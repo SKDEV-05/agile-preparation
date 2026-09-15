@@ -3,6 +3,7 @@ import { Sidebar, ActiveView } from './Sidebar';
 import { Header } from './Header';
 import { Footer } from './Footer';
 import { PartId } from '../../types';
+import { ShareButton } from '../common/ShareButton';
 
 interface LayoutProps {
   activeView: ActiveView;
@@ -32,10 +33,12 @@ export function Layout({ activeView, onNavigate, children }: LayoutProps) {
             </div>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <ShareButton variant="full" />
             <span className="rounded-full bg-emerald-50 border border-emerald-200 px-3 py-1 text-xs font-bold text-emerald-800 flex items-center gap-1.5">
               <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
-              <span>1 Module Actif (Agile)</span>
+              <span className="hidden sm:inline">1 Module Actif</span>
+              <span className="sm:hidden">Agile</span>
             </span>
           </div>
         </header>

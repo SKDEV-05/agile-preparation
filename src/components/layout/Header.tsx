@@ -3,6 +3,7 @@ import { Menu, Award, AlertTriangle, Flame, RotateCcw, Layers } from 'lucide-rea
 import { ActiveView } from './Sidebar';
 import { useProgress } from '../../store/progressStore';
 import { Button } from '../ui/Button';
+import { ShareButton } from '../common/ShareButton';
 
 interface HeaderProps {
   activeView: ActiveView;
@@ -94,6 +95,9 @@ export function Header({ activeView, onNavigate, onOpenMobileSidebar }: HeaderPr
             <span>{errorCount}</span>
           </button>
         )}
+
+        {/* Share Button (WhatsApp / Copy link) */}
+        <ShareButton />
 
         {/* Quick Launch Final Exam */}
         {activeView !== 'final-exam' && (
