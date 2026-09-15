@@ -25,6 +25,7 @@ dist-ssr
 *.suo
 *.ntvs*
 *.njsproj
-*.sln
 *.sw?
+scratch/
+implementation_plan.md
 

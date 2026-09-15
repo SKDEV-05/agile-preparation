@@ -99,55 +99,56 @@ export function QuizRunner({ questions, title, subtitle, partId, onExit, onGoToE
 
     return (
       <div className="max-w-2xl mx-auto py-6">
-        <div className="rounded-3xl border border-slate-200/90 bg-white p-8 sm:p-10 shadow-card text-center">
-          <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-indigo-50 text-primary shadow-sm mb-4">
+        <div className="rounded-3xl border border-white/10 bg-[#0D1526]/90 backdrop-blur-xl p-8 sm:p-10 shadow-2xl text-center relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-80 h-80 bg-indigo-600/10 rounded-full blur-3xl pointer-events-none"></div>
+          <div className="relative z-10 mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-indigo-600/20 border border-indigo-500/30 text-indigo-400 shadow-lg mb-4">
             <Award className="h-8 w-8" />
           </div>
 
-          <div className="text-xs font-bold uppercase tracking-wider text-slate-400">
-            Session Terminée
+          <div className="relative z-10 text-xs font-bold uppercase tracking-wider text-indigo-400">
+            Session d’entraînement Terminée
           </div>
-          <h2 className="text-3xl font-black text-slate-900 mt-1">
+          <h2 className="relative z-10 text-3xl font-black text-white mt-1">
             Résultats de l’évaluation
           </h2>
 
-          <div className="my-6">
-            <div className="text-6xl sm:text-7xl font-black text-primary tracking-tight">
+          <div className="relative z-10 my-6">
+            <div className="text-6xl sm:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-cyan-300 to-indigo-200 tracking-tight drop-shadow-[0_0_25px_rgba(99,102,241,0.4)]">
               {finalPct}%
             </div>
-            <p className="mt-2 text-sm font-semibold text-slate-600">
+            <p className="mt-2 text-sm font-semibold text-slate-300">
               {score} bonne(s) réponse(s) sur {total} questions
             </p>
           </div>
 
-          <div className="inline-block mb-8">
-            <Badge variant={levelBadge as any} size="md" className="px-4 py-1 text-sm font-semibold">
+          <div className="relative z-10 inline-block mb-8">
+            <Badge variant={levelBadge as any} size="md" className="px-4 py-1.5 text-sm font-semibold border shadow-md">
               {evaluationLevel}
             </Badge>
           </div>
 
-          <div className="grid grid-cols-2 gap-3 mb-8 text-left">
-            <div className="rounded-2xl bg-emerald-50/60 border border-emerald-100 p-4">
-              <div className="text-2xl font-bold text-emerald-800">{score}</div>
-              <div className="text-xs font-semibold text-emerald-900 mt-1">Réponses correctes</div>
+          <div className="relative z-10 grid grid-cols-2 gap-3 mb-8 text-left">
+            <div className="rounded-2xl bg-emerald-950/40 border border-emerald-500/30 p-4">
+              <div className="text-2xl font-bold text-emerald-400">{score}</div>
+              <div className="text-xs font-semibold text-emerald-200 mt-1">Réponses correctes</div>
             </div>
-            <div className="rounded-2xl bg-red-50/60 border border-red-100 p-4">
-              <div className="text-2xl font-bold text-red-800">{total - score}</div>
-              <div className="text-xs font-semibold text-red-900 mt-1">Erreurs à réviser</div>
+            <div className="rounded-2xl bg-red-950/40 border border-red-500/30 p-4">
+              <div className="text-2xl font-bold text-red-400">{total - score}</div>
+              <div className="text-xs font-semibold text-red-200 mt-1">Erreurs à réviser</div>
             </div>
           </div>
 
-          <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-2.5 sm:gap-3">
-            <Button variant="primary" size="md" onClick={handleRestart} className="gap-2 w-full sm:w-auto justify-center">
+          <div className="relative z-10 flex flex-col sm:flex-row flex-wrap justify-center gap-2.5 sm:gap-3">
+            <Button variant="primary" size="md" onClick={handleRestart} className="gap-2 w-full sm:w-auto justify-center bg-indigo-600 hover:bg-indigo-500 shadow-lg shadow-indigo-600/30">
               <RotateCcw className="h-4 w-4" />
               <span>Recommencer le quiz</span>
             </Button>
             {wrongQuestionIds.length > 0 && onGoToErrors && (
-              <Button variant="secondary" size="md" onClick={onGoToErrors} className="gap-2 w-full sm:w-auto justify-center">
+              <Button variant="secondary" size="md" onClick={onGoToErrors} className="gap-2 w-full sm:w-auto justify-center bg-white/10 hover:bg-white/15 text-white border-white/15">
                 <span>Revoir mes erreurs ({wrongQuestionIds.length})</span>
               </Button>
             )}
-            <Button variant="outline" size="md" onClick={onExit} className="gap-2 w-full sm:w-auto justify-center">
+            <Button variant="outline" size="md" onClick={onExit} className="gap-2 w-full sm:w-auto justify-center border-white/15 bg-white/5 hover:bg-white/10 text-slate-300">
               <ArrowLeft className="h-4 w-4" />
               <span>Retour au cours</span>
             </Button>
@@ -160,43 +161,44 @@ export function QuizRunner({ questions, title, subtitle, partId, onExit, onGoToE
   return (
     <div className="max-w-3xl mx-auto py-4">
       {/* Quiz Top Navigation Bar */}
-      <div className="flex items-center justify-between pb-4 border-b border-slate-100 mb-6">
+      <div className="flex items-center justify-between pb-4 border-b border-white/10 mb-6">
         <button
           onClick={onExit}
-          className="flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-slate-900 transition-colors"
+          className="flex items-center gap-1.5 text-xs font-semibold text-slate-400 hover:text-white transition-colors"
         >
           <ArrowLeft className="h-4 w-4" />
           <span>Quitter le test</span>
         </button>
         <div className="text-center">
-          <div className="text-xs font-bold text-slate-800">{title}</div>
+          <div className="text-xs font-bold text-white">{title}</div>
           <div className="text-[11px] text-slate-400">{subtitle}</div>
         </div>
-        <div className="text-xs font-bold text-primary">
+        <div className="text-xs font-bold text-indigo-400">
           Question {currentIndex + 1} / {total}
         </div>
       </div>
 
       {/* Progress Bar */}
       <div className="mb-6">
-        <Progress value={progressPercent} className="h-2" />
+        <Progress value={progressPercent} className="h-2 bg-slate-800" />
       </div>
 
       {/* Main Question Card */}
-      <div className="rounded-3xl border border-slate-200/90 bg-white p-6 sm:p-8 shadow-card">
-        <div className="flex items-center gap-2 mb-4">
-          <Badge variant="outline" size="sm">
+      <div className="rounded-3xl border border-white/10 bg-[#0D1526]/90 backdrop-blur-xl p-6 sm:p-8 shadow-2xl relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-72 h-72 bg-indigo-600/5 rounded-full blur-3xl pointer-events-none"></div>
+        <div className="relative z-10 flex items-center gap-2 mb-4">
+          <Badge variant="outline" size="sm" className="bg-white/5 text-slate-300 border-white/10">
             {currentQuestion.tag}
           </Badge>
           <span className="text-xs text-slate-400">Difficulté : {currentQuestion.difficulty}</span>
         </div>
 
-        <h3 className="text-lg sm:text-xl font-bold text-slate-900 leading-snug">
+        <h3 className="relative z-10 text-lg sm:text-xl font-bold text-white leading-snug">
           {currentQuestion.question}
         </h3>
 
         {/* 4 Options with equal lengths and clear badges */}
-        <div className="mt-6 space-y-3">
+        <div className="relative z-10 mt-6 space-y-3">
           {currentQuestion.options.map((opt, idx) => {
             const isSelected = selectedOption === idx;
             const isCorrect = idx === currentQuestion.correctIndex;
@@ -204,17 +206,17 @@ export function QuizRunner({ questions, title, subtitle, partId, onExit, onGoToE
             let optionStyle = "w-full text-left p-4 rounded-2xl border text-sm font-medium transition-all flex items-start gap-3.5 ";
             if (!isAnswerChecked) {
               if (isSelected) {
-                optionStyle += "border-primary bg-indigo-50/50 text-slate-900 ring-2 ring-primary/20";
+                optionStyle += "border-indigo-500 bg-indigo-950/50 text-white ring-2 ring-indigo-500/30 shadow-md";
               } else {
-                optionStyle += "border-slate-200/90 bg-slate-50/40 hover:bg-slate-100/70 hover:border-slate-300 text-slate-700";
+                optionStyle += "border-white/10 bg-[#070B14]/70 hover:bg-white/5 hover:border-white/20 text-slate-300";
               }
             } else {
               if (isCorrect) {
-                optionStyle += "border-emerald-300 bg-emerald-50 text-emerald-950 font-semibold ring-1 ring-emerald-400";
+                optionStyle += "border-emerald-500/60 bg-emerald-950/50 text-emerald-200 font-semibold ring-2 ring-emerald-500/40 shadow-lg shadow-emerald-900/20 animate-pulse";
               } else if (isSelected && !isCorrect) {
-                optionStyle += "border-red-300 bg-red-50 text-red-950 ring-1 ring-red-400";
+                optionStyle += "border-red-500/60 bg-red-950/50 text-red-200 ring-2 ring-red-500/40 shadow-lg shadow-red-900/20 animate-error-shake";
               } else {
-                optionStyle += "border-slate-100 bg-slate-50/20 text-slate-400 opacity-60";
+                optionStyle += "border-white/5 bg-[#070B14]/40 text-slate-500 opacity-40";
               }
             }
 
@@ -225,23 +227,23 @@ export function QuizRunner({ questions, title, subtitle, partId, onExit, onGoToE
                 disabled={isAnswerChecked}
                 className={optionStyle}
               >
-                <span className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-lg text-xs font-bold ${
+                <span className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-lg text-xs font-bold transition-colors ${
                   isSelected && !isAnswerChecked
-                    ? 'bg-primary text-white'
+                    ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/40'
                     : isAnswerChecked && isCorrect
-                    ? 'bg-emerald-600 text-white'
+                    ? 'bg-emerald-600 text-white shadow-md shadow-emerald-600/40'
                     : isAnswerChecked && isSelected && !isCorrect
-                    ? 'bg-red-500 text-white'
-                    : 'bg-white border border-slate-200 text-slate-700'
+                    ? 'bg-red-600 text-white shadow-md shadow-red-600/40'
+                    : 'bg-white/10 border border-white/10 text-slate-300'
                 }`}>
                   {String.fromCharCode(65 + idx)}
                 </span>
                 <span className="flex-1 leading-relaxed">{opt}</span>
                 {isAnswerChecked && isCorrect && (
-                  <Check className="h-5 w-5 shrink-0 text-emerald-600" />
+                  <Check className="h-5 w-5 shrink-0 text-emerald-400" />
                 )}
                 {isAnswerChecked && isSelected && !isCorrect && (
-                  <X className="h-5 w-5 shrink-0 text-red-500" />
+                  <X className="h-5 w-5 shrink-0 text-red-400" />
                 )}
               </button>
             );
@@ -250,36 +252,36 @@ export function QuizRunner({ questions, title, subtitle, partId, onExit, onGoToE
 
         {/* Immediate pedagogic explanation */}
         {isAnswerChecked && (
-          <div className={`mt-6 rounded-2xl p-4 sm:p-5 text-sm ${
+          <div className={`relative z-10 mt-6 rounded-2xl p-4 sm:p-5 text-sm backdrop-blur-md ${
             selectedOption === currentQuestion.correctIndex
-              ? 'bg-emerald-50 border border-emerald-200 text-emerald-950'
-              : 'bg-red-50 border border-red-200 text-red-950'
+              ? 'bg-emerald-950/50 border border-emerald-500/40 text-emerald-100'
+              : 'bg-red-950/50 border border-red-500/40 text-red-100'
           }`}>
             <div className="font-bold flex items-center gap-2 mb-1.5">
               {selectedOption === currentQuestion.correctIndex ? (
                 <>
-                  <Check className="h-5 w-5 text-emerald-600" />
-                  <span>Bonne réponse !</span>
+                  <Check className="h-5 w-5 text-emerald-400" />
+                  <span className="text-emerald-300">Bonne réponse !</span>
                 </>
               ) : (
                 <>
-                  <X className="h-5 w-5 text-red-500" />
-                  <span>Réponse incorrecte</span>
+                  <X className="h-5 w-5 text-red-400" />
+                  <span className="text-red-300">Réponse incorrecte</span>
                 </>
               )}
             </div>
-            <div className="text-xs text-slate-600 font-semibold mb-2">
-              Réponse attendue : <span className="font-bold text-slate-900">{String.fromCharCode(65 + currentQuestion.correctIndex)} — {currentQuestion.options[currentQuestion.correctIndex]}</span>
+            <div className="text-xs text-slate-300 font-semibold mb-2">
+              Réponse attendue : <span className="font-bold text-white">{String.fromCharCode(65 + currentQuestion.correctIndex)} — {currentQuestion.options[currentQuestion.correctIndex]}</span>
             </div>
-            <p className="leading-relaxed text-slate-700 text-xs sm:text-sm">
-              <b className="text-slate-900">Pourquoi ? </b>
+            <p className="leading-relaxed text-slate-300 text-xs sm:text-sm">
+              <b className="text-white">Pourquoi ? </b>
               {currentQuestion.explanation}
             </p>
           </div>
         )}
 
         {/* Action Button Footer */}
-        <div className="mt-8 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3.5 border-t border-slate-100 pt-5">
+        <div className="relative z-10 mt-8 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3.5 border-t border-white/10 pt-5">
           <div className="text-xs text-slate-400 font-medium text-center sm:text-left">
             {!isAnswerChecked ? "Choisis une option puis clique sur Valider" : "Analyse l'explication avant de continuer"}
           </div>
@@ -290,7 +292,7 @@ export function QuizRunner({ questions, title, subtitle, partId, onExit, onGoToE
               size="md"
               disabled={selectedOption === null}
               onClick={handleValidateAnswer}
-              className="font-bold px-6 w-full sm:w-auto justify-center"
+              className="font-bold px-6 w-full sm:w-auto justify-center bg-indigo-600 hover:bg-indigo-500 shadow-lg shadow-indigo-600/30 disabled:opacity-40"
             >
               Valider la réponse
             </Button>
@@ -299,7 +301,7 @@ export function QuizRunner({ questions, title, subtitle, partId, onExit, onGoToE
               variant="primary"
               size="md"
               onClick={handleNext}
-              className="gap-2 font-bold px-6 w-full sm:w-auto justify-center"
+              className="gap-2 font-bold px-6 w-full sm:w-auto justify-center bg-indigo-600 hover:bg-indigo-500 shadow-lg shadow-indigo-600/30"
             >
               <span>{currentIndex + 1 === total ? 'Voir mes résultats' : 'Question suivante'}</span>
               <ArrowRight className="h-4 w-4" />

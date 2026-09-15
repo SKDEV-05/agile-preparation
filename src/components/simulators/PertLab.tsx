@@ -125,7 +125,7 @@ export function PertLab() {
 
       <CardContent>
         {/* Network Diagram View */}
-        <div className="my-4 rounded-2xl border border-slate-200/80 bg-slate-50/50 p-6 overflow-x-auto">
+        <div className="my-4 rounded-2xl border border-white/10 bg-[#070B14]/80 p-6 overflow-x-auto">
           <div className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-6 text-center">
             Représentation Graphique du Réseau d’Activités
           </div>
@@ -134,7 +134,7 @@ export function PertLab() {
             {/* Task A */}
             <TaskNode task={tasks[0]} isHighlighted={isCalculated && tasks[0].isCritical} />
 
-            <div className="text-slate-300 font-bold">➔</div>
+            <div className="text-slate-600 font-bold">➔</div>
 
             {/* Parallel Tasks B & C */}
             <div className="flex flex-col gap-6">
@@ -142,17 +142,17 @@ export function PertLab() {
               <TaskNode task={tasks[2]} isHighlighted={isCalculated && tasks[2].isCritical} />
             </div>
 
-            <div className="text-slate-300 font-bold">➔</div>
+            <div className="text-slate-600 font-bold">➔</div>
 
             {/* Task D */}
             <TaskNode task={tasks[3]} isHighlighted={isCalculated && tasks[3].isCritical} />
 
-            <div className="text-slate-300 font-bold">➔</div>
+            <div className="text-slate-600 font-bold">➔</div>
 
             {/* Task E */}
             <TaskNode task={tasks[4]} isHighlighted={isCalculated && tasks[4].isCritical} />
 
-            <div className="text-slate-300 font-bold">➔</div>
+            <div className="text-slate-600 font-bold">➔</div>
 
             {/* Task F */}
             <TaskNode task={tasks[5]} isHighlighted={isCalculated && tasks[5].isCritical} />
@@ -161,18 +161,18 @@ export function PertLab() {
 
         {/* Calculation Result Banner */}
         {isCalculated && (
-          <div className="mt-6 rounded-2xl border border-emerald-200 bg-emerald-50/60 p-5 animate-in fade-in duration-300">
+          <div className="mt-6 rounded-2xl border border-emerald-500/30 bg-emerald-950/40 p-5 animate-in fade-in duration-300">
             <div className="flex flex-wrap items-center justify-between gap-4">
               <div>
-                <div className="flex items-center gap-2 text-emerald-800 font-bold text-sm">
-                  <CheckCircle2 className="h-5 w-5 text-emerald-600" />
-                  <span>Chemin critique identifié : <b className="text-slate-900 tracking-wide">{criticalPathString}</b></span>
+                <div className="flex items-center gap-2 text-emerald-300 font-bold text-sm">
+                  <CheckCircle2 className="h-5 w-5 text-emerald-400" />
+                  <span>Chemin critique identifié : <b className="text-white tracking-wide">{criticalPathString}</b></span>
                 </div>
-                <p className="text-xs text-slate-600 mt-1">
-                  Durée totale incompressible du projet : <b className="text-slate-900">{totalDuration} jours</b>. La tâche B dispose d’une marge totale de <b className="text-primary">{tasks[1].margin} jour(s)</b>.
+                <p className="text-xs text-slate-300 mt-1">
+                  Durée totale incompressible du projet : <b className="text-white">{totalDuration} jours</b>. La tâche B dispose d’une marge totale de <b className="text-cyan-400">{tasks[1].margin} jour(s)</b>.
                 </p>
               </div>
-              <Badge variant="success" size="md" className="gap-1 font-bold text-xs py-1">
+              <Badge variant="success" size="md" className="gap-1 font-bold text-xs py-1 border border-emerald-500/30">
                 <Sparkles className="h-3.5 w-3.5" />
                 Marge nulle = Critique
               </Badge>
@@ -184,7 +184,7 @@ export function PertLab() {
         <div className="mt-6 overflow-x-auto">
           <table className="w-full text-xs text-left border-collapse">
             <thead>
-              <tr className="border-b border-slate-200 text-slate-400 font-bold">
+              <tr className="border-b border-white/10 text-slate-400 font-bold">
                 <th className="py-2.5 px-3">Tâche</th>
                 <th className="py-2.5 px-3">Désignation</th>
                 <th className="py-2.5 px-3">Antécédents</th>
@@ -197,12 +197,12 @@ export function PertLab() {
                 <th className="py-2.5 px-3 text-center">Statut</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100 font-medium">
+            <tbody className="divide-y divide-white/10 font-medium">
               {tasks.map(t => (
-                <tr key={t.id} className={t.isCritical && isCalculated ? "bg-emerald-50/40" : ""}>
-                  <td className="py-3 px-3 font-bold text-slate-900">{t.id}</td>
-                  <td className="py-3 px-3 text-slate-700">{t.name}</td>
-                  <td className="py-3 px-3 text-slate-500">{t.antecedents.join(', ') || '—'}</td>
+                <tr key={t.id} className={t.isCritical && isCalculated ? "bg-emerald-950/20" : ""}>
+                  <td className="py-3 px-3 font-bold text-white">{t.id}</td>
+                  <td className="py-3 px-3 text-slate-300">{t.name}</td>
+                  <td className="py-3 px-3 text-slate-400">{t.antecedents.join(', ') || '—'}</td>
                   <td className="py-3 px-3 text-center">
                     <input
                       type="number"
@@ -210,21 +210,21 @@ export function PertLab() {
                       max={10}
                       value={t.duration}
                       onChange={(e) => updateDuration(t.id, parseInt(e.target.value) || 1)}
-                      className="w-12 text-center rounded-lg border border-slate-200 py-1 text-xs font-bold text-slate-800 focus:outline-none focus:ring-2 focus:ring-primary"
+                      className="w-12 text-center rounded-lg border border-white/10 bg-[#070B14] py-1 text-xs font-bold text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
                     />
                   </td>
-                  <td className="py-3 px-3 text-center text-slate-600">{t.es}</td>
-                  <td className="py-3 px-3 text-center text-slate-600">{t.ef}</td>
-                  <td className="py-3 px-3 text-center text-slate-600">{t.ls}</td>
-                  <td className="py-3 px-3 text-center text-slate-600">{t.lf}</td>
-                  <td className="py-3 px-3 text-center font-bold text-primary">{t.margin} j</td>
+                  <td className="py-3 px-3 text-center text-slate-300">{t.es}</td>
+                  <td className="py-3 px-3 text-center text-slate-300">{t.ef}</td>
+                  <td className="py-3 px-3 text-center text-slate-300">{t.ls}</td>
+                  <td className="py-3 px-3 text-center text-slate-300">{t.lf}</td>
+                  <td className="py-3 px-3 text-center font-bold text-indigo-400">{t.margin} j</td>
                   <td className="py-3 px-3 text-center">
                     {t.isCritical ? (
-                      <span className="inline-block rounded-md bg-emerald-100 px-2 py-0.5 text-[10px] font-bold text-emerald-800">
+                      <span className="inline-block rounded-md bg-emerald-950/60 border border-emerald-500/40 px-2 py-0.5 text-[10px] font-bold text-emerald-300">
                         Critique
                       </span>
                     ) : (
-                      <span className="inline-block rounded-md bg-slate-100 px-2 py-0.5 text-[10px] font-medium text-slate-600">
+                      <span className="inline-block rounded-md bg-white/5 border border-white/10 px-2 py-0.5 text-[10px] font-medium text-slate-400">
                         Marge {t.margin}j
                       </span>
                     )}
@@ -241,28 +241,28 @@ export function PertLab() {
 
 function TaskNode({ task, isHighlighted }: { task: PertTask; isHighlighted: boolean }) {
   return (
-    <div className={`w-32 rounded-2xl border-2 transition-all duration-300 overflow-hidden shadow-sm ${
+    <div className={`w-32 rounded-2xl border transition-all duration-300 overflow-hidden shadow-md ${
       isHighlighted
-        ? 'border-emerald-500 bg-white ring-4 ring-emerald-100 shadow-md scale-105'
-        : 'border-slate-200/90 bg-white'
+        ? 'border-emerald-500 bg-[#0D1526] ring-4 ring-emerald-500/20 shadow-emerald-900/30 scale-105'
+        : 'border-white/10 bg-[#0D1526]'
     }`}>
       {/* Node Header */}
       <div className={`grid grid-cols-2 py-1 text-[10px] font-bold text-center border-b ${
-        isHighlighted ? 'bg-emerald-50 text-emerald-900 border-emerald-200' : 'bg-slate-50 text-slate-500 border-slate-200'
+        isHighlighted ? 'bg-emerald-950/80 text-emerald-300 border-emerald-500/40' : 'bg-[#070B14] text-slate-400 border-white/10'
       }`}>
         <span>ES: {task.es}</span>
         <span className="border-l border-inherit">EF: {task.ef}</span>
       </div>
 
       {/* Node Body */}
-      <div className="py-2 px-1 text-center bg-white">
-        <div className="font-black text-sm text-slate-900">Tâche {task.id}</div>
+      <div className="py-2.5 px-1 text-center bg-[#0D1526]">
+        <div className="font-black text-sm text-white">Tâche {task.id}</div>
         <div className="text-[10px] text-slate-400 truncate mt-0.5">{task.name} ({task.duration}j)</div>
       </div>
 
       {/* Node Footer */}
       <div className={`grid grid-cols-2 py-1 text-[10px] font-bold text-center border-t ${
-        isHighlighted ? 'bg-emerald-50 text-emerald-900 border-emerald-200' : 'bg-slate-50 text-slate-500 border-slate-200'
+        isHighlighted ? 'bg-emerald-950/80 text-emerald-300 border-emerald-500/40' : 'bg-[#070B14] text-slate-400 border-white/10'
       }`}>
         <span>LS: {task.ls}</span>
         <span className="border-l border-inherit">LF: {task.lf}</span>

@@ -1,8 +1,7 @@
 import React from 'react';
 import { CreatorCard } from './CreatorCard';
-import { BookOpen, ShieldCheck, Heart } from 'lucide-react';
+import { Heart } from 'lucide-react';
 import { ActiveView } from './Sidebar';
-
 import logoImg from '../../assets/logo.jpg';
 
 interface FooterProps {
@@ -11,32 +10,32 @@ interface FooterProps {
 
 export function Footer({ onNavigate }: FooterProps) {
   return (
-    <footer className="mt-16 border-t border-slate-200/80 pt-10 pb-12">
+    <footer className="mt-16 border-t border-white/10 pt-10 pb-12 text-slate-400">
       {/* 1. Saad Korma Creator Highlight Card */}
       <div className="mb-10">
         <CreatorCard variant="full" />
       </div>
 
       {/* 2. Platform Information and Links */}
-      <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+      <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-400">
         <div className="flex items-center gap-2.5">
-          <div className="h-7 w-7 rounded-lg overflow-hidden border border-slate-200 shrink-0">
-            <img src={logoImg} alt="Logo FullStack Master" className="h-full w-full object-cover" />
+          <div className="h-7 w-7 rounded-lg overflow-hidden border border-white/10 shrink-0">
+            <img src={logoImg} alt="Logo FullStack 2A" className="h-full w-full object-cover" />
           </div>
-          <span className="font-bold text-slate-800">FULLSTACK MASTER · 2ème Année</span>
-          <span className="text-slate-300">|</span>
-          <span>Développement Digital & Gestion de Projet</span>
+          <span className="font-bold text-white">FULLSTACK <span className="text-indigo-400">2A</span></span>
+          <span className="text-slate-600">|</span>
+          <span>Développement Digital · Web & Mobile</span>
         </div>
 
         <div className="flex flex-wrap items-center justify-center gap-3 text-[11px] font-medium text-slate-400">
-          <span>200 Questions officielles</span>
+          <span>200 Questions d'examen</span>
           <span>•</span>
-          <span>5 Simulateurs interactifs</span>
+          <span>5 Simulateurs temps réel</span>
           <span>•</span>
-          <span>Modèles 3D & Vidéos</span>
+          <span>Modèles 3D & Vidéos FR/EN</span>
           <span>•</span>
-          <span className="flex items-center gap-1 text-slate-600 font-semibold bg-slate-100 px-2.5 py-1 rounded-lg">
-            Conçu avec <Heart className="h-3 w-3 text-red-500 fill-red-500" /> pour les stagiaires de la filière Développement Digital (Full Stack 2ème Année) · OFPPT Maroc
+          <span className="flex items-center gap-1.5 text-slate-300 font-semibold bg-slate-900/90 border border-white/10 px-3 py-1 rounded-lg">
+            Conçu avec <Heart className="h-3 w-3 text-rose-500 fill-rose-500" /> pour les stagiaires de la filière Développement Digital (Full Stack 2ème Année) · OFPPT Maroc
           </span>
         </div>
       </div>

@@ -42,7 +42,7 @@ export function TableOfContents({ sections, completedSectionIds }: TableOfConten
 
   return (
     <div className="hidden xl:block w-64 shrink-0">
-      <div className="sticky top-24 rounded-2xl border border-slate-200/80 bg-white p-5 shadow-card">
+      <div className="sticky top-24 rounded-2xl border border-white/10 bg-[#0D1526]/85 backdrop-blur-xl p-5 shadow-2xl">
         <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400">
           Sommaire du cours
         </h4>
@@ -56,18 +56,18 @@ export function TableOfContents({ sections, completedSectionIds }: TableOfConten
                 key={sec.id}
                 onClick={() => scrollToSection(sec.id)}
                 className={cn(
-                  "group flex w-full items-start gap-2.5 rounded-xl px-2.5 py-2 text-left text-xs transition-colors",
+                  "group flex w-full items-start gap-2.5 rounded-xl px-2.5 py-2 text-left text-xs transition-all",
                   isCurrent
-                    ? "bg-indigo-50/80 text-primary font-bold"
-                    : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
+                    ? "bg-indigo-600/20 text-indigo-300 font-bold border border-indigo-500/30 shadow-sm"
+                    : "text-slate-400 hover:bg-white/5 hover:text-slate-200 border border-transparent"
                 )}
               >
                 {isCompleted ? (
-                  <CheckCircle2 className="h-4 w-4 shrink-0 text-success mt-0.5" />
+                  <CheckCircle2 className="h-4 w-4 shrink-0 text-emerald-400 mt-0.5" />
                 ) : (
                   <Circle className={cn(
                     "h-4 w-4 shrink-0 mt-0.5",
-                    isCurrent ? "text-primary fill-primary/20" : "text-slate-300"
+                    isCurrent ? "text-indigo-400 fill-indigo-400/20" : "text-slate-600"
                   )} />
                 )}
                 <span className="line-clamp-2 leading-relaxed">
@@ -81,7 +81,7 @@ export function TableOfContents({ sections, completedSectionIds }: TableOfConten
         {/* Practical Case link */}
         <button
           onClick={() => scrollToSection('practical-case')}
-          className="mt-3 block w-full border-t border-slate-100 pt-3 text-left text-xs font-semibold text-teal-700 hover:text-teal-800"
+          className="mt-3 block w-full border-t border-white/10 pt-3 text-left text-xs font-semibold text-cyan-400 hover:text-cyan-300 transition-colors"
         >
           ✦ Cas Pratique & Corrigé
         </button>

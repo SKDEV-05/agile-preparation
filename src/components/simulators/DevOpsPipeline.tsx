@@ -236,9 +236,9 @@ deploy_to_server:
       <CardContent>
         {viewYaml ? (
           /* YAML Viewer */
-          <div className="rounded-2xl border border-slate-800 bg-[#0F172A] p-5 font-mono text-xs text-slate-300 overflow-x-auto shadow-inner">
-            <div className="flex items-center gap-2 pb-3 border-b border-slate-700/80 mb-3 text-slate-400">
-              <FileCode className="h-4 w-4 text-primary" />
+          <div className="rounded-2xl border border-white/10 bg-[#030712] p-5 font-mono text-xs text-slate-300 overflow-x-auto shadow-inner">
+            <div className="flex items-center gap-2 pb-3 border-b border-white/10 mb-3 text-slate-400">
+              <FileCode className="h-4 w-4 text-cyan-400" />
               <span>.gitlab-ci.yml — Configuration déclarative du pipeline</span>
             </div>
             <pre className="text-slate-200 leading-relaxed">{yamlContent}</pre>
@@ -249,11 +249,11 @@ deploy_to_server:
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 mb-6">
               {stages.map((stage) => {
                 const isSelected = stage.id === selectedStageId;
-                let borderStyle = 'border-slate-200 bg-white hover:border-slate-300';
+                let borderStyle = 'border-white/10 bg-[#070B14]/80 hover:border-white/20 text-slate-300';
                 if (stage.status === 'running') {
-                  borderStyle = 'border-primary bg-indigo-50/50 ring-2 ring-primary/20 animate-pulse';
+                  borderStyle = 'border-indigo-500 bg-indigo-950/60 ring-2 ring-indigo-500/40 text-white animate-pulse';
                 } else if (stage.status === 'passed') {
-                  borderStyle = 'border-emerald-300 bg-emerald-50/40 text-emerald-950';
+                  borderStyle = 'border-emerald-500/40 bg-emerald-950/40 text-emerald-200';
                 }
 
                 return (
@@ -261,19 +261,19 @@ deploy_to_server:
                     key={stage.id}
                     onClick={() => setSelectedStageId(stage.id)}
                     className={`text-left rounded-2xl border p-4 transition-all duration-200 ${borderStyle} ${
-                      isSelected ? 'ring-2 ring-primary shadow-md' : 'shadow-sm'
+                      isSelected ? 'ring-2 ring-cyan-400 shadow-lg shadow-cyan-900/30' : 'shadow-sm'
                     }`}
                   >
                     <div className="flex items-center justify-between text-[11px] mb-2 font-bold">
-                      <span className="text-slate-500">{stage.name}</span>
+                      <span className="text-slate-400">{stage.name}</span>
                       {stage.status === 'passed' && (
-                        <CheckCircle2 className="h-4 w-4 text-emerald-600 shrink-0" />
+                        <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0" />
                       )}
                       {stage.status === 'running' && (
-                        <Clock className="h-4 w-4 text-primary animate-spin shrink-0" />
+                        <Clock className="h-4 w-4 text-indigo-400 animate-spin shrink-0" />
                       )}
                     </div>
-                    <div className="text-xs font-bold text-slate-900 truncate">
+                    <div className="text-xs font-bold text-white truncate">
                       {stage.jobName}
                     </div>
                     <div className="text-[10px] text-slate-400 mt-1">
@@ -285,20 +285,20 @@ deploy_to_server:
             </div>
 
             {/* Stage Detail & Terminal Logs */}
-            <div className="rounded-2xl border border-slate-800 bg-[#0F172A] p-5 shadow-inner">
-              <div className="flex flex-wrap items-center justify-between pb-3 border-b border-slate-700/80 mb-3 gap-2">
+            <div className="rounded-2xl border border-white/10 bg-[#030712] p-5 shadow-inner">
+              <div className="flex flex-wrap items-center justify-between pb-3 border-b border-white/10 mb-3 gap-2">
                 <div className="flex items-center gap-2 font-mono text-xs text-slate-300">
-                  <Server className="h-4 w-4 text-emerald-400" />
+                  <Server className="h-4 w-4 text-cyan-400" />
                   <span>GitLab Runner #01 · Stage : <b className="text-white font-bold">{selectedStage.name}</b></span>
                 </div>
                 <div className="font-mono text-xs text-slate-400">
-                  Commande : <code className="text-emerald-300 font-bold">{selectedStage.command}</code>
+                  Commande : <code className="text-cyan-300 font-bold">{selectedStage.command}</code>
                 </div>
               </div>
 
               <div className="space-y-1 font-mono text-xs text-slate-300 max-h-48 overflow-y-auto">
                 {selectedStage.logs.map((line, idx) => (
-                  <div key={idx} className={line.startsWith('$') ? 'text-emerald-400 font-bold' : line.includes('succeeded') || line.includes('Passed') ? 'text-teal-300 font-bold' : 'text-slate-300'}>
+                  <div key={idx} className={line.startsWith('$') ? 'text-cyan-400 font-bold' : line.includes('succeeded') || line.includes('Passed') ? 'text-emerald-300 font-bold' : 'text-slate-300'}>
                     {line}
                   </div>
                 ))}

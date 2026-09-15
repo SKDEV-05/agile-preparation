@@ -159,40 +159,41 @@ export function FinalExamPage({ onExit, onGoToErrors }: FinalExamProps) {
     return (
       <div className="max-w-4xl mx-auto py-6 space-y-8">
         {/* Score Hero Banner */}
-        <div className="rounded-3xl border border-slate-200/90 bg-white p-8 sm:p-12 shadow-card text-center">
-          <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-3xl bg-indigo-50 text-primary shadow-sm mb-4">
+        <div className="rounded-3xl border border-white/10 bg-[#0D1526]/90 backdrop-blur-xl p-8 sm:p-12 shadow-2xl text-center relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-indigo-600/10 rounded-full blur-3xl pointer-events-none"></div>
+          <div className="relative z-10 mx-auto flex h-20 w-20 items-center justify-center rounded-3xl bg-indigo-600/20 border border-indigo-500/30 text-indigo-400 shadow-lg mb-4">
             <Award className="h-10 w-10" />
           </div>
 
-          <div className="text-xs font-bold uppercase tracking-wider text-slate-400">
+          <div className="relative z-10 text-xs font-bold uppercase tracking-wider text-indigo-400">
             Examen Officiel Terminé
           </div>
-          <h1 className="text-3xl sm:text-4xl font-black text-slate-900 mt-1">
+          <h1 className="relative z-10 text-3xl sm:text-4xl font-black text-white mt-1">
             Bilan d’Évaluation Finale
           </h1>
 
-          <div className="my-6">
-            <div className="text-6xl sm:text-8xl font-black text-primary tracking-tight">
+          <div className="relative z-10 my-6">
+            <div className="text-6xl sm:text-8xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-cyan-300 to-indigo-200 tracking-tight drop-shadow-[0_0_25px_rgba(99,102,241,0.4)]">
               {pct}%
             </div>
-            <p className="mt-2 text-base font-bold text-slate-700">
-              Note officielle : <span className="text-slate-950 text-lg">{finalScore} / {totalQuestions}</span>
+            <p className="mt-2 text-base font-bold text-slate-300">
+              Note officielle : <span className="text-white text-lg font-black">{finalScore} / {totalQuestions}</span>
             </p>
           </div>
 
-          <div className="inline-block mb-8">
+          <div className="relative z-10 inline-block mb-8">
             <Badge
               variant={pct >= 80 ? 'success' : pct >= 60 ? 'primary' : 'danger'}
               size="md"
-              className="px-5 py-1.5 text-sm font-bold"
+              className="px-5 py-1.5 text-sm font-bold shadow-md"
             >
               {pct >= 80 ? '✦ Mention Très Bien · Prêt pour l’EFM' : pct >= 60 ? '✓ Mention Assez Bien · Bon niveau général' : '⚠️ Niveau insuffisant · Révisions requises'}
             </Badge>
           </div>
 
           {/* Breakdown by module */}
-          <div className="rounded-2xl border border-slate-200/80 bg-slate-50/50 p-6 text-left mb-8">
-            <h3 className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-4">
+          <div className="relative z-10 rounded-2xl border border-white/10 bg-[#070B14]/80 p-6 text-left mb-8">
+            <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4">
               Résultats détaillés par domaine de compétences :
             </h3>
             <div className="space-y-3.5">
@@ -201,14 +202,14 @@ export function FinalExamPage({ onExit, onGoToErrors }: FinalExamProps) {
                 const partPct = Math.round((b.correct / b.total) * 100);
                 return (
                   <div key={p.id}>
-                    <div className="flex justify-between text-xs font-semibold text-slate-700 mb-1">
+                    <div className="flex justify-between text-xs font-semibold text-slate-300 mb-1">
                       <span>{p.name}</span>
-                      <span className="font-bold text-slate-900">{b.correct} / {b.total} ({partPct}%)</span>
+                      <span className="font-bold text-white">{b.correct} / {b.total} ({partPct}%)</span>
                     </div>
                     <Progress
                       value={partPct}
-                      className="h-2"
-                      indicatorColor={partPct >= 80 ? 'bg-emerald-500' : partPct >= 60 ? 'bg-primary' : 'bg-red-500'}
+                      className="h-2 bg-slate-800"
+                      indicatorColor={partPct >= 80 ? 'bg-emerald-400' : partPct >= 60 ? 'bg-indigo-500' : 'bg-red-500'}
                     />
                   </div>
                 );
@@ -217,47 +218,47 @@ export function FinalExamPage({ onExit, onGoToErrors }: FinalExamProps) {
           </div>
 
           {/* Strong vs Weak Points */}
-          <div className="grid sm:grid-cols-2 gap-4 text-left mb-8">
-            <div className="rounded-2xl border border-emerald-200 bg-emerald-50/40 p-5">
-              <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-emerald-900 mb-2">
-                <CheckCircle2 className="h-4 w-4 text-emerald-600" />
+          <div className="relative z-10 grid sm:grid-cols-2 gap-4 text-left mb-8">
+            <div className="rounded-2xl border border-emerald-500/30 bg-emerald-950/40 p-5">
+              <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-emerald-300 mb-2">
+                <CheckCircle2 className="h-4 w-4 text-emerald-400" />
                 Tes points forts
               </div>
               {strongPoints.length > 0 ? (
-                <ul className="space-y-1 text-xs text-slate-700">
+                <ul className="space-y-1 text-xs text-slate-200">
                   {strongPoints.map(p => (
                     <li key={p.id} className="flex items-center gap-1.5 font-medium">
-                      <span className="text-emerald-600 font-bold">✓</span> {p.name}
+                      <span className="text-emerald-400 font-bold">✓</span> {p.name}
                     </li>
                   ))}
                 </ul>
               ) : (
-                <p className="text-xs text-slate-500 italic">Aucun domaine au-dessus de 80% pour l’instant.</p>
+                <p className="text-xs text-slate-400 italic">Aucun domaine au-dessus de 80% pour l’instant.</p>
               )}
             </div>
 
-            <div className="rounded-2xl border border-amber-200 bg-amber-50/40 p-5">
-              <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-amber-900 mb-2">
-                <AlertTriangle className="h-4 w-4 text-amber-600" />
+            <div className="rounded-2xl border border-amber-500/30 bg-amber-950/40 p-5">
+              <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-amber-300 mb-2">
+                <AlertTriangle className="h-4 w-4 text-amber-400" />
                 Notions prioritaires à revoir
               </div>
               {weakPoints.length > 0 ? (
-                <ul className="space-y-1 text-xs text-slate-700">
+                <ul className="space-y-1 text-xs text-slate-200">
                   {weakPoints.map(p => (
-                    <li key={p.id} className="flex items-center gap-1.5 font-medium text-amber-950">
-                      <span className="text-amber-600 font-bold">➔</span> {p.name}
+                    <li key={p.id} className="flex items-center gap-1.5 font-medium text-amber-200">
+                      <span className="text-amber-400 font-bold">➔</span> {p.name}
                     </li>
                   ))}
                 </ul>
               ) : (
-                <p className="text-xs text-emerald-700 font-medium">Excellent ! Aucune faiblesse majeure détectée.</p>
+                <p className="text-xs text-emerald-300 font-medium">Excellent ! Aucune faiblesse majeure détectée.</p>
               )}
             </div>
           </div>
 
           {/* Action buttons */}
-          <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-2.5 sm:gap-3">
-            <Button variant="primary" size="lg" onClick={onGoToErrors} className="gap-2 font-bold shadow-sm w-full sm:w-auto justify-center">
+          <div className="relative z-10 flex flex-col sm:flex-row flex-wrap justify-center gap-2.5 sm:gap-3">
+            <Button variant="primary" size="lg" onClick={onGoToErrors} className="gap-2 font-bold shadow-lg shadow-indigo-600/30 w-full sm:w-auto justify-center bg-indigo-600 hover:bg-indigo-500">
               <AlertTriangle className="h-4 w-4" />
               <span>Travailler mes erreurs ({totalQuestions - finalScore})</span>
             </Button>
@@ -271,12 +272,12 @@ export function FinalExamPage({ onExit, onGoToErrors }: FinalExamProps) {
                 setSecondsRemaining(45 * 60);
                 setCurrentIndex(0);
               }}
-              className="gap-2 w-full sm:w-auto justify-center"
+              className="gap-2 w-full sm:w-auto justify-center border-white/15 bg-white/5 hover:bg-white/10 text-slate-200"
             >
               <RotateCcw className="h-4 w-4" />
               <span>Repasser l’examen</span>
             </Button>
-            <Button variant="secondary" size="lg" onClick={onExit} className="w-full sm:w-auto justify-center">
+            <Button variant="secondary" size="lg" onClick={onExit} className="w-full sm:w-auto justify-center bg-white/10 hover:bg-white/15 text-white border border-white/10">
               Retour au tableau de bord
             </Button>
           </div>
@@ -292,22 +293,22 @@ export function FinalExamPage({ onExit, onGoToErrors }: FinalExamProps) {
   return (
     <div className="max-w-5xl mx-auto py-4">
       {/* Top Exam Header */}
-      <div className="flex items-center justify-between gap-2 pb-4 border-b border-slate-200/80 mb-6">
+      <div className="flex items-center justify-between gap-2 pb-4 border-b border-white/10 mb-6">
         <div className="flex items-center gap-2 min-w-0">
-          <Badge variant="primary" size="sm" className="font-bold shrink-0">
+          <Badge variant="primary" size="sm" className="font-bold shrink-0 bg-indigo-600/20 text-indigo-300 border border-indigo-500/30">
             50 QCM
           </Badge>
-          <span className="text-xs text-slate-500 font-medium hidden md:inline truncate">
-            Conditions réelles d’examen officiel
+          <span className="text-xs text-slate-400 font-medium hidden md:inline truncate">
+            Conditions réelles d’examen officiel · Simulation EFM
           </span>
         </div>
 
         <div className="flex items-center gap-2 sm:gap-3 shrink-0">
           {/* Timer */}
-          <div className={`flex items-center gap-1.5 sm:gap-2 rounded-xl px-2.5 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-mono font-bold border ${
+          <div className={`flex items-center gap-1.5 sm:gap-2 rounded-xl px-2.5 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-mono font-bold border shadow-sm ${
             secondsRemaining <= 300
-              ? 'bg-red-50 text-red-600 border-red-200 animate-pulse'
-              : 'bg-indigo-50 text-primary border-indigo-200'
+              ? 'bg-red-950/60 text-red-400 border-red-500/50 animate-pulse'
+              : 'bg-indigo-950/60 text-indigo-300 border-indigo-500/30'
           }`}>
             <Clock className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
             <span>{formatTime(secondsRemaining)}</span>
@@ -318,7 +319,7 @@ export function FinalExamPage({ onExit, onGoToErrors }: FinalExamProps) {
             variant="primary"
             size="sm"
             onClick={() => setIsSubmitDialogOpen(true)}
-            className="gap-1.5 font-bold shadow-sm px-2.5 sm:px-3 text-xs"
+            className="gap-1.5 font-bold shadow-lg shadow-indigo-600/30 px-2.5 sm:px-3 text-xs bg-indigo-600 hover:bg-indigo-500"
           >
             <Send className="h-3.5 w-3.5" />
             <span className="hidden sm:inline">Terminer l’examen</span>
@@ -330,13 +331,14 @@ export function FinalExamPage({ onExit, onGoToErrors }: FinalExamProps) {
       <div className="grid lg:grid-cols-4 gap-6">
         {/* Main Question Card (3 cols) */}
         <div className="lg:col-span-3 space-y-6">
-          <div className="rounded-3xl border border-slate-200/90 bg-white p-6 sm:p-8 shadow-card">
-            <div className="flex items-center justify-between mb-4">
+          <div className="rounded-3xl border border-white/10 bg-[#0D1526]/90 backdrop-blur-xl p-6 sm:p-8 shadow-2xl relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-72 h-72 bg-indigo-600/5 rounded-full blur-3xl pointer-events-none"></div>
+            <div className="relative z-10 flex items-center justify-between mb-4">
               <div className="flex items-center gap-2">
-                <span className="text-xs font-bold text-primary bg-indigo-50 px-2.5 py-1 rounded-lg">
+                <span className="text-xs font-bold text-indigo-300 bg-indigo-950/60 border border-indigo-500/30 px-2.5 py-1 rounded-lg">
                   Question {currentIndex + 1} / {totalQuestions}
                 </span>
-                <Badge variant="outline" size="sm">
+                <Badge variant="outline" size="sm" className="bg-white/5 text-slate-300 border-white/10">
                   {currentQuestion.tag}
                 </Badge>
               </div>
@@ -346,22 +348,22 @@ export function FinalExamPage({ onExit, onGoToErrors }: FinalExamProps) {
                 onClick={() => toggleFlag(currentQuestion.id)}
                 className={`flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1.5 rounded-lg border transition-colors ${
                   isFlagged
-                    ? 'bg-amber-50 text-amber-800 border-amber-300 font-bold'
-                    : 'bg-white text-slate-500 border-slate-200 hover:text-slate-800'
+                    ? 'bg-amber-950/60 text-amber-300 border-amber-500/40 font-bold shadow-sm'
+                    : 'bg-white/5 text-slate-400 border-white/10 hover:text-white hover:bg-white/10'
                 }`}
               >
-                <Flag className={`h-3.5 w-3.5 ${isFlagged ? 'fill-amber-500 text-amber-600' : ''}`} />
+                <Flag className={`h-3.5 w-3.5 ${isFlagged ? 'fill-amber-400 text-amber-400' : ''}`} />
                 <span>{isFlagged ? 'Marquée' : 'Marquer pour révision'}</span>
               </button>
             </div>
 
             {/* Question Text */}
-            <h2 className="text-lg sm:text-xl font-bold text-slate-900 leading-snug">
+            <h2 className="relative z-10 text-lg sm:text-xl font-bold text-white leading-snug">
               {currentQuestion.question}
             </h2>
 
             {/* 4 Options (Clean, balanced lengths, radio style) */}
-            <div className="mt-6 space-y-3">
+            <div className="relative z-10 mt-6 space-y-3">
               {currentQuestion.options.map((opt, idx) => {
                 const isSelected = selectedChoice === idx;
                 return (
@@ -370,12 +372,12 @@ export function FinalExamPage({ onExit, onGoToErrors }: FinalExamProps) {
                     onClick={() => handleSelectOption(idx)}
                     className={`w-full text-left p-4 rounded-2xl border text-sm font-medium transition-all flex items-start gap-3.5 ${
                       isSelected
-                        ? 'border-primary bg-indigo-50/60 text-slate-900 ring-2 ring-primary/20 shadow-sm'
-                        : 'border-slate-200/90 bg-slate-50/40 hover:bg-slate-100/70 hover:border-slate-300 text-slate-700'
+                        ? 'border-indigo-500 bg-indigo-950/50 text-white ring-2 ring-indigo-500/40 shadow-lg shadow-indigo-900/20'
+                        : 'border-white/10 bg-[#070B14]/70 hover:bg-white/5 hover:border-white/20 text-slate-300'
                     }`}
                   >
-                    <span className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-lg text-xs font-bold ${
-                      isSelected ? 'bg-primary text-white' : 'bg-white border border-slate-200 text-slate-700'
+                    <span className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-lg text-xs font-bold transition-colors ${
+                      isSelected ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/40' : 'bg-white/10 border border-white/10 text-slate-300'
                     }`}>
                       {String.fromCharCode(65 + idx)}
                     </span>
@@ -386,13 +388,13 @@ export function FinalExamPage({ onExit, onGoToErrors }: FinalExamProps) {
             </div>
 
             {/* Prev / Next buttons */}
-            <div className="mt-8 flex items-center justify-between border-t border-slate-100 pt-5">
+            <div className="relative z-10 mt-8 flex items-center justify-between border-t border-white/10 pt-5">
               <Button
                 variant="outline"
                 size="md"
                 disabled={currentIndex === 0}
                 onClick={() => setCurrentIndex(prev => Math.max(0, prev - 1))}
-                className="gap-2"
+                className="gap-2 border-white/15 bg-white/5 hover:bg-white/10 text-slate-300 disabled:opacity-30"
               >
                 <ArrowLeft className="h-4 w-4" />
                 <span>Précédente</span>
@@ -407,7 +409,7 @@ export function FinalExamPage({ onExit, onGoToErrors }: FinalExamProps) {
                   variant="primary"
                   size="md"
                   onClick={() => setCurrentIndex(prev => Math.min(totalQuestions - 1, prev + 1))}
-                  className="gap-2 font-bold px-6"
+                  className="gap-2 font-bold px-6 bg-indigo-600 hover:bg-indigo-500 shadow-lg shadow-indigo-600/30"
                 >
                   <span>Suivante</span>
                   <ArrowRight className="h-4 w-4" />
@@ -417,7 +419,7 @@ export function FinalExamPage({ onExit, onGoToErrors }: FinalExamProps) {
                   variant="primary"
                   size="md"
                   onClick={() => setIsSubmitDialogOpen(true)}
-                  className="gap-2 font-bold bg-emerald-600 hover:bg-emerald-700 px-6"
+                  className="gap-2 font-bold bg-emerald-600 hover:bg-emerald-500 px-6 shadow-lg shadow-emerald-600/30"
                 >
                   <span>Finaliser l’examen</span>
                   <Send className="h-4 w-4" />
@@ -428,24 +430,24 @@ export function FinalExamPage({ onExit, onGoToErrors }: FinalExamProps) {
         </div>
 
         {/* Question Grid Navigator (1 col) */}
-        <div className="rounded-3xl border border-slate-200/90 bg-white p-5 shadow-card h-fit">
+        <div className="rounded-3xl border border-white/10 bg-[#0D1526]/90 backdrop-blur-xl p-5 shadow-2xl h-fit">
           <div className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3">
             Grille des 50 questions
           </div>
 
-          <div className="grid grid-cols-5 gap-1.5 max-h-[380px] overflow-y-auto p-1">
+          <div className="grid grid-cols-5 gap-1.5 max-h-[380px] overflow-y-auto p-1 custom-scrollbar">
             {FINAL_EXAM_QUESTIONS.map((q, idx) => {
               const isAnswered = answers[q.id] !== undefined;
               const isFlag = flaggedIds.includes(q.id);
               const isCurrent = currentIndex === idx;
 
-              let cellStyle = 'bg-slate-100 text-slate-600 border-transparent hover:bg-slate-200';
+              let cellStyle = 'bg-[#070B14]/80 text-slate-400 border-white/5 hover:border-white/20 hover:text-white';
               if (isCurrent) {
-                cellStyle = 'ring-2 ring-primary font-bold text-primary bg-indigo-50 border-primary';
+                cellStyle = 'ring-2 ring-cyan-400 font-bold text-cyan-300 bg-cyan-950/40 border-cyan-500 shadow-sm';
               } else if (isFlag) {
-                cellStyle = 'bg-amber-100 text-amber-900 border-amber-300 font-bold';
+                cellStyle = 'bg-amber-950/60 text-amber-300 border-amber-500/50 font-bold';
               } else if (isAnswered) {
-                cellStyle = 'bg-indigo-600 text-white font-bold border-indigo-700';
+                cellStyle = 'bg-indigo-600 text-white font-bold border-indigo-500 shadow-md shadow-indigo-600/30';
               }
 
               return (
@@ -460,17 +462,17 @@ export function FinalExamPage({ onExit, onGoToErrors }: FinalExamProps) {
             })}
           </div>
 
-          <div className="mt-4 pt-3 border-t border-slate-100 space-y-2 text-[11px] text-slate-500 font-medium">
+          <div className="mt-4 pt-3 border-t border-white/10 space-y-2 text-[11px] text-slate-400 font-medium">
             <div className="flex items-center gap-2">
-              <span className="h-3 w-3 rounded bg-indigo-600" />
+              <span className="h-3 w-3 rounded bg-indigo-600 shadow-sm" />
               <span>Répondue ({answeredCount})</span>
             </div>
             <div className="flex items-center gap-2">
-              <span className="h-3 w-3 rounded bg-amber-200" />
+              <span className="h-3 w-3 rounded bg-amber-500/40 border border-amber-400/50" />
               <span>Marquée ({flaggedIds.length})</span>
             </div>
             <div className="flex items-center gap-2">
-              <span className="h-3 w-3 rounded bg-slate-100" />
+              <span className="h-3 w-3 rounded bg-[#070B14] border border-white/10" />
               <span>Non répondue ({totalQuestions - answeredCount})</span>
             </div>
           </div>
@@ -479,27 +481,27 @@ export function FinalExamPage({ onExit, onGoToErrors }: FinalExamProps) {
 
       {/* Confirmation Dialog before submitting */}
       <Dialog open={isSubmitDialogOpen} onOpenChange={setIsSubmitDialogOpen}>
-        <DialogContent>
+        <DialogContent className="bg-[#0D1526] border-white/10 text-white">
           <DialogHeader>
-            <DialogTitle>Soumettre définitivement l’examen ?</DialogTitle>
-            <DialogDescription>
+            <DialogTitle className="text-white">Soumettre définitivement l’examen ?</DialogTitle>
+            <DialogDescription className="text-slate-400">
               Vérifie ton bilan avant validation finale :
             </DialogDescription>
           </DialogHeader>
 
           <div className="space-y-2.5 my-2 text-sm">
-            <div className="flex justify-between p-3 rounded-xl bg-slate-50 border border-slate-200">
-              <span className="text-slate-600">Questions répondues :</span>
-              <b className="text-primary">{answeredCount} / {totalQuestions}</b>
+            <div className="flex justify-between p-3 rounded-xl bg-[#070B14] border border-white/10">
+              <span className="text-slate-400">Questions répondues :</span>
+              <b className="text-indigo-400">{answeredCount} / {totalQuestions}</b>
             </div>
             {totalQuestions - answeredCount > 0 && (
-              <div className="flex justify-between p-3 rounded-xl bg-amber-50 border border-amber-200 text-amber-900">
+              <div className="flex justify-between p-3 rounded-xl bg-amber-950/40 border border-amber-500/30 text-amber-200">
                 <span>Questions sans réponse :</span>
                 <b>{totalQuestions - answeredCount}</b>
               </div>
             )}
             {flaggedIds.length > 0 && (
-              <div className="flex justify-between p-3 rounded-xl bg-indigo-50 border border-indigo-200 text-indigo-950">
+              <div className="flex justify-between p-3 rounded-xl bg-indigo-950/40 border border-indigo-500/30 text-indigo-200">
                 <span>Questions encore marquées :</span>
                 <b>{flaggedIds.length}</b>
               </div>
@@ -507,10 +509,10 @@ export function FinalExamPage({ onExit, onGoToErrors }: FinalExamProps) {
           </div>
 
           <DialogFooter>
-            <Button variant="outline" onClick={() => setIsSubmitDialogOpen(false)}>
+            <Button variant="outline" onClick={() => setIsSubmitDialogOpen(false)} className="border-white/15 bg-white/5 hover:bg-white/10 text-slate-300">
               Reprendre la relecture
             </Button>
-            <Button variant="primary" onClick={handleSubmitExam} className="font-bold">
+            <Button variant="primary" onClick={handleSubmitExam} className="font-bold bg-indigo-600 hover:bg-indigo-500 shadow-lg shadow-indigo-600/30">
               Confirmer et voir la note
             </Button>
           </DialogFooter>
