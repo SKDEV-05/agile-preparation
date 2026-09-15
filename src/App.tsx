@@ -16,15 +16,73 @@ import { AntigravityParticleField } from './components/3d/AntigravityParticleFie
 import { useScrollReveal } from './hooks/useScrollReveal';
 import { trackPageView, analytics } from './lib/analytics';
 
+// Map URL pathname to internal ActiveView
+function getInitialView(): ActiveView {
+  if (typeof window === 'undefined') return 'curriculum-hub';
+  const path = window.location.pathname.replace(/^\/+|\/+$/g, '');
+  if (path.startsWith('course/part')) {
+    const p = path.replace('course/', '');
+    if (['part1', 'part2', 'part3', 'part4', 'part5'].includes(p)) {
+      return p as ActiveView;
+    }
+  }
+  if (path === 'part1' || path === 'part2' || path === 'part3' || path === 'part4' || path === 'part5') {
+    return path as ActiveView;
+  }
+  if (path === 'simulators' || path === 'laboratory') return 'simulators';
+  if (path === 'flashcards') return 'flashcards';
+  if (path === 'final-exam' || path === 'exam') return 'final-exam';
+  if (path === 'errors') return 'errors';
+  if (path === 'agile' || path === 'dashboard') return 'dashboard';
+  return 'curriculum-hub';
+}
+
+function getUrlForView(view: ActiveView, partId?: PartId): string {
+  const target = partId || view;
+  if (target === 'curriculum-hub') return '/';
+  if (target.startsWith('part')) return `/course/${target}`;
+  if (target === 'final-exam') return '/final-exam';
+  return `/${target}`;
+}
+
 export function App() {
   useScrollReveal();
-  // Default entry view: Curriculum Hub (Choose from 2nd Year Modules)
-  const [activeView, setActiveView] = useState<ActiveView>('curriculum-hub');
-
+  const [activeView, setActiveView] = useState<ActiveView>(getInitialView);
   const [quizPartId, setQuizPartId] = useState<PartId | null>(null);
 
+  // Sync document title and meta description per route for Googlebot indexing
+  React.useEffect(() => {
+    const titles: Record<string, string> = {
+      'curriculum-hub': 'Full Stack Web Master · 2ème Année | Plateforme d’Excellence OFPPT',
+      'dashboard': 'Module Approche Agile & Gestion de Projet (M201) | Full Stack 2A',
+      'part1': 'Partie 1 : Fondamentaux & Cycle de Vie Informatique | Full Stack 2A',
+      'part2': 'Partie 2 : Planifier un projet · Réseau PERT & Gantt | Full Stack 2A',
+      'part3': 'Partie 3 : Méthode Agile, Framework Scrum & Jira | Full Stack 2A',
+      'part4': 'Partie 4 : Architecture Git 4 Zones & SonarQube | Full Stack 2A',
+      'part5': 'Partie 5 : Culture DevOps & Pipelines GitLab CI/CD | Full Stack 2A',
+      'simulators': 'Laboratoire Pratique · 5 Simulateurs Temps Réel (PERT, Gantt, Git, CI/CD) | Full Stack 2A',
+      'final-exam': 'Examen Blanc Officiel (50 QCM Minutés 45 min) | Full Stack 2A',
+      'flashcards': 'Flashcards 3D de Mémorisation Rapide | Full Stack 2A',
+      'errors': 'Carnet Pédagogique de Révision des Erreurs | Full Stack 2A',
+    };
+
+    const targetKey = quizPartId ? `Quiz ${quizPartId}` : activeView;
+    if (titles[activeView]) {
+      document.title = titles[activeView];
+    }
+  }, [activeView, quizPartId]);
+
+  // Handle browser Back/Forward buttons (popstate)
+  React.useEffect(() => {
+    const handlePopState = () => {
+      setActiveView(getInitialView());
+      setQuizPartId(null);
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
   const handleNavigate = (view: ActiveView, partId?: PartId) => {
-    // Reset quiz mode on any navigation
     setQuizPartId(null);
     const target = partId || view;
     if (partId) {
@@ -32,7 +90,13 @@ export function App() {
     } else {
       setActiveView(view);
     }
-    trackPageView(`/${target}`);
+
+    const newUrl = getUrlForView(view, partId);
+    if (window.location.pathname !== newUrl) {
+      window.history.pushState(null, '', newUrl);
+    }
+
+    trackPageView(newUrl);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
