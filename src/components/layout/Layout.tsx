@@ -18,7 +18,7 @@ export function Layout({ activeView, onNavigate, children }: LayoutProps) {
   // 1. Full-width Portal Layout when choosing a module (no premature Agile sidebar)
   if (isCurriculumHub) {
     return (
-      <div className="min-h-screen bg-[#070B14] text-slate-100 flex flex-col">
+      <div className="min-h-screen bg-transparent text-slate-100 flex flex-col">
         {/* Minimal sleek dark glass header for Hub */}
         <header className="sticky top-0 z-20 flex h-16 w-full items-center justify-between border-b border-white/10 bg-[#070B14]/80 px-4 sm:px-8 backdrop-blur-xl">
           <div className="flex items-center gap-3">
@@ -54,7 +54,7 @@ export function Layout({ activeView, onNavigate, children }: LayoutProps) {
 
   // 2. Regular Workspace Layout (Sidebar + Header + Lessons/Simulators/Exams)
   return (
-    <div className="min-h-screen bg-[#070B14] text-slate-100 flex">
+    <div className="min-h-screen bg-transparent text-slate-100 flex">
       {/* Sidebar with Agile course parts */}
       <Sidebar
         activeView={activeView}

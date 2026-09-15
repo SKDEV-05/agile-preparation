@@ -12,6 +12,7 @@ import { COURSE_MAP } from './data/course';
 import { QUESTIONS_BY_PART } from './data/questions';
 import { PartId } from './types';
 import { CurriculumHub } from './pages/CurriculumHub';
+import { AntigravityParticleField } from './components/3d/AntigravityParticleField';
 import { useScrollReveal } from './hooks/useScrollReveal';
 import { trackPageView, analytics } from './lib/analytics';
 
@@ -116,9 +117,17 @@ export function App() {
   };
 
   return (
-    <Layout activeView={activeView} onNavigate={handleNavigate}>
-      {renderContent()}
-    </Layout>
+    <div className="relative min-h-screen bg-[#070B14] text-slate-100 selection:bg-cyan-500/30 selection:text-cyan-200">
+      {/* Global Google Antigravity Particle Field Canvas across ALL pages */}
+      <AntigravityParticleField />
+
+      {/* Foreground Website Content */}
+      <div className="relative z-10">
+        <Layout activeView={activeView} onNavigate={handleNavigate}>
+          {renderContent()}
+        </Layout>
+      </div>
+    </div>
   );
 }
 
