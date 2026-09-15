@@ -3,4 +3,4 @@ User-agent: *
 Allow: /
 
 # Sitemap index
-Sitemap: https://fullstack-master-exam.web.app/sitemap.xml
+Sitemap: https://fullstack-2a.vercel.app/sitemap.xml

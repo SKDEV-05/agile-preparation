@@ -15,7 +15,7 @@ declare global {
   }
 }
 
-export const GA_TRACKING_ID = 'G-XXXXXXXXXX'; // Remplacez par votre identifiant GA4 réel (ex: G-A1B2C3D4E5)
+export const GA_TRACKING_ID = 'G-E229H2TMY7';
 
 /**
  * Envoie un événement personnalisé à Google Analytics
