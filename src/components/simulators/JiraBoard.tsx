@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '../ui/Card';
-import { Button } from '../ui/Button';
 import { Badge } from '../ui/Badge';
-import { ArrowRight, ArrowLeft, Plus, CheckCircle2, Bookmark, Bug, CheckSquare, Layers, Filter } from 'lucide-react';
+import { ArrowRight, ArrowLeft, Bookmark, Bug, CheckSquare, Filter } from 'lucide-react';
 
 type TicketStatus = 'todo' | 'in_progress' | 'review' | 'done';
 type TicketType = 'story' | 'bug' | 'task';

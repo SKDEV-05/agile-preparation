@@ -29,24 +29,13 @@ const initialTasks: PertTask[] = [
 export function PertLab() {
   const [tasks, setTasks] = useState<PertTask[]>(initialTasks);
   const [isCalculated, setIsCalculated] = useState(false);
-  const [activeStep, setActiveStep] = useState<number | null>(null);
 
   const handleCalculate = () => {
     setIsCalculated(true);
-    // Animate step by step
-    let step = 0;
-    const interval = setInterval(() => {
-      setActiveStep(step);
-      step++;
-      if (step > tasks.length) {
-        clearInterval(interval);
-      }
-    }, 300);
   };
 
   const handleReset = () => {
     setIsCalculated(false);
-    setActiveStep(null);
   };
 
   const updateDuration = (id: string, newDuration: number) => {

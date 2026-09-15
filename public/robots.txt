@@ -1,0 +1,6 @@
+# Robots.txt for Full Stack Web Master (2ème Année)
+User-agent: *
+Allow: /
+
+# Sitemap index
+Sitemap: https://fullstack-master-exam.web.app/sitemap.xml

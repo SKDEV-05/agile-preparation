@@ -11,14 +11,20 @@ node_modules
 dist
 dist-ssr
 *.local
+.env
+.env.*
+!.env.example
 
-# Editor directories and files
+# Editor and Tool directories
 .vscode/*
 !.vscode/extensions.json
 .idea
+.gemini
+.antigravity-ide
 .DS_Store
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
+

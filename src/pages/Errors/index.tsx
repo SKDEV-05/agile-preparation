@@ -37,19 +37,19 @@ export function ErrorsPage({ onBackToDashboard }: ErrorsPageProps) {
   }
 
   return (
-    <div className="max-w-4xl mx-auto py-4 space-y-8">
+    <div className="max-w-4xl mx-auto py-4 space-y-6 sm:space-y-8">
       {/* Header Banner */}
-      <div className="rounded-3xl border border-slate-200/90 bg-white p-6 sm:p-8 shadow-card">
+      <div className="reveal-on-scroll rounded-3xl border border-slate-200/90 bg-white p-5 sm:p-8 shadow-card">
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-50 text-amber-700 shadow-sm">
+            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-50 text-amber-700 shadow-sm shrink-0">
               <AlertTriangle className="h-6 w-6" />
             </div>
             <div>
               <div className="text-xs font-bold text-amber-800 uppercase tracking-wider">
                 Carnet Pédagogique
               </div>
-              <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight mt-0.5">
+              <h1 className="text-xl sm:text-3xl font-black text-slate-900 tracking-tight mt-0.5">
                 Mes Erreurs à Réviser
               </h1>
             </div>
@@ -60,7 +60,7 @@ export function ErrorsPage({ onBackToDashboard }: ErrorsPageProps) {
               variant="primary"
               size="md"
               onClick={() => setIsQuizMode(true)}
-              className="gap-2 font-bold shadow-sm"
+              className="gap-2 font-bold shadow-sm w-full sm:w-auto justify-center"
             >
               <Play className="h-4 w-4" />
               <span>S’entraîner sur mes {filteredErrors.length} erreurs</span>
@@ -68,17 +68,17 @@ export function ErrorsPage({ onBackToDashboard }: ErrorsPageProps) {
           )}
         </div>
 
-        <p className="mt-3 text-sm text-slate-500 leading-relaxed">
+        <p className="mt-3 text-xs sm:text-sm text-slate-500 leading-relaxed">
           Cette page recense l’ensemble des questions auxquelles tu as mal répondu lors de tes entraînements ou de l’examen final. Révise les explications et rejoue le quiz pour les éliminer.
         </p>
 
-        {/* Filter bar */}
+        {/* Filter bar - horizontal swipe on mobile */}
         {wrongQuestions.length > 0 && (
-          <div className="mt-6 flex flex-wrap items-center gap-2 border-t border-slate-100 pt-4">
-            <span className="text-xs font-bold text-slate-400 mr-2">Filtrer par module :</span>
+          <div className="mt-6 flex overflow-x-auto no-scrollbar sm:flex-wrap items-center gap-2 border-t border-slate-100 pt-4 pb-1 sm:pb-0">
+            <span className="text-xs font-bold text-slate-400 mr-2 shrink-0">Filtrer par module :</span>
             <button
               onClick={() => setSelectedPartFilter('all')}
-              className={`rounded-xl px-3 py-1.5 text-xs font-semibold transition-colors ${
+              className={`shrink-0 rounded-xl px-3 py-1.5 text-xs font-semibold transition-colors ${
                 selectedPartFilter === 'all' ? 'bg-slate-900 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
               }`}
             >

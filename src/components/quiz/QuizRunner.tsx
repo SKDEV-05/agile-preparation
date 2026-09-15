@@ -4,7 +4,7 @@ import { useProgress } from '../../store/progressStore';
 import { Button } from '../ui/Button';
 import { Badge } from '../ui/Badge';
 import { Progress } from '../ui/Progress';
-import { Check, X, ArrowRight, RotateCcw, ArrowLeft, Award, HelpCircle } from 'lucide-react';
+import { Check, X, ArrowRight, RotateCcw, ArrowLeft, Award } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
 interface QuizRunnerProps {
@@ -137,17 +137,17 @@ export function QuizRunner({ questions, title, subtitle, partId, onExit, onGoToE
             </div>
           </div>
 
-          <div className="flex flex-wrap justify-center gap-3">
-            <Button variant="primary" size="md" onClick={handleRestart} className="gap-2">
+          <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-2.5 sm:gap-3">
+            <Button variant="primary" size="md" onClick={handleRestart} className="gap-2 w-full sm:w-auto justify-center">
               <RotateCcw className="h-4 w-4" />
               <span>Recommencer le quiz</span>
             </Button>
             {wrongQuestionIds.length > 0 && onGoToErrors && (
-              <Button variant="secondary" size="md" onClick={onGoToErrors} className="gap-2">
+              <Button variant="secondary" size="md" onClick={onGoToErrors} className="gap-2 w-full sm:w-auto justify-center">
                 <span>Revoir mes erreurs ({wrongQuestionIds.length})</span>
               </Button>
             )}
-            <Button variant="outline" size="md" onClick={onExit} className="gap-2">
+            <Button variant="outline" size="md" onClick={onExit} className="gap-2 w-full sm:w-auto justify-center">
               <ArrowLeft className="h-4 w-4" />
               <span>Retour au cours</span>
             </Button>
@@ -279,8 +279,8 @@ export function QuizRunner({ questions, title, subtitle, partId, onExit, onGoToE
         )}
 
         {/* Action Button Footer */}
-        <div className="mt-8 flex items-center justify-between border-t border-slate-100 pt-5">
-          <div className="text-xs text-slate-400 font-medium">
+        <div className="mt-8 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3.5 border-t border-slate-100 pt-5">
+          <div className="text-xs text-slate-400 font-medium text-center sm:text-left">
             {!isAnswerChecked ? "Choisis une option puis clique sur Valider" : "Analyse l'explication avant de continuer"}
           </div>
 
@@ -290,7 +290,7 @@ export function QuizRunner({ questions, title, subtitle, partId, onExit, onGoToE
               size="md"
               disabled={selectedOption === null}
               onClick={handleValidateAnswer}
-              className="font-bold px-6"
+              className="font-bold px-6 w-full sm:w-auto justify-center"
             >
               Valider la réponse
             </Button>
@@ -299,7 +299,7 @@ export function QuizRunner({ questions, title, subtitle, partId, onExit, onGoToE
               variant="primary"
               size="md"
               onClick={handleNext}
-              className="gap-2 font-bold px-6"
+              className="gap-2 font-bold px-6 w-full sm:w-auto justify-center"
             >
               <span>{currentIndex + 1 === total ? 'Voir mes résultats' : 'Question suivante'}</span>
               <ArrowRight className="h-4 w-4" />

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '../ui/Card';
 import { Button } from '../ui/Button';
 import { Badge } from '../ui/Badge';
-import { Terminal, GitCommit, GitBranch, ArrowRight, RotateCcw, CheckCircle2, AlertTriangle } from 'lucide-react';
+import { Terminal, GitCommit, GitBranch, RotateCcw, CheckCircle2 } from 'lucide-react';
 
 export function GitLabVisualizer() {
   const [workingFiles, setWorkingFiles] = useState<string[]>(['src/auth.ts', 'src/login.tsx']);

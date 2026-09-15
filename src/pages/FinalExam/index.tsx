@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { FINAL_EXAM_QUESTIONS } from '../../data/questions';
 import { useProgress } from '../../store/progressStore';
 import { Button } from '../../components/ui/Button';
@@ -15,8 +15,6 @@ import {
   CheckCircle2,
   AlertTriangle,
   RotateCcw,
-  Check,
-  X,
   Send
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
@@ -51,39 +49,18 @@ export function FinalExamPage({ onExit, onGoToErrors }: FinalExamProps) {
   const currentQuestion = FINAL_EXAM_QUESTIONS[currentIndex];
   const answeredCount = Object.keys(answers).length;
 
-  // Countdown timer
+  const answersRef = useRef(answers);
+  const secondsRef = useRef(secondsRemaining);
+
   useEffect(() => {
-    if (isExamCompleted) return;
-    const timer = setInterval(() => {
-      setSecondsRemaining(prev => {
-        if (prev <= 1) {
-          clearInterval(timer);
-          handleSubmitExam();
-          return 0;
-        }
-        return prev - 1;
-      });
-    }, 1000);
+    answersRef.current = answers;
+  }, [answers]);
 
-    return () => clearInterval(timer);
-  }, [isExamCompleted]);
+  useEffect(() => {
+    secondsRef.current = secondsRemaining;
+  }, [secondsRemaining]);
 
-  const handleSelectOption = (optionIndex: number) => {
-    setAnswers(prev => ({
-      ...prev,
-      [currentQuestion.id]: optionIndex
-    }));
-  };
-
-  const toggleFlag = (questionId: string) => {
-    setFlaggedIds(prev =>
-      prev.includes(questionId)
-        ? prev.filter(id => id !== questionId)
-        : [...prev, questionId]
-    );
-  };
-
-  const handleSubmitExam = () => {
+  const handleSubmitExam = useCallback(() => {
     setIsSubmitDialogOpen(false);
     let totalCorrect = 0;
     const breakdown: Record<PartId, { correct: number; total: number }> = {
@@ -97,7 +74,7 @@ export function FinalExamPage({ onExit, onGoToErrors }: FinalExamProps) {
 
     FINAL_EXAM_QUESTIONS.forEach(q => {
       breakdown[q.partId].total++;
-      const userChoice = answers[q.id];
+      const userChoice = answersRef.current[q.id];
       if (userChoice === q.correctIndex) {
         totalCorrect++;
         breakdown[q.partId].correct++;
@@ -113,7 +90,7 @@ export function FinalExamPage({ onExit, onGoToErrors }: FinalExamProps) {
     recordExamResult(
       totalCorrect,
       totalQuestions,
-      45 * 60 - secondsRemaining,
+      45 * 60 - secondsRef.current,
       breakdown,
       wrongIds
     );
@@ -124,6 +101,38 @@ export function FinalExamPage({ onExit, onGoToErrors }: FinalExamProps) {
     }
 
     setIsExamCompleted(true);
+  }, [recordExamResult, totalQuestions]);
+
+  // Countdown timer
+  useEffect(() => {
+    if (isExamCompleted) return;
+    const timer = setInterval(() => {
+      setSecondsRemaining(prev => {
+        if (prev <= 1) {
+          clearInterval(timer);
+          handleSubmitExam();
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [isExamCompleted, handleSubmitExam]);
+
+  const handleSelectOption = (optionIndex: number) => {
+    setAnswers(prev => ({
+      ...prev,
+      [currentQuestion.id]: optionIndex
+    }));
+  };
+
+  const toggleFlag = (questionId: string) => {
+    setFlaggedIds(prev =>
+      prev.includes(questionId)
+        ? prev.filter(id => id !== questionId)
+        : [...prev, questionId]
+    );
   };
 
   // Result View
@@ -247,8 +256,8 @@ export function FinalExamPage({ onExit, onGoToErrors }: FinalExamProps) {
           </div>
 
           {/* Action buttons */}
-          <div className="flex flex-wrap justify-center gap-3">
-            <Button variant="primary" size="lg" onClick={onGoToErrors} className="gap-2 font-bold shadow-sm">
+          <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-2.5 sm:gap-3">
+            <Button variant="primary" size="lg" onClick={onGoToErrors} className="gap-2 font-bold shadow-sm w-full sm:w-auto justify-center">
               <AlertTriangle className="h-4 w-4" />
               <span>Travailler mes erreurs ({totalQuestions - finalScore})</span>
             </Button>
@@ -262,12 +271,12 @@ export function FinalExamPage({ onExit, onGoToErrors }: FinalExamProps) {
                 setSecondsRemaining(45 * 60);
                 setCurrentIndex(0);
               }}
-              className="gap-2"
+              className="gap-2 w-full sm:w-auto justify-center"
             >
               <RotateCcw className="h-4 w-4" />
               <span>Repasser l’examen</span>
             </Button>
-            <Button variant="secondary" size="lg" onClick={onExit}>
+            <Button variant="secondary" size="lg" onClick={onExit} className="w-full sm:w-auto justify-center">
               Retour au tableau de bord
             </Button>
           </div>
@@ -283,36 +292,39 @@ export function FinalExamPage({ onExit, onGoToErrors }: FinalExamProps) {
   return (
     <div className="max-w-5xl mx-auto py-4">
       {/* Top Exam Header */}
-      <div className="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-slate-200/80 mb-6">
-        <div className="flex items-center gap-3">
-          <Badge variant="primary" size="md" className="font-bold">
-            Examen Final · 50 QCM
+      <div className="flex items-center justify-between gap-2 pb-4 border-b border-slate-200/80 mb-6">
+        <div className="flex items-center gap-2 min-w-0">
+          <Badge variant="primary" size="sm" className="font-bold shrink-0">
+            50 QCM
           </Badge>
-          <span className="text-xs text-slate-500 font-medium hidden sm:inline">
-            Conditions réelles d’examen OFPPT
+          <span className="text-xs text-slate-500 font-medium hidden md:inline truncate">
+            Conditions réelles d’examen officiel
           </span>
         </div>
 
-        {/* Timer */}
-        <div className={`flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-mono font-bold border ${
-          secondsRemaining <= 300
-            ? 'bg-red-50 text-red-600 border-red-200 animate-pulse'
-            : 'bg-indigo-50 text-primary border-indigo-200'
-        }`}>
-          <Clock className="h-4 w-4" />
-          <span>{formatTime(secondsRemaining)}</span>
-        </div>
+        <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+          {/* Timer */}
+          <div className={`flex items-center gap-1.5 sm:gap-2 rounded-xl px-2.5 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-mono font-bold border ${
+            secondsRemaining <= 300
+              ? 'bg-red-50 text-red-600 border-red-200 animate-pulse'
+              : 'bg-indigo-50 text-primary border-indigo-200'
+          }`}>
+            <Clock className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+            <span>{formatTime(secondsRemaining)}</span>
+          </div>
 
-        {/* Submit button */}
-        <Button
-          variant="primary"
-          size="sm"
-          onClick={() => setIsSubmitDialogOpen(true)}
-          className="gap-2 font-bold shadow-sm"
-        >
-          <Send className="h-4 w-4" />
-          <span>Terminer l’examen</span>
-        </Button>
+          {/* Submit button */}
+          <Button
+            variant="primary"
+            size="sm"
+            onClick={() => setIsSubmitDialogOpen(true)}
+            className="gap-1.5 font-bold shadow-sm px-2.5 sm:px-3 text-xs"
+          >
+            <Send className="h-3.5 w-3.5" />
+            <span className="hidden sm:inline">Terminer l’examen</span>
+            <span className="sm:hidden">Terminer</span>
+          </Button>
+        </div>
       </div>
 
       <div className="grid lg:grid-cols-4 gap-6">

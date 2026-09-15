@@ -26,8 +26,8 @@ export function CourseViewer({ coursePart, onStartQuiz, onOpenSimulators }: Cour
       {/* Main Editorial Column */}
       <div className="flex-1 min-w-0">
         {/* Module Header Banner */}
-        <div className="rounded-3xl border border-slate-200/90 bg-white p-6 sm:p-8 shadow-card mb-8">
-          <div className="flex flex-wrap items-center justify-between gap-4">
+        <div className="reveal-on-scroll rounded-3xl border border-slate-200/90 bg-white p-5 sm:p-8 shadow-card mb-8">
+          <div className="flex flex-wrap items-center justify-between gap-3">
             <div className="flex items-center gap-2">
               <Badge variant="primary" size="sm">
                 Partie {coursePart.orderNumber} · Cours
@@ -43,38 +43,38 @@ export function CourseViewer({ coursePart, onStartQuiz, onOpenSimulators }: Cour
             )}
           </div>
 
-          <h1 className="mt-4 text-3xl sm:text-4xl font-black tracking-tight text-slate-900 leading-tight">
+          <h1 className="mt-4 text-2xl sm:text-4xl font-black tracking-tight text-slate-900 leading-tight">
             {coursePart.title}
           </h1>
-          <p className="mt-2 text-base text-slate-500 leading-relaxed max-w-3xl">
+          <p className="mt-2 text-sm sm:text-base text-slate-500 leading-relaxed max-w-3xl">
             {coursePart.subtitle}
           </p>
 
-          <p className="mt-4 text-sm text-slate-600 leading-relaxed border-t border-slate-100 pt-4">
+          <p className="mt-4 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100 pt-4">
             {coursePart.description}
           </p>
 
-          <div className="mt-6 flex flex-wrap items-center gap-3">
+          <div className="mt-6 flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 sm:gap-3">
             <Button
               variant="primary"
               size="md"
               onClick={() => onStartQuiz(coursePart.id)}
-              className="gap-2 font-bold shadow-sm"
+              className="gap-2 font-bold shadow-sm w-full sm:w-auto justify-center"
             >
-              <Award className="h-4 w-4" />
-              <span>Passer aux 30 QCM de la Partie {coursePart.orderNumber}</span>
-              <ArrowRight className="h-4 w-4" />
+              <Award className="h-4 w-4 shrink-0" />
+              <span>Passer aux 30 QCM · Partie {coursePart.orderNumber}</span>
+              <ArrowRight className="h-4 w-4 shrink-0" />
             </Button>
             <Button
               variant="outline"
               size="md"
               onClick={onOpenSimulators}
-              className="gap-2"
+              className="gap-2 w-full sm:w-auto justify-center"
             >
-              <FlaskConical className="h-4 w-4 text-slate-500" />
+              <FlaskConical className="h-4 w-4 text-slate-500 shrink-0" />
               <span>Laboratoire interactif</span>
             </Button>
-            <div className="ml-auto text-xs text-slate-400 font-medium hidden sm:block">
+            <div className="ml-auto text-xs text-slate-400 font-medium hidden lg:block">
               {completedCount} / {totalSections} notions lues
             </div>
           </div>

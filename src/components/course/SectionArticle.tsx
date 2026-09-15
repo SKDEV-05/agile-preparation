@@ -1,7 +1,19 @@
 import React, { useState } from 'react';
 import { CourseSection, PartId } from '../../types';
 import { CourseDiagram } from './CourseDiagram';
-import { CheckCircle2, AlertTriangle, Lightbulb, Check, X, BookmarkCheck } from 'lucide-react';
+import { Concept3DVisualizer } from './Concept3DVisualizer';
+import { VideoLearningPlayer } from './VideoLearningPlayer';
+import {
+  CheckCircle2,
+  AlertTriangle,
+  Lightbulb,
+  Check,
+  X,
+  BookmarkCheck,
+  Building2,
+  BookOpen,
+  Sparkles
+} from 'lucide-react';
 import { Button } from '../ui/Button';
 
 interface SectionArticleProps {
@@ -25,10 +37,10 @@ export function SectionArticle({ section, isCompleted, onMarkCompleted }: Sectio
   };
 
   return (
-    <article id={section.id} className="scroll-mt-24 border-b border-slate-200/80 pb-12 mb-12">
+    <article id={section.id} className="reveal-on-scroll scroll-mt-24 border-b border-slate-200/80 pb-12 mb-12">
       {/* Section Header */}
       <div className="flex items-center gap-3">
-        <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-50 font-bold text-xs text-primary">
+        <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-50 font-bold text-xs text-primary shrink-0">
           {section.order}
         </span>
         <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900">
@@ -39,8 +51,8 @@ export function SectionArticle({ section, isCompleted, onMarkCompleted }: Sectio
       {/* 1. Définition */}
       <div className="mt-5 rounded-2xl border border-indigo-100 bg-indigo-50/40 p-4 sm:p-5">
         <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-primary">
-          <BookmarkCheck className="h-4 w-4" />
-          Définition
+          <BookmarkCheck className="h-4 w-4 shrink-0" />
+          Définition Officielle
         </div>
         <p className="mt-2 text-sm sm:text-base font-medium text-slate-800 leading-relaxed">
           {section.definition}
@@ -50,18 +62,31 @@ export function SectionArticle({ section, isCompleted, onMarkCompleted }: Sectio
       {/* 2. En termes simples */}
       <div className="mt-6">
         <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400">
-          En termes simples
+          En termes simples & vulgarisation
         </h3>
         <p className="mt-2 text-sm sm:text-base text-slate-700 leading-relaxed">
           {section.explanation}
         </p>
       </div>
 
-      {/* 3. Exemples concrets */}
+      {/* 3. Explication Approfondie & Clés Pédagogiques */}
+      {section.deepExplanation && (
+        <div className="mt-6 rounded-2xl border border-slate-200/90 bg-white p-5 shadow-xs">
+          <h3 className="text-xs font-bold uppercase tracking-wider text-primary flex items-center gap-2">
+            <BookOpen className="h-4 w-4" />
+            Explication Approfondie · Pour aller plus loin
+          </h3>
+          <p className="mt-2.5 text-xs sm:text-sm text-slate-700 leading-relaxed font-normal whitespace-pre-line">
+            {section.deepExplanation}
+          </p>
+        </div>
+      )}
+
+      {/* 4. Exemples concrets */}
       {section.examples && section.examples.length > 0 && (
         <div className="mt-6">
           <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400">
-            Exemples concrets
+            Exemples concrets du quotidien
           </h3>
           <div className="mt-2.5 space-y-2">
             {section.examples.map((ex, idx) => (
@@ -76,10 +101,46 @@ export function SectionArticle({ section, isCompleted, onMarkCompleted }: Sectio
         </div>
       )}
 
-      {/* 4. Schéma interactif / vectoriel */}
+      {/* 5. Étude de Cas Réelle en Entreprise */}
+      {section.realWorldCase && (
+        <div className="mt-7 rounded-3xl border border-teal-200/90 bg-gradient-to-br from-teal-50/50 via-white to-indigo-50/30 p-5 sm:p-6 shadow-sm">
+          <div className="flex items-center justify-between pb-3 border-b border-teal-100/80">
+            <div className="flex items-center gap-2 text-xs font-bold text-teal-800 uppercase tracking-wider">
+              <Building2 className="h-4 w-4 text-teal-600" />
+              <span>Cas Réel d'Entreprise · {section.realWorldCase.company}</span>
+            </div>
+            <span className="rounded-full bg-teal-100 px-2.5 py-0.5 text-[10px] font-bold text-teal-800">
+              {section.realWorldCase.sector}
+            </span>
+          </div>
+
+          <div className="mt-4 space-y-3 text-xs sm:text-sm">
+            <div>
+              <span className="font-bold text-slate-900">Le Défi rencontré : </span>
+              <span className="text-slate-600">{section.realWorldCase.problem}</span>
+            </div>
+            <div>
+              <span className="font-bold text-teal-900">Solution Agile adoptée : </span>
+              <span className="text-slate-700">{section.realWorldCase.agileSolution}</span>
+            </div>
+            <div className="rounded-xl bg-teal-100/60 p-3 text-teal-950 font-semibold text-xs flex items-start gap-2">
+              <Sparkles className="h-4 w-4 text-teal-700 shrink-0 mt-0.5" />
+              <span><b>Résultat concret : </b>{section.realWorldCase.concreteResult}</span>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* 6. Visualisation 3D Interactive (si disponible) */}
+      {section.model3D && <Concept3DVisualizer type={section.model3D} />}
+
+      {/* 7. Schéma interactif / vectoriel 2D */}
       {section.diagramType && <CourseDiagram type={section.diagramType} />}
 
-      {/* 5. À retenir & Attention (2 colonnes) */}
+      {/* 8. Vidéo YouTube HD d'Explication (Français/Maroc & English) */}
+      {section.videos && <VideoLearningPlayer videos={section.videos} />}
+
+      {/* 9. À retenir & Attention (2 colonnes) */}
       <div className="mt-8 grid sm:grid-cols-2 gap-4">
         {/* À retenir */}
         <div className="rounded-2xl border border-emerald-100 bg-emerald-50/40 p-4 sm:p-5">
@@ -114,7 +175,7 @@ export function SectionArticle({ section, isCompleted, onMarkCompleted }: Sectio
         </div>
       </div>
 
-      {/* 6. Contexte d'Examen OFPPT */}
+      {/* 10. Contexte d'Examen OFPPT */}
       {section.examContext && (
         <div className="mt-6 flex items-start gap-3 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm text-xs sm:text-sm text-slate-700">
           <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-indigo-50 text-primary mt-0.5">
@@ -127,7 +188,7 @@ export function SectionArticle({ section, isCompleted, onMarkCompleted }: Sectio
         </div>
       )}
 
-      {/* 7. Mini question de compréhension interactive */}
+      {/* 11. Mini question de compréhension immédiate */}
       {section.miniQuestion && (
         <div className="mt-8 rounded-2xl border border-slate-200/90 bg-white p-5 sm:p-6 shadow-sm">
           <div className="flex items-center justify-between pb-3 border-b border-slate-100">
@@ -147,7 +208,7 @@ export function SectionArticle({ section, isCompleted, onMarkCompleted }: Sectio
               const isSelected = selectedMiniAnswer === idx;
               const isCorrect = idx === section.miniQuestion?.correctIndex;
 
-              let btnCls = "w-full text-left p-3 rounded-xl border text-xs sm:text-sm font-medium transition-all flex items-start gap-3 ";
+              let btnCls = "w-full text-left p-3.5 rounded-xl border text-xs sm:text-sm font-medium transition-all flex items-start gap-3 ";
               if (!isMiniAnswerChecked) {
                 btnCls += "border-slate-200/90 bg-slate-50/50 hover:bg-slate-100/80 hover:border-slate-300 text-slate-700";
               } else if (isCorrect) {
@@ -214,7 +275,7 @@ export function SectionArticle({ section, isCompleted, onMarkCompleted }: Sectio
           size="sm"
           variant={isCompleted ? "secondary" : "outline"}
           onClick={() => onMarkCompleted(section.id)}
-          className="gap-2"
+          className="gap-2 w-full sm:w-auto justify-center font-semibold"
         >
           <CheckCircle2 className={`h-4 w-4 ${isCompleted ? 'text-success' : 'text-slate-400'}`} />
           <span>{isCompleted ? 'Notion comprise ✓' : 'Marquer comme comprise'}</span>

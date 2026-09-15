@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '../ui/Card';
 import { Button } from '../ui/Button';
 import { Badge } from '../ui/Badge';
-import { RotateCcw, Calendar, CheckCircle2 } from 'lucide-react';
+import { RotateCcw, Calendar } from 'lucide-react';
 
 interface GanttTask {
   id: string;

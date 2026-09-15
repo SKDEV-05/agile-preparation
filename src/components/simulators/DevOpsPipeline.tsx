@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '../ui/Card';
 import { Button } from '../ui/Button';
 import { Badge } from '../ui/Badge';
-import { Play, RotateCcw, CheckCircle2, Clock, Terminal, FileCode, Server } from 'lucide-react';
+import { Play, RotateCcw, CheckCircle2, Clock, FileCode, Server } from 'lucide-react';
 
 interface Stage {
   id: string;

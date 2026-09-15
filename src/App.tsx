@@ -11,24 +11,33 @@ import { QuizRunner } from './components/quiz/QuizRunner';
 import { COURSE_MAP } from './data/course';
 import { QUESTIONS_BY_PART } from './data/questions';
 import { PartId } from './types';
+import { CurriculumHub } from './pages/CurriculumHub';
+import { useScrollReveal } from './hooks/useScrollReveal';
+import { trackPageView, analytics } from './lib/analytics';
 
 export function App() {
-  const [activeView, setActiveView] = useState<ActiveView>('dashboard');
+  useScrollReveal();
+  // Default entry view: Curriculum Hub (Choose from 2nd Year Modules)
+  const [activeView, setActiveView] = useState<ActiveView>('curriculum-hub');
+
   const [quizPartId, setQuizPartId] = useState<PartId | null>(null);
 
   const handleNavigate = (view: ActiveView, partId?: PartId) => {
     // Reset quiz mode on any navigation
     setQuizPartId(null);
+    const target = partId || view;
     if (partId) {
       setActiveView(partId as ActiveView);
     } else {
       setActiveView(view);
     }
+    trackPageView(`/${target}`);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleStartQuiz = (partId: PartId) => {
     setQuizPartId(partId);
+    analytics.startQuiz(partId, 30);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -55,6 +64,11 @@ export function App() {
           }}
         />
       );
+    }
+
+    // 1. Curriculum Hub (Choose from 2nd Year Modules: Agile, React, Laravel, Database)
+    if (activeView === 'curriculum-hub') {
+      return <CurriculumHub onSelectAgile={() => handleNavigate('dashboard')} />;
     }
 
     // 2. Final Exam Mode (50 QCM)

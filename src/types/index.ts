@@ -7,17 +7,44 @@ export interface MiniQuestion {
   explanation: string;
 }
 
+export interface SectionVideo {
+  youtubeId: string;
+  title: string;
+  channel: string;
+  duration: string;
+  language: 'fr' | 'en';
+  summary: string;
+  keyPoints: string[];
+}
+
+export interface RealWorldCase {
+  company: string;
+  sector: string;
+  problem: string;
+  agileSolution: string;
+  concreteResult: string;
+}
+
+export type Model3DType = 'triangle_3d' | 'pert_3d' | 'scrum_3d' | 'git_3d' | 'devops_3d';
+
 export interface CourseSection {
   id: string;
   order: string;
   title: string;
   definition: string;
   explanation: string;
+  deepExplanation?: string;
   examples: string[];
+  realWorldCase?: RealWorldCase;
   keyPoints: string[];
   traps: string[];
   examContext: string;
   diagramType?: 'lifecycle' | 'gantt_preview' | 'pert_preview' | 'scrum_workflow' | 'git_flow' | 'devops_cycle' | 'raci_matrix';
+  model3D?: Model3DType;
+  videos?: {
+    fr: SectionVideo;
+    en: SectionVideo;
+  };
   miniQuestion?: MiniQuestion;
 }
 
