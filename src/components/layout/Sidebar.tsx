@@ -53,7 +53,7 @@ export function Sidebar({ activeView, onNavigate, isOpenMobile, onCloseMobile }:
   };
 
   const content = (
-    <div className="flex min-h-full flex-col justify-between p-4 sm:p-5 gap-6 text-slate-200">
+    <div className="flex min-h-full flex-col justify-between p-3.5 sm:p-4 pb-8 sm:pb-10 gap-4 sm:gap-5 text-slate-200">
       {/* Brand Header & Nav */}
       <div>
         <div className="flex items-center justify-between pb-4 border-b border-white/10">
@@ -98,7 +98,7 @@ export function Sidebar({ activeView, onNavigate, isOpenMobile, onCloseMobile }:
         </div>
 
         {/* Navigation Section */}
-        <nav className="mt-5 space-y-6">
+        <nav className="mt-4 space-y-4">
           {/* Dashboard Item */}
           <div>
             <button
@@ -236,23 +236,25 @@ export function Sidebar({ activeView, onNavigate, isOpenMobile, onCloseMobile }:
       </div>
 
       {/* Bottom Area: Progress Card + Creator Card */}
-      <div className="space-y-3.5 pt-4 border-t border-white/10">
+      <div className="space-y-2.5 pt-3 border-t border-white/10 pb-4 mb-2">
         {/* Progress Card */}
-        <div className="rounded-2xl border border-white/10 bg-slate-900/60 p-3.5 backdrop-blur-sm">
+        <div className="rounded-xl border border-white/10 bg-slate-900/60 p-2.5 backdrop-blur-sm">
           <div className="flex items-center justify-between text-xs font-semibold text-slate-300">
             <span>Maîtrise globale</span>
             <span className="text-indigo-400 font-mono font-bold">{overallPercentage}%</span>
           </div>
-          <div className="mt-2">
+          <div className="mt-1.5">
             <Progress value={overallPercentage} className="h-1.5 bg-slate-800" />
           </div>
-          <p className="mt-2 text-[11px] text-slate-400 leading-snug">
+          <p className="mt-1.5 text-[10px] text-slate-400 leading-snug">
             Progression enregistrée en temps réel.
           </p>
         </div>
 
         {/* Creator Mini Card */}
-        <CreatorCard variant="compact" />
+        <div className="pt-0.5">
+          <CreatorCard variant="compact" />
+        </div>
       </div>
     </div>
   );
@@ -260,7 +262,7 @@ export function Sidebar({ activeView, onNavigate, isOpenMobile, onCloseMobile }:
   return (
     <>
       {/* Desktop Sticky Sidebar */}
-      <aside className="hidden lg:flex w-72 flex-col fixed inset-y-0 left-0 z-30 bg-[#0A0E1A] border-r border-white/10 h-screen overflow-y-auto">
+      <aside className="hidden lg:flex w-72 flex-col fixed inset-y-0 left-0 z-30 bg-[#0A0E1A] border-r border-white/10 h-screen overflow-y-auto pb-6">
         {content}
       </aside>
 

@@ -46,30 +46,30 @@ export function CreatorCard({ variant = 'full', className = '' }: CreatorCardPro
 
   if (variant === 'compact') {
     return (
-      <div className={`group relative rounded-2xl p-[1px] bg-gradient-to-r from-slate-700/60 via-indigo-500/40 to-slate-700/60 hover:from-indigo-500 hover:via-pink-500 hover:to-amber-500 transition-all duration-500 ${className}`}>
-        <div className="relative rounded-2xl bg-slate-900/90 backdrop-blur-md p-3.5 flex items-center justify-between gap-3 shadow-lg border border-white/5">
-          <div className="flex items-center gap-3 min-w-0">
+      <div className={`group relative rounded-xl p-[1px] bg-gradient-to-r from-slate-700/60 via-indigo-500/40 to-slate-700/60 hover:from-indigo-500 hover:via-pink-500 hover:to-amber-500 transition-all duration-500 shadow-md ${className}`}>
+        <div className="relative rounded-xl bg-slate-900/90 backdrop-blur-md p-2.5 flex items-center justify-between gap-2.5 shadow-md border border-white/5">
+          <div className="flex items-center gap-2.5 min-w-0">
             {/* Picture with Instagram gradient ring on hover */}
             <div className="relative shrink-0">
-              <div className="h-11 w-11 rounded-xl p-[2px] bg-gradient-to-tr from-amber-500 via-pink-500 to-indigo-600 transition-transform duration-300 group-hover:scale-105 shadow-sm">
+              <div className="h-9 w-9 rounded-lg p-[1.5px] bg-gradient-to-tr from-amber-500 via-pink-500 to-indigo-600 transition-transform duration-300 group-hover:scale-105 shadow-sm">
                 <img
                   src={saadImage}
                   alt="Saâd Korma"
-                  className="h-full w-full object-cover rounded-[10px]"
+                  className="h-full w-full object-cover rounded-[6px]"
                 />
               </div>
-              <span className="absolute -bottom-1 -right-1 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-emerald-500 ring-2 ring-slate-900">
-                <span className="h-1.5 w-1.5 rounded-full bg-white animate-pulse" />
+              <span className="absolute -bottom-0.5 -right-0.5 flex h-3 w-3 items-center justify-center rounded-full bg-emerald-500 ring-2 ring-slate-900">
+                <span className="h-1 w-1 rounded-full bg-white animate-pulse" />
               </span>
             </div>
 
             <div className="min-w-0">
-              <div className="flex items-center gap-1.5">
-                <span className="text-xs font-bold text-white truncate">Saâd Korma</span>
-                <span className="text-[10px] text-indigo-400 font-bold">✓</span>
+              <div className="flex items-center gap-1">
+                <span className="text-[11px] font-bold text-white truncate">Saâd Korma</span>
+                <span className="text-[9px] text-indigo-400 font-bold">✓</span>
               </div>
-              <p className="text-[11px] text-slate-400 truncate font-mono">Web & Mobile Dev</p>
-              <div className="flex items-center gap-1 text-[10px] text-slate-400 font-mono mt-0.5">
+              <p className="text-[10px] text-slate-400 truncate font-mono">Web & Mobile Dev</p>
+              <div className="flex items-center gap-1 text-[9px] text-slate-400 font-mono mt-0.5">
                 <Clock className="h-2.5 w-2.5 text-slate-400" />
                 <span>{timeStr || '--:--:--'}</span>
               </div>
@@ -82,10 +82,10 @@ export function CreatorCard({ variant = 'full', className = '' }: CreatorCardPro
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Visiter le profil Instagram de Saâd Korma"
-            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-gradient-to-tr from-pink-500 to-indigo-600 text-white shadow-md transition-transform duration-200 hover:scale-110 hover:shadow-indigo-500/30"
+            className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-gradient-to-tr from-pink-500 to-indigo-600 text-white shadow-md transition-transform duration-200 hover:scale-110 hover:shadow-indigo-500/30"
             title="Instagram @saadkorma_dev"
           >
-            <InstagramIcon className="h-4 w-4" />
+            <InstagramIcon className="h-3.5 w-3.5" />
           </a>
         </div>
       </div>

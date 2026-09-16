@@ -57,13 +57,17 @@ export function JiraBoard() {
   const donePoints = tickets.filter(t => t.status === 'done').reduce((acc, t) => acc + t.storyPoints, 0);
 
   return (
-    <Card className="rounded-3xl border-slate-200/90 shadow-card">
-      <CardHeader>
+    <Card className="relative rounded-3xl border-0 ring-1 ring-indigo-500/20 bg-gradient-to-b from-[#0F172A]/95 via-[#0D1526]/95 to-[#070B14]/98 backdrop-blur-2xl shadow-[0_25px_60px_-15px_rgba(0,0,0,0.85),0_0_40px_-10px_rgba(99,102,241,0.18)] overflow-hidden transition-all duration-300">
+      {/* Ambient background glows */}
+      <div className="absolute top-0 right-0 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-80 h-80 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none" />
+
+      <CardHeader className="relative z-10 border-b border-indigo-500/15 pb-5">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
             <div className="flex items-center gap-2">
               <Badge variant="primary" size="sm">Laboratoire 03</Badge>
-              <Badge variant="outline" size="sm">Kanban Scrum interactif</Badge>
+              <Badge variant="outline" size="sm" className="border-indigo-500/30 text-indigo-300">Kanban Scrum interactif</Badge>
             </div>
             <CardTitle className="text-xl sm:text-2xl mt-1">Jira Simulation · Scrum Board</CardTitle>
             <CardDescription>
@@ -76,7 +80,7 @@ export function JiraBoard() {
             <span className="text-xs font-semibold text-slate-400 flex items-center gap-1">
               <Filter className="h-3.5 w-3.5" /> Filtrer :
             </span>
-            <div className="inline-flex rounded-xl bg-[#070B14] border border-white/10 p-1 text-xs">
+            <div className="inline-flex rounded-xl bg-[#070B14] border border-indigo-500/20 p-1 text-xs">
               <button
                 onClick={() => setTypeFilter('all')}
                 className={`px-2.5 py-1 rounded-lg font-medium transition-colors ${typeFilter === 'all' ? 'bg-indigo-600 shadow-sm font-bold text-white' : 'text-slate-400 hover:text-white'}`}
@@ -106,9 +110,9 @@ export function JiraBoard() {
         </div>
       </CardHeader>
 
-      <CardContent>
+      <CardContent className="relative z-10 pt-6">
         {/* Sprint Goal Banner */}
-        <div className="mb-6 flex flex-wrap items-center justify-between gap-4 rounded-2xl bg-indigo-950/40 border border-indigo-500/30 p-4">
+        <div className="mb-6 flex flex-wrap items-center justify-between gap-4 rounded-2xl bg-indigo-950/40 border border-indigo-500/30 p-4 shadow-sm">
           <div>
             <div className="text-xs font-bold text-indigo-400 uppercase tracking-wider">Sprint 1 Goal</div>
             <div className="text-sm font-bold text-white mt-0.5">
@@ -132,9 +136,9 @@ export function JiraBoard() {
             const colPoints = colTickets.reduce((acc, t) => acc + t.storyPoints, 0);
 
             return (
-              <div key={col.id} className="flex flex-col rounded-2xl border border-white/10 bg-[#070B14]/70 p-3.5">
+              <div key={col.id} className="flex flex-col rounded-2xl border border-indigo-500/15 bg-gradient-to-b from-[#070B14]/80 to-[#0A0F1E]/80 p-3.5 shadow-lg">
                 {/* Column Header */}
-                <div className="flex items-center justify-between pb-3 border-b border-white/10 mb-3">
+                <div className="flex items-center justify-between pb-3 border-b border-indigo-500/15 mb-3">
                   <div className="flex items-center gap-2">
                     <span className="text-xs font-bold text-slate-200">{col.label}</span>
                     <span className="flex h-5 w-5 items-center justify-center rounded-full bg-white/10 text-[10px] font-bold text-slate-300">
@@ -149,14 +153,14 @@ export function JiraBoard() {
                 {/* Ticket Cards */}
                 <div className="flex-1 space-y-3">
                   {colTickets.length === 0 ? (
-                    <div className="rounded-xl border border-dashed border-white/10 p-4 text-center text-xs text-slate-500">
+                    <div className="rounded-xl border border-dashed border-indigo-500/20 p-4 text-center text-xs text-slate-500">
                       Aucun ticket
                     </div>
                   ) : (
                     colTickets.map(ticket => (
                       <div
                         key={ticket.id}
-                        className="rounded-xl border border-white/10 bg-[#0D1526] p-3.5 shadow-md hover:border-indigo-500/40 transition-all group"
+                        className="rounded-xl border border-indigo-500/20 bg-gradient-to-b from-[#0F172A] to-[#0D1526] p-3.5 shadow-md hover:border-indigo-500/50 hover:shadow-indigo-500/10 transition-all group"
                       >
                         {/* Key and Type */}
                         <div className="flex items-center justify-between text-[11px] mb-2">
@@ -181,7 +185,7 @@ export function JiraBoard() {
                         </h4>
 
                         {/* Footer (Points, Assignee, Move Buttons) */}
-                        <div className="flex items-center justify-between border-t border-white/10 pt-2 text-[10px] text-slate-400">
+                        <div className="flex items-center justify-between border-t border-indigo-500/15 pt-2 text-[10px] text-slate-400">
                           <div className="flex items-center gap-1.5">
                             <span className="rounded-md bg-white/10 px-1.5 py-0.5 font-bold text-slate-300">
                               {ticket.storyPoints} pts

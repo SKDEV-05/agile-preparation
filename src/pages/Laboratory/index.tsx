@@ -20,11 +20,12 @@ export function LaboratoryPage() {
   return (
     <div className="space-y-8 pb-12">
       {/* Page Header */}
-      <div className="reveal-on-scroll rounded-3xl border border-white/10 bg-[#0D1526]/90 backdrop-blur-xl p-5 sm:p-8 shadow-2xl relative overflow-hidden">
+      <div className="reveal-on-scroll relative rounded-3xl border-0 ring-1 ring-cyan-500/20 bg-gradient-to-b from-[#0F172A]/95 via-[#0D1526]/90 to-[#070B14]/95 backdrop-blur-2xl p-5 sm:p-8 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.85),0_0_40px_-10px_rgba(6,182,212,0.18)] overflow-hidden">
         <div className="absolute top-0 right-0 w-96 h-96 bg-cyan-600/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div className="absolute bottom-0 left-0 w-80 h-80 bg-indigo-600/10 rounded-full blur-3xl pointer-events-none"></div>
 
         {/* Terminal top bar dots */}
-        <div className="flex items-center gap-1.5 mb-4 pb-3 border-b border-white/10">
+        <div className="flex items-center gap-1.5 mb-4 pb-3 border-b border-white/5">
           <div className="w-2.5 h-2.5 rounded-full bg-red-500/80"></div>
           <div className="w-2.5 h-2.5 rounded-full bg-amber-500/80"></div>
           <div className="w-2.5 h-2.5 rounded-full bg-emerald-500/80"></div>
@@ -49,7 +50,7 @@ export function LaboratoryPage() {
         </p>
 
         {/* Tab Navigation Pill Bar - Horizontal Swipe on Mobile */}
-        <div className="relative z-10 mt-6 flex overflow-x-auto no-scrollbar sm:flex-wrap gap-2 border-t border-white/10 pt-4 pb-1 sm:pb-0">
+        <div className="relative z-10 mt-6 flex overflow-x-auto no-scrollbar sm:flex-wrap gap-2 border-t border-white/5 pt-4 pb-1 sm:pb-0">
           {tabs.map((tab) => {
             const Icon = tab.icon;
             const isActive = activeTab === tab.id;
