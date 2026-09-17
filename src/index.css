@@ -80,17 +80,15 @@ html {
   -webkit-text-size-adjust: 100%;
 }
 
-/* High-Performance Scroll Reveal Animations */
+/* High-Performance Scroll Reveal Animations - Always visible default */
 .reveal-on-scroll {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: opacity, transform;
+  opacity: 1;
+  transform: none;
 }
 
 .reveal-on-scroll.is-revealed {
   opacity: 1;
-  transform: translateY(0);
+  transform: none;
 }
 
 /* Stagger animation utilities for grids & lists */
