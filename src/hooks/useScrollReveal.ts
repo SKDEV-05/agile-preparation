@@ -8,22 +8,8 @@ export function useScrollReveal() {
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
-    const revealAll = () => {
-      document.querySelectorAll('.reveal-on-scroll, [data-scroll-reveal]').forEach((el) => {
-        el.classList.add('is-revealed');
-      });
-    };
-
-    revealAll();
-
-    const observer = new MutationObserver(() => {
-      revealAll();
+    document.querySelectorAll('.reveal-on-scroll, [data-scroll-reveal]').forEach((el) => {
+      el.classList.add('is-revealed');
     });
-
-    observer.observe(document.body, { childList: true, subtree: true });
-
-    return () => {
-      observer.disconnect();
-    };
   }, []);
 }
