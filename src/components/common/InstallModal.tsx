@@ -40,23 +40,23 @@ export function InstallModal({ open, onOpenChange }: InstallModalProps) {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-md p-6 sm:p-7">
+      <DialogContent className="max-w-md p-4 sm:p-6">
         <DialogHeader>
-          <div className="flex items-center gap-3 mb-2">
-            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-indigo-500 to-indigo-700 text-white shadow-lg shadow-indigo-500/25 shrink-0">
-              <Smartphone className="h-6 w-6" />
+          <div className="flex items-center gap-2.5 sm:gap-3 mb-1 pr-6">
+            <div className="flex h-10 w-10 sm:h-11 sm:w-11 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-500 to-indigo-700 text-white shadow-md shadow-indigo-500/25 shrink-0">
+              <Smartphone className="h-5 w-5" />
             </div>
-            <div>
+            <div className="min-w-0">
               <div className="flex items-center gap-2">
-                <DialogTitle className="text-xl font-black">
+                <DialogTitle className="text-base sm:text-lg font-black truncate">
                   Installer l'Application
                 </DialogTitle>
-                <Badge variant="success" size="sm" className="text-[10px] font-bold">
+                <Badge variant="success" size="sm" className="text-[9px] sm:text-[10px] font-bold px-1.5 py-0.5">
                   PWA / APK
                 </Badge>
               </div>
-              <DialogDescription className="text-xs">
-                Accès instantané, plein écran & révisions hors-ligne
+              <DialogDescription className="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 mt-0.5 truncate">
+                Accès plein écran & révisions hors-ligne
               </DialogDescription>
             </div>
           </div>
