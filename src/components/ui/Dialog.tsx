@@ -1,4 +1,5 @@
 import * as React from "react";
+import { createPortal } from "react-dom";
 import { X } from "lucide-react";
 import { cn } from "../../lib/utils";
 
@@ -33,11 +34,13 @@ export function DialogContent({ className, children, ...props }: React.HTMLAttri
   const { open, onOpenChange } = React.useContext(DialogContext);
   if (!open) return null;
 
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 overflow-y-auto overscroll-contain">
+  if (typeof document === 'undefined') return null;
+
+  return createPortal(
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-4 overflow-y-auto overscroll-contain">
       {/* Overlay */}
       <div
-        className="fixed inset-0 bg-slate-950/60 dark:bg-black/80 backdrop-blur-sm transition-opacity"
+        className="fixed inset-0 bg-slate-950/70 dark:bg-black/85 backdrop-blur-sm transition-opacity"
         onClick={() => onOpenChange?.(false)}
       />
       {/* Modal Dialog Box */}
@@ -45,7 +48,7 @@ export function DialogContent({ className, children, ...props }: React.HTMLAttri
         role="dialog"
         aria-modal="true"
         className={cn(
-          "relative z-10 w-full max-w-lg my-auto flex flex-col gap-3.5 max-h-[calc(100dvh-1.5rem)] sm:max-h-[calc(100dvh-3rem)] overflow-y-auto border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0D1526] p-4.5 sm:p-6 shadow-2xl rounded-3xl text-slate-900 dark:text-white overscroll-contain",
+          "relative z-10 w-full max-w-lg my-auto flex flex-col gap-3.5 max-h-[calc(100dvh-2rem)] overflow-y-auto border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0D1526] p-4.5 sm:p-6 shadow-2xl rounded-3xl text-slate-900 dark:text-white overscroll-contain",
           className
         )}
         {...props}
@@ -60,7 +63,8 @@ export function DialogContent({ className, children, ...props }: React.HTMLAttri
           <X className="h-4 w-4" />
         </button>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }
 
