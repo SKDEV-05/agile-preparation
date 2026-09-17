@@ -31,6 +31,12 @@ export function AntigravityParticleField() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   useEffect(() => {
+    // Disable heavy 60fps canvas particle simulation on mobile / touch screens for maximum CPU performance
+    if (typeof window !== 'undefined') {
+      const isMobile = window.innerWidth < 768 || window.matchMedia('(pointer: coarse)').matches;
+      if (isMobile) return;
+    }
+
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
@@ -111,7 +117,7 @@ export function AntigravityParticleField() {
       height = canvas.height = window.innerHeight;
       initParticles();
     };
-    window.addEventListener('resize', handleResize);
+    window.addEventListener('resize', handleResize, { passive: true });
 
     // Global mouse tracking across the entire website
     const handleMouseMove = (e: MouseEvent) => {
@@ -139,7 +145,7 @@ export function AntigravityParticleField() {
     };
 
     window.addEventListener('mousemove', handleMouseMove, { passive: true });
-    window.addEventListener('mouseleave', handleMouseLeave);
+    window.addEventListener('mouseleave', handleMouseLeave, { passive: true });
     window.addEventListener('click', handleClick, { passive: true });
 
     // 60FPS Render Loop

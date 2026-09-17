@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Question, PartId } from '../../types';
 import { useProgress } from '../../store/progressStore';
+import { COURSE_MAP } from '../../data/course';
+import { QUESTIONS_BY_PART } from '../../data/questions';
 import { Button } from '../ui/Button';
 import { Badge } from '../ui/Badge';
 import { Progress } from '../ui/Progress';
@@ -8,16 +10,21 @@ import { Check, X, ArrowRight, RotateCcw, ArrowLeft, Award } from 'lucide-react'
 import confetti from 'canvas-confetti';
 
 interface QuizRunnerProps {
-  questions: Question[];
-  title: string;
-  subtitle: string;
+  questions?: Question[];
+  title?: string;
+  subtitle?: string;
   partId?: PartId;
   onExit: () => void;
   onGoToErrors?: () => void;
 }
 
-export function QuizRunner({ questions, title, subtitle, partId, onExit, onGoToErrors }: QuizRunnerProps) {
+export function QuizRunner({ questions: propQuestions, title: propTitle, subtitle: propSubtitle, partId, onExit, onGoToErrors }: QuizRunnerProps) {
+  const course = partId ? COURSE_MAP[partId] : null;
+  const questions = propQuestions || (partId ? QUESTIONS_BY_PART[partId] : []) || [];
+  const title = propTitle || (course ? `Évaluation · 30 QCM · Partie ${course.orderNumber}` : 'Évaluation QCM');
+  const subtitle = propSubtitle || (course ? course.title : '');
   const { recordQuizResult, clearResolvedError } = useProgress();
+
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedOption, setSelectedOption] = useState<number | null>(null);

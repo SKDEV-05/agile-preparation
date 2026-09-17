@@ -197,3 +197,39 @@ html {
     animation: none !important;
   }
 }
+
+/* Mobile Performance Optimization: Disable expensive backdrop-filter calculations and continuous CSS animations on small screens to eliminate CPU/GPU throttling */
+@media (max-width: 768px) {
+  .backdrop-blur-xs,
+  .backdrop-blur-sm,
+  .backdrop-blur-md,
+  .backdrop-blur-lg,
+  .backdrop-blur-xl,
+  .backdrop-blur-2xl,
+  .backdrop-blur-3xl,
+  .glass-header,
+  .glass-card,
+  .glass-panel,
+  .lcp-hero-card {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  /* Disable continuous floating keyframe animations on mobile to keep CPU idle at 0% */
+  .animate-float-subtle,
+  .animate-float-reverse,
+  .animate-glow-pulse,
+  .animate-pulse {
+    animation: none !important;
+  }
+
+  /* Instant scroll reveals on mobile: no transition delays, no opacity 0 */
+  .reveal-on-scroll,
+  [data-scroll-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+

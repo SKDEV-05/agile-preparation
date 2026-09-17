@@ -14,13 +14,14 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks(id: string) {
-          if (id.includes('node_modules/react/') || id.includes('node_modules/react-dom/')) {
+          if (
+            id.includes('node_modules/react') ||
+            id.includes('node_modules/react-dom') ||
+            id.includes('node_modules/scheduler')
+          ) {
             return 'vendor-react';
           }
-          if (id.includes('node_modules/@radix-ui/')) {
-            return 'vendor-radix';
-          }
-          if (id.includes('node_modules/gsap/') || id.includes('node_modules/canvas-confetti/')) {
+          if (id.includes('node_modules/canvas-confetti/')) {
             return 'vendor-animations';
           }
           if (id.includes('node_modules/lucide-react/')) {
@@ -28,6 +29,9 @@ export default defineConfig({
           }
           if (id.includes('/src/data/')) {
             return 'course-data';
+          }
+          if (id.includes('node_modules/')) {
+            return 'vendor-utils';
           }
         },
       },

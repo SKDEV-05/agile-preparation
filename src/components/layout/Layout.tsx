@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { Sidebar, ActiveView } from './Sidebar';
-import { Header } from './Header';
+import { ActiveView } from './Sidebar';
 import { Footer } from './Footer';
 import { PartId } from '../../types';
 import { ShareButton } from '../common/ShareButton';
+
+const Sidebar = React.lazy(() => import('./Sidebar').then(m => ({ default: m.Sidebar })));
+const Header = React.lazy(() => import('./Header').then(m => ({ default: m.Header })));
 
 interface LayoutProps {
   activeView: ActiveView;
@@ -23,7 +25,7 @@ export function Layout({ activeView, onNavigate, children }: LayoutProps) {
         <header className="sticky top-0 z-20 flex h-16 w-full items-center justify-between border-b border-white/10 bg-[#070B14]/80 px-4 sm:px-8 backdrop-blur-xl">
           <div className="flex items-center gap-3">
             <div className="h-9 w-9 rounded-xl overflow-hidden border border-white/15 shadow-md">
-              <img src="/logo.webp" alt="FullStack Master Logo" width={36} height={36} decoding="async" className="h-full w-full object-cover" />
+              <img src="/logo.webp" alt="FullStack Master Logo" width={36} height={36} fetchPriority="high" loading="eager" decoding="async" className="h-full w-full object-cover" />
             </div>
             <div>
               <span className="font-black text-white text-sm sm:text-base tracking-tight">
@@ -56,20 +58,24 @@ export function Layout({ activeView, onNavigate, children }: LayoutProps) {
   return (
     <div className="min-h-screen bg-transparent text-slate-100 flex">
       {/* Sidebar with Agile course parts */}
-      <Sidebar
-        activeView={activeView}
-        onNavigate={onNavigate}
-        isOpenMobile={isMobileMenuOpen}
-        onCloseMobile={() => setIsMobileMenuOpen(false)}
-      />
+      <React.Suspense fallback={<div className="hidden lg:block w-72 h-screen border-r border-white/10 bg-[#0B1120]" />}>
+        <Sidebar
+          activeView={activeView}
+          onNavigate={onNavigate}
+          isOpenMobile={isMobileMenuOpen}
+          onCloseMobile={() => setIsMobileMenuOpen(false)}
+        />
+      </React.Suspense>
 
       {/* Main Content Area */}
       <div className="flex flex-1 flex-col lg:pl-72 min-w-0">
-        <Header
-          activeView={activeView}
-          onNavigate={onNavigate}
-          onOpenMobileSidebar={() => setIsMobileMenuOpen(true)}
-        />
+        <React.Suspense fallback={<div className="h-16 border-b border-white/10 bg-[#070B14]/80" />}>
+          <Header
+            activeView={activeView}
+            onNavigate={onNavigate}
+            onOpenMobileSidebar={() => setIsMobileMenuOpen(true)}
+          />
+        </React.Suspense>
         <main className="flex-1 px-3 py-5 sm:px-6 sm:py-8 lg:px-8 max-w-7xl w-full mx-auto">
           {children}
           <Footer onNavigate={onNavigate} />
@@ -78,3 +84,4 @@ export function Layout({ activeView, onNavigate, children }: LayoutProps) {
     </div>
   );
 }
+

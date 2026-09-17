@@ -3,8 +3,6 @@ import { Layout } from './components/layout/Layout';
 import { ActiveView } from './components/layout/Sidebar';
 import { CurriculumHub } from './pages/CurriculumHub';
 import { ViewSkeleton } from './components/common/ViewSkeleton';
-import { COURSE_MAP } from './data/course';
-import { QUESTIONS_BY_PART } from './data/questions';
 import { PartId } from './types';
 import { useScrollReveal } from './hooks/useScrollReveal';
 import { trackPageView, analytics } from './lib/analytics';
@@ -18,6 +16,29 @@ const FlashcardsPage = lazy(() => import('./pages/Flashcards').then(m => ({ defa
 const CourseViewer = lazy(() => import('./components/course/CourseViewer').then(m => ({ default: m.CourseViewer })));
 const QuizRunner = lazy(() => import('./components/quiz/QuizRunner').then(m => ({ default: m.QuizRunner })));
 const AntigravityParticleField = lazy(() => import('./components/3d/AntigravityParticleField').then(m => ({ default: m.AntigravityParticleField })));
+
+function DesktopParticleBackground() {
+  const [canRender, setCanRender] = useState(() => 
+    typeof window !== 'undefined' && window.innerWidth >= 768 && !window.matchMedia('(pointer: coarse)').matches
+  );
+
+  React.useEffect(() => {
+    const handleResize = () => {
+      setCanRender(window.innerWidth >= 768 && !window.matchMedia('(pointer: coarse)').matches);
+    };
+    window.addEventListener('resize', handleResize, { passive: true });
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  if (!canRender) return null;
+
+  return (
+    <Suspense fallback={null}>
+      <AntigravityParticleField />
+    </Suspense>
+  );
+}
+
 
 // Map URL pathname to internal ActiveView
 function getInitialView(): ActiveView {
@@ -115,14 +136,9 @@ export function App() {
   const renderContent = () => {
     // 1. If currently in a Part Quiz (30 QCM)
     if (quizPartId) {
-      const questions = QUESTIONS_BY_PART[quizPartId] || [];
-      const course = COURSE_MAP[quizPartId];
       return (
         <QuizRunner
-          questions={questions}
           partId={quizPartId}
-          title={`Évaluation · 30 QCM · Partie ${course.orderNumber}`}
-          subtitle={course.title}
           onExit={handleExitQuiz}
           onGoToErrors={() => {
             setQuizPartId(null);
@@ -165,16 +181,13 @@ export function App() {
     // 6. Course Modules (part1, part2, part3, part4, part5)
     if (activeView.startsWith('part')) {
       const partId = activeView as PartId;
-      const coursePart = COURSE_MAP[partId];
-      if (coursePart) {
-        return (
-          <CourseViewer
-            coursePart={coursePart}
-            onStartQuiz={handleStartQuiz}
-            onOpenSimulators={() => setActiveView('simulators')}
-          />
-        );
-      }
+      return (
+        <CourseViewer
+          partId={partId}
+          onStartQuiz={handleStartQuiz}
+          onOpenSimulators={() => setActiveView('simulators')}
+        />
+      );
     }
 
     // 7. Default: Dashboard
@@ -183,10 +196,8 @@ export function App() {
 
   return (
     <div className="relative min-h-screen bg-[#070B14] text-slate-100 selection:bg-cyan-500/30 selection:text-cyan-200">
-      {/* Global Google Antigravity Particle Field Canvas across ALL pages (Lazy & Non-Blocking) */}
-      <Suspense fallback={null}>
-        <AntigravityParticleField />
-      </Suspense>
+      {/* Global Google Antigravity Particle Field Canvas across ALL pages (Desktop only, Lazy & Non-Blocking) */}
+      <DesktopParticleBackground />
 
       {/* Foreground Website Content */}
       <div className="relative z-10">

@@ -17,6 +17,11 @@ export function Hero3DScene() {
   const containerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const isTouch = window.innerWidth < 1024 || window.matchMedia('(hover: none)').matches;
+      if (isTouch) return;
+    }
+
     const handleGlobalMouseMove = (e: MouseEvent) => {
       if (!containerRef.current) return;
       const rect = containerRef.current.getBoundingClientRect();

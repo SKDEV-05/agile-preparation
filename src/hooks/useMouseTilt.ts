@@ -77,9 +77,9 @@ export function useMouseTilt(options: UseMouseTiltOptions = {}) {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (isTouch || prefersReducedMotion) return;
 
-    el.addEventListener('mousemove', handleMouseMove);
-    el.addEventListener('mouseenter', handleMouseEnter);
-    el.addEventListener('mouseleave', handleMouseLeave);
+    el.addEventListener('mousemove', handleMouseMove, { passive: true });
+    el.addEventListener('mouseenter', handleMouseEnter, { passive: true });
+    el.addEventListener('mouseleave', handleMouseLeave, { passive: true });
 
     return () => {
       el.removeEventListener('mousemove', handleMouseMove);

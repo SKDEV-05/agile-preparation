@@ -29,6 +29,8 @@ export function CreatorCard({ variant = 'full', className = '' }: CreatorCardPro
   const [timeStr, setTimeStr] = useState('');
 
   useEffect(() => {
+    if (variant !== 'compact') return;
+
     const updateTime = () => {
       const now = new Date();
       setTimeStr(
@@ -42,7 +44,7 @@ export function CreatorCard({ variant = 'full', className = '' }: CreatorCardPro
     updateTime();
     const interval = setInterval(updateTime, 1000);
     return () => clearInterval(interval);
-  }, []);
+  }, [variant]);
 
   if (variant === 'compact') {
     return (

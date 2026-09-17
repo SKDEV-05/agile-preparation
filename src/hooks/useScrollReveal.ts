@@ -6,40 +6,39 @@ import { useEffect } from 'react';
  */
 export function useScrollReveal() {
   useEffect(() => {
-    // Check if IntersectionObserver is supported
-    if (typeof window === 'undefined' || !('IntersectionObserver' in window)) return;
+    if (typeof window === 'undefined') return;
+
+    // On mobile screens, instantly reveal all elements to avoid CPU throttling and animation lag
+    if (window.innerWidth < 768 || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.querySelectorAll('.reveal-on-scroll, [data-scroll-reveal]').forEach((el) => {
+        el.classList.add('is-revealed');
+      });
+      return;
+    }
+
+    if (!('IntersectionObserver' in window)) return;
 
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add('is-revealed');
-            // Unobserve after revealing once for performance
             observer.unobserve(entry.target);
           }
         });
       },
       {
         root: null,
-        rootMargin: '0px 0px -40px 0px', // triggers slightly before scrolling fully into view
-        threshold: 0.1,
+        rootMargin: '0px 0px -20px 0px',
+        threshold: 0.05,
       }
     );
 
     const elements = document.querySelectorAll('.reveal-on-scroll, [data-scroll-reveal]');
     elements.forEach((el) => observer.observe(el));
 
-    // Also observe newly rendered dynamic elements via MutationObserver
-    const mutationObserver = new MutationObserver(() => {
-      const newElements = document.querySelectorAll('.reveal-on-scroll:not(.is-revealed), [data-scroll-reveal]:not(.is-revealed)');
-      newElements.forEach((el) => observer.observe(el));
-    });
-
-    mutationObserver.observe(document.body, { childList: true, subtree: true });
-
     return () => {
       observer.disconnect();
-      mutationObserver.disconnect();
     };
   }, []);
 }

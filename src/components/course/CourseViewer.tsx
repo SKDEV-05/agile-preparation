@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { CoursePart, PartId } from '../../types';
+import { COURSE_MAP } from '../../data/course';
 import { SectionArticle } from './SectionArticle';
 import { TableOfContents } from './TableOfContents';
 import { useProgress } from '../../store/progressStore';
@@ -8,18 +9,23 @@ import { Badge } from '../ui/Badge';
 import { Award, FlaskConical, ChevronDown, ChevronUp, BookCheck, ArrowRight } from 'lucide-react';
 
 interface CourseViewerProps {
-  coursePart: CoursePart;
+  coursePart?: CoursePart;
+  partId?: PartId;
   onStartQuiz: (partId: PartId) => void;
   onOpenSimulators: () => void;
 }
 
-export function CourseViewer({ coursePart, onStartQuiz, onOpenSimulators }: CourseViewerProps) {
+export function CourseViewer({ coursePart: propCoursePart, partId, onStartQuiz, onOpenSimulators }: CourseViewerProps) {
+  const coursePart = propCoursePart || (partId ? COURSE_MAP[partId] : null);
   const { progress, markSectionCompleted } = useProgress();
   const [showCaseSolution, setShowCaseSolution] = useState(false);
+
+  if (!coursePart) return null;
 
   const partProgress = progress.parts[coursePart.id] || { completedSections: [], quizCompleted: false, bestScore: 0, attempts: 0 };
   const completedCount = partProgress.completedSections.length;
   const totalSections = coursePart.sections.length;
+
 
   return (
     <div className="flex gap-8 items-start">

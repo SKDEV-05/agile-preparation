@@ -67,6 +67,8 @@
         margin: 0;
         padding: 0;
         font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        font-synthesis: none;
+        text-rendering: optimizeSpeed;
       }
       #root {
         min-height: 100vh;
@@ -78,6 +80,14 @@
         background-color: rgba(13, 21, 38, 0.6);
         border: 1px solid rgba(255, 255, 255, 0.1);
         border-radius: 1.5rem;
+      }
+      @media (max-width: 768px) {
+        .backdrop-blur-xl,
+        .backdrop-blur-md,
+        .lcp-hero-card {
+          backdrop-filter: none !important;
+          -webkit-backdrop-filter: none !important;
+        }
       }
     </style>
 
@@ -206,7 +216,7 @@
         <header class="sticky top-0 z-20 flex h-16 w-full items-center justify-between border-b border-white/10 bg-[#070B14]/80 px-4 sm:px-8 backdrop-blur-xl">
           <div class="flex items-center gap-3">
             <div class="h-9 w-9 rounded-xl overflow-hidden border border-white/15 shadow-md">
-              <img src="/logo.webp" alt="FullStack Master Logo" width="36" height="36" fetchpriority="high" class="h-full w-full object-cover" />
+              <img src="/logo.webp" alt="FullStack Master Logo" width="36" height="36" fetchpriority="high" loading="eager" class="h-full w-full object-cover" />
             </div>
             <div>
               <span class="font-black text-white text-sm sm:text-base tracking-tight">
@@ -215,15 +225,23 @@
               <span class="hidden sm:inline-block ml-2 text-xs font-mono font-bold text-slate-400">· 2ème Année OFPPT</span>
             </div>
           </div>
+
+          <div class="flex items-center gap-2 sm:gap-3">
+            <span class="rounded-full bg-emerald-500/10 border border-emerald-500/30 px-3 py-1 text-xs font-bold text-emerald-400 flex items-center gap-1.5">
+              <span class="h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
+              <span class="hidden sm:inline">1 Module Actif</span>
+              <span class="sm:hidden">Agile</span>
+            </span>
+          </div>
         </header>
 
         <!-- Static Prerender Hero Shell for Instant LCP -->
-        <main class="flex-1">
+        <main class="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div class="min-h-screen bg-transparent text-slate-100 py-6 sm:py-10 px-4 sm:px-6 lg:px-8 space-y-16">
             <section class="relative max-w-7xl mx-auto grid lg:grid-cols-12 gap-10 lg:gap-8 items-center pt-8 sm:pt-12 min-h-[520px] rounded-3xl overflow-hidden p-6 sm:p-10 border border-white/10 bg-[#0D1526]/60 backdrop-blur-xl shadow-2xl lcp-hero-card">
               <div class="lg:col-span-7 space-y-6 text-left relative z-10 pointer-events-auto">
                 <div class="inline-flex items-center gap-2.5 rounded-full bg-slate-900/80 border border-indigo-500/30 px-3.5 py-1.5 text-xs font-semibold text-indigo-300 shadow-inner backdrop-blur-md">
-                  <img src="/logo.webp" alt="Logo FullStack 2A" width="20" height="20" fetchpriority="high" class="h-5 w-5 rounded-md object-cover ring-1 ring-indigo-400/50" />
+                  <img src="/logo.webp" alt="Logo FullStack 2A" width="20" height="20" fetchpriority="high" loading="eager" decoding="async" class="h-5 w-5 rounded-md object-cover ring-1 ring-indigo-400/50" />
                   <span>Cursus Développement Digital · 2ème Année</span>
                   <span class="h-1.5 w-1.5 rounded-full bg-indigo-400 animate-ping"></span>
                 </div>

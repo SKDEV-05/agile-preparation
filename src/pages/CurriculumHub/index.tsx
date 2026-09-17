@@ -19,8 +19,9 @@ import {
   Laptop
 } from 'lucide-react';
 import { Button } from '../../components/ui/Button';
-import { Hero3DScene } from '../../components/3d/Hero3DScene';
 import logoImg from '../../assets/logo.webp';
+
+const Hero3DScene = React.lazy(() => import('../../components/3d/Hero3DScene').then(m => ({ default: m.Hero3DScene })));
 
 interface CurriculumHubProps {
   onSelectAgile: () => void;
@@ -28,6 +29,17 @@ interface CurriculumHubProps {
 
 export function CurriculumHub({ onSelectAgile }: CurriculumHubProps) {
   const [hoveredModuleId, setHoveredModuleId] = useState<string | null>(null);
+  const [isDesktop, setIsDesktop] = useState(() => typeof window !== 'undefined' && window.innerWidth >= 1024);
+
+  React.useEffect(() => {
+    const handleResize = () => {
+      setIsDesktop(window.innerWidth >= 1024);
+    };
+    window.addEventListener('resize', handleResize, { passive: true });
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+
 
   const modules = [
     {
@@ -219,7 +231,7 @@ export function CurriculumHub({ onSelectAgile }: CurriculumHubProps) {
   return (
     <div className="min-h-screen bg-transparent text-slate-100 py-6 sm:py-10 px-4 sm:px-6 lg:px-8 space-y-16">
       {/* 1. MAJOR UX HERO SECTION */}
-      <section className="relative max-w-7xl mx-auto grid lg:grid-cols-12 gap-10 lg:gap-8 items-center pt-8 sm:pt-12 min-h-[520px] rounded-3xl overflow-hidden p-6 sm:p-10 border border-white/10 bg-[#0D1526]/60 backdrop-blur-xl shadow-2xl">
+      <section className="relative max-w-7xl mx-auto grid lg:grid-cols-12 gap-10 lg:gap-8 items-center pt-8 sm:pt-12 min-h-[520px] rounded-3xl overflow-hidden p-6 sm:p-10 border border-white/10 bg-[#0D1526]/60 backdrop-blur-xl shadow-2xl lcp-hero-card">
         {/* Left Side: Pitch & Official Branding */}
         <div className="lg:col-span-7 space-y-6 text-left relative z-10 pointer-events-auto">
           <div className="inline-flex items-center gap-2.5 rounded-full bg-slate-900/80 border border-indigo-500/30 px-3.5 py-1.5 text-xs font-semibold text-indigo-300 shadow-inner backdrop-blur-md">
@@ -229,6 +241,7 @@ export function CurriculumHub({ onSelectAgile }: CurriculumHubProps) {
               width={20}
               height={20}
               fetchPriority="high"
+              loading="eager"
               decoding="async"
               className="h-5 w-5 rounded-md object-cover ring-1 ring-indigo-400/50" 
             />
@@ -290,9 +303,13 @@ export function CurriculumHub({ onSelectAgile }: CurriculumHubProps) {
           </div>
         </div>
 
-        {/* Right Side: Interactive 3D Educational Scene */}
-        <div className="lg:col-span-5 relative z-10 pointer-events-auto">
-          <Hero3DScene />
+        {/* Right Side: Interactive 3D Educational Scene (Desktop only) */}
+        <div className="hidden lg:block lg:col-span-5 relative z-10 pointer-events-auto">
+          {isDesktop && (
+            <React.Suspense fallback={<div className="h-[420px] w-full" />}>
+              <Hero3DScene />
+            </React.Suspense>
+          )}
         </div>
       </section>
 
