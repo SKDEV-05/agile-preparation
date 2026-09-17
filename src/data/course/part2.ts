@@ -70,11 +70,11 @@ export const coursePart2: CoursePart = {
       miniQuestion: {
         question: 'Quelle caractéristique définit un jalon (milestone) dans un calendrier de projet ?',
         options: [
-          'Un point de contrôle ou de décision clé dont la durée est égale à zéro',
-          'Une tâche très complexe nécessitant plus de 10 développeurs simultanés',
-          'La première réunion organisée avec la maîtrise d’ouvrage',
-          'Une marge temporelle ajoutée en fin de projet pour absorber les retards'
-        ],
+        'Un point de contrôle ou de décision clé dont la durée est égale à zéro',
+        'Une tâche très complexe nécessitant plus de 10 développeurs simultanés',
+        'Une marge temporelle ajoutée en fin de projet pour absorber les retards',
+        'La première réunion organisée avec la maîtrise d’ouvrage',
+      ],
         correctIndex: 0,
         explanation: 'Par définition en gestion de projet, un jalon représente un événement ou une validation majeure sans durée propre (durée = 0).'
       }
@@ -143,12 +143,12 @@ export const coursePart2: CoursePart = {
       miniQuestion: {
         question: 'Quel est l’avantage principal d’un diagramme de Gantt par rapport à une simple liste de tâches ?',
         options: [
-          'Visualiser l’étalement dans le temps et les parallélismes entre tâches',
-          'Écrire automatiquement le code de l’application informatique',
-          'Supprimer toutes les dépendances entre les membres de l’équipe',
-          'Remplacer le rôle du Product Owner dans la méthodologie Scrum'
-        ],
-        correctIndex: 0,
+        'Remplacer le rôle du Product Owner dans la méthodologie Scrum',
+        'Supprimer toutes les dépendances entre les membres de l’équipe',
+        'Écrire automatiquement le code de l’application informatique',
+        'Visualiser l’étalement dans le temps et les parallélismes entre tâches',
+      ],
+        correctIndex: 3,
         explanation: 'Le Gantt est l’outil roi pour visualiser le calendrier, les dates de début/fin, la durée et les recouvrements d’activités.'
       }
     },
@@ -215,12 +215,12 @@ export const coursePart2: CoursePart = {
       miniQuestion: {
         question: 'Dans le calcul des dates au plus tôt d’un réseau PERT, lorsque deux tâches antécédentes convergent vers une même tâche suivante, quelle valeur retient-on ?',
         options: [
-          'La date de fin au plus tôt la plus élevée (le maximum)',
-          'La date de fin au plus tôt la plus petite (le minimum)',
-          'La moyenne arithmétique des deux dates calculées',
-          'La différence absolue entre les deux durées estimées'
-        ],
-        correctIndex: 0,
+        'La différence absolue entre les deux durées estimées',
+        'La date de fin au plus tôt la plus élevée (le maximum)',
+        'La moyenne arithmétique des deux dates calculées',
+        'La date de fin au plus tôt la plus petite (le minimum)',
+      ],
+        correctIndex: 1,
         explanation: 'La tâche suivante ne peut débuter que lorsque TOUS ses antécédents sont achevés. C’est donc la tâche qui se termine le plus tard (le MAX) qui impose la date de début au plus tôt.'
       }
     },
@@ -287,12 +287,12 @@ export const coursePart2: CoursePart = {
       miniQuestion: {
         question: 'Qu’arrive-t-il si une tâche située sur le chemin critique subit un retard imprévu de 3 jours ?',
         options: [
-          'La durée globale du projet est prolongée d’exactement 3 jours',
-          'Le retard est totalement absorbé par la marge totale de la tâche',
-          'Le chemin critique est automatiquement annulé par le chef de projet',
-          'Le budget du projet est automatiquement réduit de moitié'
-        ],
-        correctIndex: 0,
+        'Le budget du projet est automatiquement réduit de moitié',
+        'Le chemin critique est automatiquement annulé par le chef de projet',
+        'La durée globale du projet est prolongée d’exactement 3 jours',
+        'Le retard est totalement absorbé par la marge totale de la tâche',
+      ],
+        correctIndex: 2,
         explanation: 'Puisque la marge totale d’une tâche critique est nulle (0 jour), tout retard sur celle-ci se répercute jour pour jour sur la date finale du projet.'
       }
     }

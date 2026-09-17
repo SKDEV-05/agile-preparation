@@ -9,6 +9,68 @@
     <link rel="canonical" href="https://fullstack-2a.vercel.app/" />
     <meta name="google-site-verification" content="GkvWvEdkJrUa5337pXU8WUQxBni0rRLZL6mWUMX7eTk" />
     
+    <!-- PWA & Mobile Web App Meta -->
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="FullStack 2A" />
+    <link rel="apple-touch-icon" href="/favicon.png" />
+
+    <!-- Structured Data (JSON-LD) for Google Rich Snippets -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "EducationalWebSite",
+          "@id": "https://fullstack-2a.vercel.app/#website",
+          "url": "https://fullstack-2a.vercel.app/",
+          "name": "FullStack Master · 2ème Année Développement Digital",
+          "description": "Plateforme d'excellence pour préparer et réussir les examens OFPPT Développement Digital : QCM corrigés, simulateurs PERT/Gantt et cours complets.",
+          "inLanguage": "fr-FR",
+          "publisher": {
+            "@id": "https://fullstack-2a.vercel.app/#author"
+          }
+        },
+        {
+          "@type": "Person",
+          "@id": "https://fullstack-2a.vercel.app/#author",
+          "name": "Saâd Korma",
+          "jobTitle": "Web & Mobile Developer",
+          "url": "https://fullstack-2a.vercel.app/",
+          "sameAs": [
+            "https://instagram.com/saadkorma_dev"
+          ]
+        },
+        {
+          "@type": "Course",
+          "@id": "https://fullstack-2a.vercel.app/#course-agile",
+          "name": "Approche Agile & Gestion de Projet (M201)",
+          "description": "Préparation complète au module M201 : Fondamentaux cycle de vie, planification PERT/Gantt, framework Scrum, Jira, Git GitLab et DevOps CI/CD.",
+          "provider": {
+            "@id": "https://fullstack-2a.vercel.app/#website"
+          },
+          "educationalLevel": "Bac+2 / 2ème Année Technicien Spécialisé",
+          "hasCourseInstance": {
+            "@type": "CourseInstance",
+            "courseMode": "online",
+            "inLanguage": "fr"
+          }
+        },
+        {
+          "@type": "Quiz",
+          "@id": "https://fullstack-2a.vercel.app/#quiz-final-exam",
+          "name": "Examen Blanc Officiel M201 Agile",
+          "educationalLevel": "Examen Fin de Module OFPPT",
+          "timeRequired": "PT45M",
+          "numberOfQuestions": 50,
+          "inLanguage": "fr"
+        }
+      ]
+    }
+    </script>
+    
     <!-- Primary SEO Meta Tags -->
     <title>FullStack Master · 2ème Année Développement Digital</title>
     <meta name="title" content="FullStack Master · 2ème Année Développement Digital" />
@@ -58,12 +120,46 @@
       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800;900&family=Inter:wght@400;500;600&display=optional">
     </noscript>
 
+    <!-- Instant Anti-FOUC (Flash of Unstyled Color) Script -->
+    <script>
+      (function() {
+        try {
+          var stored = localStorage.getItem('fullstack2a_theme');
+          var systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          if (stored === 'dark' || (!stored && systemDark) || (stored === 'system' && systemDark)) {
+            document.documentElement.classList.add('dark');
+            document.documentElement.style.colorScheme = 'dark';
+          } else {
+            document.documentElement.classList.remove('dark');
+            document.documentElement.style.colorScheme = 'light';
+          }
+        } catch (e) {}
+      })();
+    </script>
+
     <!-- Critical CSS for Instant Above-the-Fold Paint (FCP < 1.0s, LCP < 1.5s) -->
     <style>
-      :root { color-scheme: dark; }
+      :root {
+        --crit-bg: #f8fafc;
+        --crit-text: #0f172a;
+        --crit-surface: #ffffff;
+        --crit-border: rgba(15, 23, 42, 0.12);
+        --crit-card: #ffffff;
+        --crit-header: rgba(248, 250, 252, 0.85);
+        color-scheme: light;
+      }
+      html.dark {
+        --crit-bg: #070B14;
+        --crit-text: #f8fafc;
+        --crit-surface: #0D1526;
+        --crit-border: rgba(255, 255, 255, 0.12);
+        --crit-card: rgba(13, 21, 38, 0.7);
+        --crit-header: rgba(7, 11, 20, 0.85);
+        color-scheme: dark;
+      }
       html, body {
-        background-color: #070B14;
-        color: #f8fafc;
+        background-color: var(--crit-bg);
+        color: var(--crit-text);
         margin: 0;
         padding: 0;
         font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -74,11 +170,11 @@
         min-height: 100vh;
         display: flex;
         flex-direction: column;
-        background-color: #070B14;
+        background-color: var(--crit-bg);
       }
       .lcp-hero-card {
-        background-color: rgba(13, 21, 38, 0.6);
-        border: 1px solid rgba(255, 255, 255, 0.1);
+        background-color: var(--crit-card);
+        border: 1px solid var(--crit-border);
         border-radius: 1.5rem;
       }
       @media (max-width: 768px) {
@@ -208,21 +304,21 @@
       }
     </script>
   </head>
-  <body class="h-full bg-[#070B14] text-slate-100 font-sans antialiased selection:bg-indigo-500/30 selection:text-indigo-200">
+  <body class="h-full bg-[var(--crit-bg)] text-[var(--crit-text)] font-sans antialiased selection:bg-indigo-500/30 selection:text-indigo-200">
     <!-- Prerendered Static Shell for Instant Zero-Delay LCP / FCP -->
     <div id="root" class="min-h-full flex flex-col">
-      <div class="min-h-screen bg-transparent text-slate-100 flex flex-col">
-        <!-- Minimal sleek dark glass header for Hub -->
-        <header class="sticky top-0 z-20 flex h-16 w-full items-center justify-between border-b border-white/10 bg-[#070B14]/80 px-4 sm:px-8 backdrop-blur-xl">
+      <div class="min-h-screen bg-transparent flex flex-col">
+        <!-- Minimal sleek glass header for Hub -->
+        <header class="sticky top-0 z-20 flex h-16 w-full items-center justify-between border-b border-[var(--crit-border)] bg-[var(--crit-header)] px-4 sm:px-8 backdrop-blur-xl">
           <div class="flex items-center gap-3">
-            <div class="h-9 w-9 rounded-xl overflow-hidden border border-white/15 shadow-md">
+            <div class="h-9 w-9 rounded-xl overflow-hidden border border-[var(--crit-border)] shadow-md">
               <img src="/logo.webp" alt="FullStack Master Logo" width="36" height="36" fetchpriority="high" loading="eager" class="h-full w-full object-cover" />
             </div>
             <div>
-              <span class="font-black text-white text-sm sm:text-base tracking-tight">
+              <span class="font-black text-[var(--crit-text)] text-sm sm:text-base tracking-tight">
                 FULLSTACK <span style="background: linear-gradient(to right, #818cf8, #22d3ee); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">2A</span>
               </span>
-              <span class="hidden sm:inline-block ml-2 text-xs font-mono font-bold text-slate-400">· 2ème Année OFPPT</span>
+              <span class="hidden sm:inline-block ml-2 text-xs font-mono font-bold opacity-70">· 2ème Année OFPPT</span>
             </div>
           </div>
 

@@ -9,11 +9,6 @@ import {
   Sparkles, 
   ArrowRight, 
   BookOpen, 
-  Layers, 
-  FlaskConical, 
-  Award, 
-  ChevronRight,
-  Terminal,
   ShieldCheck,
   Compass,
   Laptop
@@ -28,7 +23,6 @@ interface CurriculumHubProps {
 }
 
 export function CurriculumHub({ onSelectAgile }: CurriculumHubProps) {
-  const [hoveredModuleId, setHoveredModuleId] = useState<string | null>(null);
   const [isDesktop, setIsDesktop] = useState(() => typeof window !== 'undefined' && window.innerWidth >= 1024);
 
   React.useEffect(() => {
@@ -77,17 +71,17 @@ export function CurriculumHub({ onSelectAgile }: CurriculumHubProps) {
             <span className="text-emerald-400 text-[9px]">En cours</span>
           </div>
           <div className="grid grid-cols-3 gap-1 text-[8px] font-mono">
-            <div className="bg-slate-800/80 p-1.5 rounded border border-white/5 text-slate-400">
-              <div className="font-bold text-slate-300 mb-0.5">To Do</div>
-              <div className="bg-slate-700/60 p-1 rounded text-[7px] text-slate-300">PERT #01</div>
+            <div className="bg-white dark:bg-slate-800/80 p-1.5 rounded border border-slate-200 dark:border-white/5 text-slate-600 dark:text-slate-400">
+              <div className="font-bold text-slate-800 dark:text-slate-300 mb-0.5">To Do</div>
+              <div className="bg-slate-100 dark:bg-slate-700/60 p-1 rounded text-[7px] text-slate-700 dark:text-slate-300">PERT #01</div>
             </div>
-            <div className="bg-indigo-950/40 p-1.5 rounded border border-indigo-500/30 text-indigo-200">
-              <div className="font-bold text-indigo-400 mb-0.5">In Dev</div>
-              <div className="bg-indigo-900/60 p-1 rounded text-[7px] text-white">Scrum #03</div>
+            <div className="bg-indigo-50 dark:bg-indigo-950/40 p-1.5 rounded border border-indigo-200 dark:border-indigo-500/30 text-indigo-900 dark:text-indigo-200">
+              <div className="font-bold text-indigo-600 dark:text-indigo-400 mb-0.5">In Dev</div>
+              <div className="bg-indigo-600 dark:bg-indigo-900/60 p-1 rounded text-[7px] text-white">Scrum #03</div>
             </div>
-            <div className="bg-emerald-950/40 p-1.5 rounded border border-emerald-500/30 text-emerald-200">
-              <div className="font-bold text-emerald-400 mb-0.5">Done</div>
-              <div className="bg-emerald-900/60 p-1 rounded text-[7px] text-white">GitLab CI ✓</div>
+            <div className="bg-emerald-50 dark:bg-emerald-950/40 p-1.5 rounded border border-emerald-200 dark:border-emerald-500/30 text-emerald-900 dark:text-emerald-200">
+              <div className="font-bold text-emerald-600 dark:text-emerald-400 mb-0.5">Done</div>
+              <div className="bg-emerald-600 dark:bg-emerald-900/60 p-1 rounded text-[7px] text-white">GitLab CI ✓</div>
             </div>
           </div>
         </div>
@@ -122,15 +116,15 @@ export function CurriculumHub({ onSelectAgile }: CurriculumHubProps) {
         exam: 'Prochainement'
       },
       preview3D: (
-        <div className="rounded-xl bg-slate-900/90 border border-cyan-500/40 p-3 shadow-lg font-mono text-[9px] text-cyan-300 transform-style-preserve-3d animate-float-subtle">
-          <div className="flex items-center gap-1.5 text-slate-400 mb-1.5 pb-1 border-b border-white/10">
-            <Code2 className="h-3 w-3 text-cyan-400" />
-            <span className="text-white font-bold">&lt;ComponentTree /&gt;</span>
+        <div className="rounded-xl bg-white/95 dark:bg-slate-900/90 border border-cyan-300 dark:border-cyan-500/40 p-3 shadow-md dark:shadow-lg font-mono text-[9px] text-cyan-700 dark:text-cyan-300 transform-style-preserve-3d animate-float-subtle">
+          <div className="flex items-center gap-1.5 text-slate-500 dark:text-slate-400 mb-1.5 pb-1 border-b border-slate-200 dark:border-white/10">
+            <Code2 className="h-3 w-3 text-cyan-600 dark:text-cyan-400" />
+            <span className="text-slate-900 dark:text-white font-bold">&lt;ComponentTree /&gt;</span>
           </div>
-          <div className="space-y-1 text-slate-400 text-[8px]">
-            <div><span className="text-purple-400">const</span> [state] = <span className="text-cyan-400">useState</span>();</div>
-            <div><span className="text-purple-400">return</span> &lt;<span className="text-indigo-400">VirtualDOM</span> /&gt;</div>
-            <div className="text-emerald-400 font-bold">Fast Refresh Active ✓</div>
+          <div className="space-y-1 text-slate-600 dark:text-slate-400 text-[8px]">
+            <div><span className="text-purple-600 dark:text-purple-400 font-semibold">const</span> [state] = <span className="text-cyan-600 dark:text-cyan-400">useState</span>();</div>
+            <div><span className="text-purple-600 dark:text-purple-400 font-semibold">return</span> &lt;<span className="text-indigo-600 dark:text-indigo-400 font-semibold">VirtualDOM</span> /&gt;</div>
+            <div className="text-emerald-600 dark:text-emerald-400 font-bold">Fast Refresh Active ✓</div>
           </div>
         </div>
       )
@@ -164,15 +158,15 @@ export function CurriculumHub({ onSelectAgile }: CurriculumHubProps) {
         exam: 'Prochainement'
       },
       preview3D: (
-        <div className="rounded-xl bg-slate-900/90 border border-rose-500/40 p-3 shadow-lg font-mono text-[9px] text-rose-300 transform-style-preserve-3d animate-float-subtle">
-          <div className="flex items-center gap-1.5 text-slate-400 mb-1.5 pb-1 border-b border-white/10">
-            <Server className="h-3 w-3 text-rose-400" />
-            <span className="text-white font-bold">api/v1/routes.php</span>
+        <div className="rounded-xl bg-white/95 dark:bg-slate-900/90 border border-rose-300 dark:border-rose-500/40 p-3 shadow-md dark:shadow-lg font-mono text-[9px] text-rose-700 dark:text-rose-300 transform-style-preserve-3d animate-float-subtle">
+          <div className="flex items-center gap-1.5 text-slate-500 dark:text-slate-400 mb-1.5 pb-1 border-b border-slate-200 dark:border-white/10">
+            <Server className="h-3 w-3 text-rose-600 dark:text-rose-400" />
+            <span className="text-slate-900 dark:text-white font-bold">api/v1/routes.php</span>
           </div>
-          <div className="space-y-1 text-slate-400 text-[8px]">
-            <div><span className="text-amber-400">Route::</span>get(<span className="text-emerald-400">'/stagiaires'</span>);</div>
-            <div>Eloquent: <span className="text-rose-400">Stagiaire::with('notes')</span></div>
-            <div className="text-emerald-400 font-bold">200 JSON Response ✓</div>
+          <div className="space-y-1 text-slate-600 dark:text-slate-400 text-[8px]">
+            <div><span className="text-amber-600 dark:text-amber-400 font-semibold">Route::</span>get(<span className="text-emerald-600 dark:text-emerald-400">'/stagiaires'</span>);</div>
+            <div>Eloquent: <span className="text-rose-600 dark:text-rose-400 font-semibold">Stagiaire::with('notes')</span></div>
+            <div className="text-emerald-600 dark:text-emerald-400 font-bold">200 JSON Response ✓</div>
           </div>
         </div>
       )
@@ -206,15 +200,15 @@ export function CurriculumHub({ onSelectAgile }: CurriculumHubProps) {
         exam: 'Prochainement'
       },
       preview3D: (
-        <div className="rounded-xl bg-slate-900/90 border border-emerald-500/40 p-3 shadow-lg font-mono text-[9px] text-emerald-300 transform-style-preserve-3d animate-float-subtle">
-          <div className="flex items-center gap-1.5 text-slate-400 mb-1.5 pb-1 border-b border-white/10">
-            <Database className="h-3 w-3 text-emerald-400" />
-            <span className="text-white font-bold">db_ofppt_2a.sql</span>
+        <div className="rounded-xl bg-white/95 dark:bg-slate-900/90 border border-emerald-300 dark:border-emerald-500/40 p-3 shadow-md dark:shadow-lg font-mono text-[9px] text-emerald-700 dark:text-emerald-300 transform-style-preserve-3d animate-float-subtle">
+          <div className="flex items-center gap-1.5 text-slate-500 dark:text-slate-400 mb-1.5 pb-1 border-b border-slate-200 dark:border-white/10">
+            <Database className="h-3 w-3 text-emerald-600 dark:text-emerald-400" />
+            <span className="text-slate-900 dark:text-white font-bold">db_ofppt_2a.sql</span>
           </div>
-          <div className="space-y-1 text-slate-400 text-[8px]">
-            <div><span className="text-indigo-400">SELECT</span> s.nom, p.score</div>
-            <div><span className="text-indigo-400">FROM</span> stagiaires s <span className="text-indigo-400">JOIN</span> pert;</div>
-            <div className="text-emerald-400 font-bold">Index B-Tree Cached ✓</div>
+          <div className="space-y-1 text-slate-600 dark:text-slate-400 text-[8px]">
+            <div><span className="text-indigo-600 dark:text-indigo-400 font-semibold">SELECT</span> s.nom, p.score</div>
+            <div><span className="text-indigo-600 dark:text-indigo-400 font-semibold">FROM</span> stagiaires s <span className="text-indigo-600 dark:text-indigo-400 font-semibold">JOIN</span> pert;</div>
+            <div className="text-emerald-600 dark:text-emerald-400 font-bold">Index B-Tree Cached ✓</div>
           </div>
         </div>
       )
@@ -229,12 +223,12 @@ export function CurriculumHub({ onSelectAgile }: CurriculumHubProps) {
   };
 
   return (
-    <div className="min-h-screen bg-transparent text-slate-100 py-6 sm:py-10 px-4 sm:px-6 lg:px-8 space-y-16">
+    <div className="min-h-screen bg-transparent text-slate-900 dark:text-slate-100 py-6 sm:py-10 px-4 sm:px-6 lg:px-8 space-y-16 transition-colors">
       {/* 1. MAJOR UX HERO SECTION */}
-      <section className="relative max-w-7xl mx-auto grid lg:grid-cols-12 gap-10 lg:gap-8 items-center pt-8 sm:pt-12 min-h-[520px] rounded-3xl overflow-hidden p-6 sm:p-10 border border-white/10 bg-[#0D1526]/60 backdrop-blur-xl shadow-2xl lcp-hero-card">
+      <section className="relative max-w-7xl mx-auto grid lg:grid-cols-12 gap-10 lg:gap-8 items-center pt-8 sm:pt-12 min-h-[520px] rounded-3xl overflow-hidden p-6 sm:p-10 border border-slate-200/90 dark:border-white/10 bg-white/95 dark:bg-[#0D1526]/60 backdrop-blur-xl shadow-xl dark:shadow-2xl lcp-hero-card">
         {/* Left Side: Pitch & Official Branding */}
         <div className="lg:col-span-7 space-y-6 text-left relative z-10 pointer-events-auto">
-          <div className="inline-flex items-center gap-2.5 rounded-full bg-slate-900/80 border border-indigo-500/30 px-3.5 py-1.5 text-xs font-semibold text-indigo-300 shadow-inner backdrop-blur-md">
+          <div className="inline-flex items-center gap-2.5 rounded-full bg-slate-100 dark:bg-slate-900/80 border border-indigo-500/30 px-3.5 py-1.5 text-xs font-semibold text-indigo-700 dark:text-indigo-300 shadow-inner backdrop-blur-md">
             <img 
               src={logoImg} 
               alt="Logo FullStack 2A" 
@@ -246,36 +240,36 @@ export function CurriculumHub({ onSelectAgile }: CurriculumHubProps) {
               className="h-5 w-5 rounded-md object-cover ring-1 ring-indigo-400/50" 
             />
             <span>Cursus Développement Digital · 2ème Année</span>
-            <span className="h-1.5 w-1.5 rounded-full bg-indigo-400 animate-ping"></span>
+            <span className="h-1.5 w-1.5 rounded-full bg-indigo-500 dark:bg-indigo-400 animate-ping"></span>
           </div>
 
           <div className="space-y-2">
-            <h1 className="text-4xl sm:text-6xl lg:text-6xl font-black tracking-tight text-white leading-[1.08]">
-              FULLSTACK <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-cyan-400 to-purple-400">2A</span>
+            <h1 className="text-4xl sm:text-6xl lg:text-6xl font-black tracking-tight text-slate-900 dark:text-white leading-[1.08]">
+              FULLSTACK <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 via-cyan-500 to-purple-500 dark:from-indigo-400 dark:via-cyan-400 dark:to-purple-400">2A</span>
             </h1>
-            <p className="text-base sm:text-xl font-bold text-slate-300 tracking-tight">
+            <p className="text-base sm:text-xl font-bold text-slate-700 dark:text-slate-300 tracking-tight">
               Plateforme de préparation — 2ème année Full Stack OFPPT
             </p>
           </div>
 
-          <p className="text-sm sm:text-base text-slate-400 leading-relaxed max-w-2xl font-normal">
+          <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400 leading-relaxed max-w-2xl font-normal">
             L’environnement d’excellence conçu spécifiquement pour réussir tes examens de 2ème année : 
-            cours synthétisés, <span className="text-slate-200 font-semibold">5 simulateurs interactifs (PERT, Gantt, Jira, Git, CI/CD)</span>, 
+            cours synthétisés, <span className="text-slate-900 dark:text-slate-200 font-semibold">5 simulateurs interactifs (PERT, Gantt, Jira, Git, CI/CD)</span>, 
             explications 3D et plus de 200 QCM corrigés en conditions réelles.
           </p>
 
           {/* Value Badges */}
           <div className="flex flex-wrap gap-2.5 pt-1 text-xs">
-            <span className="flex items-center gap-1.5 rounded-lg bg-slate-800/80 border border-white/10 px-3 py-1 text-slate-300">
-              <Sparkles className="h-3.5 w-3.5 text-amber-400" />
+            <span className="flex items-center gap-1.5 rounded-lg bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-white/10 px-3 py-1 text-slate-700 dark:text-slate-300">
+              <Sparkles className="h-3.5 w-3.5 text-amber-500 dark:text-amber-400" />
               <span>Simulateurs Pratiques</span>
             </span>
-            <span className="flex items-center gap-1.5 rounded-lg bg-slate-800/80 border border-white/10 px-3 py-1 text-slate-300">
-              <Laptop className="h-3.5 w-3.5 text-cyan-400" />
+            <span className="flex items-center gap-1.5 rounded-lg bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-white/10 px-3 py-1 text-slate-700 dark:text-slate-300">
+              <Laptop className="h-3.5 w-3.5 text-cyan-600 dark:text-cyan-400" />
               <span>Visualisations 3D</span>
             </span>
-            <span className="flex items-center gap-1.5 rounded-lg bg-slate-800/80 border border-white/10 px-3 py-1 text-slate-300">
-              <ShieldCheck className="h-3.5 w-3.5 text-emerald-400" />
+            <span className="flex items-center gap-1.5 rounded-lg bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-white/10 px-3 py-1 text-slate-700 dark:text-slate-300">
+              <ShieldCheck className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400" />
               <span>200 QCM Conformes EFM</span>
             </span>
           </div>
@@ -295,9 +289,9 @@ export function CurriculumHub({ onSelectAgile }: CurriculumHubProps) {
               variant="outline"
               size="lg"
               onClick={handleScrollToCourses}
-              className="gap-2 border-slate-700 bg-slate-900/60 hover:bg-slate-800 text-slate-200 hover:text-white transition-all"
+              className="gap-2 border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900/60 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200 hover:text-slate-900 dark:hover:text-white transition-all shadow-xs"
             >
-              <Compass className="h-4 w-4 text-cyan-400" />
+              <Compass className="h-4 w-4 text-cyan-600 dark:text-cyan-400" />
               <span>Explorer les cours</span>
             </Button>
           </div>
@@ -315,23 +309,23 @@ export function CurriculumHub({ onSelectAgile }: CurriculumHubProps) {
 
       {/* 2. COURSE SELECTION MARKETPLACE (4 MODULES) */}
       <section id="courses-grid" className="max-w-7xl mx-auto space-y-8 pt-8">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-white/10 pb-5">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-slate-200 dark:border-white/10 pb-5">
           <div>
-            <div className="inline-flex items-center gap-2 text-xs font-bold text-indigo-400 uppercase tracking-wider mb-1">
+            <div className="inline-flex items-center gap-2 text-xs font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-wider mb-1">
               <BookOpen className="h-3.5 w-3.5" />
               <span>Programme Pédagogique 2A</span>
             </div>
-            <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
+            <h2 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight">
               Modules & Matières d'Examen
             </h2>
-            <p className="text-xs sm:text-sm text-slate-400 mt-1">
+            <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-1">
               Sélectionne ton module d’étude pour accéder aux cours rédigés, simulateurs dédiés et QCM d'entraînement.
             </p>
           </div>
 
-          <div className="flex items-center gap-2 text-xs text-slate-400">
-            <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            <span className="font-semibold text-slate-300">1 Module Actif</span>
+          <div className="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
+            <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span className="font-semibold text-slate-700 dark:text-slate-300">1 Module Actif</span>
             <span>· 3 Modules en rédaction</span>
           </div>
         </div>
@@ -341,17 +335,14 @@ export function CurriculumHub({ onSelectAgile }: CurriculumHubProps) {
           {modules.map((mod) => {
             const Icon = mod.icon;
             const isAvailable = mod.status === 'available';
-            const isHovered = hoveredModuleId === mod.id;
 
             return (
               <div
                 key={mod.id}
-                onMouseEnter={() => setHoveredModuleId(mod.id)}
-                onMouseLeave={() => setHoveredModuleId(null)}
                 className={`group relative rounded-3xl border transition-all duration-300 flex flex-col justify-between overflow-hidden glass-card ${
                   isAvailable 
-                    ? `border-indigo-500/30 ${mod.borderGlow} hover:-translate-y-1.5` 
-                    : 'border-white/5 opacity-80 hover:opacity-100 hover:border-slate-700 hover:-translate-y-0.5'
+                    ? `border-indigo-500/40 dark:border-indigo-500/30 ${mod.borderGlow} hover:-translate-y-1.5` 
+                    : 'border-slate-200 dark:border-white/5 opacity-85 hover:opacity-100 hover:border-slate-300 dark:hover:border-slate-700 hover:-translate-y-0.5'
                 }`}
               >
                 {/* Gradient accent top bar */}
@@ -366,10 +357,10 @@ export function CurriculumHub({ onSelectAgile }: CurriculumHubProps) {
                           <Icon className="h-6 w-6" />
                         </div>
                         <div>
-                          <span className="text-[11px] font-mono font-bold text-slate-400 uppercase tracking-wider block">
+                          <span className="text-[11px] font-mono font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider block">
                             Module {mod.shortCode}
                           </span>
-                          <span className="text-xs font-bold text-slate-200">
+                          <span className="text-xs font-bold text-slate-700 dark:text-slate-200">
                             {mod.stats.parts} · {mod.stats.lessons}
                           </span>
                         </div>
@@ -379,12 +370,12 @@ export function CurriculumHub({ onSelectAgile }: CurriculumHubProps) {
                         <span className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-bold border ${mod.badgeColor}`}>
                           {isAvailable ? (
                             <>
-                              <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                              <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
                               <span>{mod.badgeText}</span>
                             </>
                           ) : (
                             <>
-                              <Clock className="h-3 w-3 text-slate-400" />
+                              <Clock className="h-3 w-3 text-slate-500 dark:text-slate-400" />
                               <span>{mod.badgeText}</span>
                             </>
                           )}
@@ -393,10 +384,10 @@ export function CurriculumHub({ onSelectAgile }: CurriculumHubProps) {
                     </div>
 
                     {/* Title & Description */}
-                    <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight mb-2 group-hover:text-indigo-300 transition-colors">
+                    <h3 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white tracking-tight mb-2 group-hover:text-indigo-600 dark:group-hover:text-indigo-300 transition-colors">
                       {mod.title}
                     </h3>
-                    <p className="text-xs sm:text-sm text-slate-400 leading-relaxed mb-5">
+                    <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-5">
                       {mod.description}
                     </p>
 
@@ -407,13 +398,13 @@ export function CurriculumHub({ onSelectAgile }: CurriculumHubProps) {
 
                     {/* Key Topics List */}
                     <div className="space-y-2 mb-4">
-                      <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-slate-400 block">
+                      <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 block">
                         Programme examens couvert :
                       </span>
                       <ul className="space-y-1.5">
                         {mod.topics.map((top, i) => (
-                          <li key={i} className="flex items-start gap-2 text-xs text-slate-300">
-                            <CheckCircle2 className={`h-3.5 w-3.5 shrink-0 mt-0.5 ${isAvailable ? 'text-indigo-400' : 'text-slate-500'}`} />
+                          <li key={i} className="flex items-start gap-2 text-xs text-slate-700 dark:text-slate-300">
+                            <CheckCircle2 className={`h-3.5 w-3.5 shrink-0 mt-0.5 ${isAvailable ? 'text-indigo-600 dark:text-indigo-400' : 'text-slate-400 dark:text-slate-500'}`} />
                             <span className="leading-snug">{top}</span>
                           </li>
                         ))}
@@ -422,12 +413,12 @@ export function CurriculumHub({ onSelectAgile }: CurriculumHubProps) {
                   </div>
 
                   {/* Footer & Action Button */}
-                  <div className="pt-4 border-t border-white/10">
+                  <div className="pt-4 border-t border-slate-200 dark:border-white/10">
                     <div className="flex items-center justify-between gap-3">
-                      <div className="text-[11px] font-medium text-slate-400">
+                      <div className="text-[11px] font-medium text-slate-500 dark:text-slate-400">
                         {isAvailable ? (
-                          <span className="text-emerald-400 font-bold flex items-center gap-1.5">
-                            <Sparkles className="h-3.5 w-3.5 text-emerald-400" />
+                          <span className="text-emerald-600 dark:text-emerald-400 font-bold flex items-center gap-1.5">
+                            <Sparkles className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400" />
                             <span>200 QCM Corrigés + 5 Simulateurs</span>
                           </span>
                         ) : (
@@ -450,7 +441,7 @@ export function CurriculumHub({ onSelectAgile }: CurriculumHubProps) {
                         <Button
                           variant="outline"
                           disabled
-                          className="opacity-40 cursor-not-allowed text-xs font-semibold border-slate-700 bg-slate-900/40 text-slate-400"
+                          className="opacity-50 cursor-not-allowed text-xs font-semibold border-slate-300 dark:border-slate-700 bg-slate-100/60 dark:bg-slate-900/40 text-slate-500 dark:text-slate-400"
                         >
                           <span>Bientôt disponible</span>
                         </Button>
@@ -464,16 +455,16 @@ export function CurriculumHub({ onSelectAgile }: CurriculumHubProps) {
         </div>
 
         {/* Bottom Banner: OFPPT Curriculum Architecture */}
-        <div className="rounded-3xl border border-white/10 bg-gradient-to-r from-indigo-950/40 via-slate-900/60 to-cyan-950/40 p-6 sm:p-8 shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="rounded-3xl border border-slate-200 dark:border-white/10 bg-gradient-to-r from-indigo-50/80 via-white to-cyan-50/80 dark:from-indigo-950/40 dark:via-slate-900/60 dark:to-cyan-950/40 p-6 sm:p-8 shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex items-start gap-4">
-            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-indigo-600/30 border border-indigo-500/40 text-indigo-300 shadow-md">
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-indigo-500/10 dark:bg-indigo-600/30 border border-indigo-500/20 dark:border-indigo-500/40 text-indigo-600 dark:text-indigo-300 shadow-md">
               <BookOpen className="h-6 w-6" />
             </div>
             <div>
-              <h3 className="text-base sm:text-lg font-bold text-white tracking-tight">
+              <h3 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white tracking-tight">
                 Alignement Pédagogique Officiel — Filière Développement Digital
               </h3>
-              <p className="text-xs sm:text-sm text-slate-400 mt-1 max-w-2xl leading-relaxed">
+              <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-1 max-w-2xl leading-relaxed">
                 Les modules respectent rigoureusement les compétences requises par le programme marocain. 
                 L'Approche Agile (M201) est prête pour l'entraînement intensif avec tous les barèmes de calculs (PERT, Marges, Scrum).
               </p>

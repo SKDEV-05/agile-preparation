@@ -74,12 +74,12 @@ export const coursePart5: CoursePart = {
       miniQuestion: {
         question: 'Dans le modèle CALMS régissant la démarche DevOps, que représente la lettre "M" ?',
         options: [
-          'Measurement (la mesure et l’analyse des indicateurs clés de performance)',
-          'Management (la hiérarchie obligatoire imposant les heures de travail)',
-          'Master (la branche Git principale où tout le monde doit coder sans test)',
-          'Migration (le transfert annuel obligatoire des données vers une autre base)'
-        ],
-        correctIndex: 0,
+        'Master (la branche Git principale où tout le monde doit coder sans test)',
+        'Migration (le transfert annuel obligatoire des données vers une autre base)',
+        'Measurement (la mesure et l’analyse des indicateurs clés de performance)',
+        'Management (la hiérarchie obligatoire imposant les heures de travail)',
+      ],
+        correctIndex: 2,
         explanation: 'Dans CALMS, la lettre M correspond à "Measurement" : mesurer les métriques de fiabilité, de délai et d’erreur pour guider l’amélioration continue.'
       }
     },
@@ -145,12 +145,12 @@ export const coursePart5: CoursePart = {
       miniQuestion: {
         question: 'Quelle est la différence fondamentale entre Continuous Delivery et Continuous Deployment ?',
         options: [
-          'La Livraison Continue conserve une décision ou validation manuelle avant la production, tandis que le Déploiement Continu automatise jusqu’à la production finale',
-          'La Livraison Continue s’applique uniquement aux téléphones mobiles alors que le Déploiement Continu est réservé aux ordinateurs de bureau',
-          'La Livraison Continue supprime l’étape de compilation alors que le Déploiement Continu supprime les tests unitaires',
-          'Ce sont deux expressions rigoureusement synonymes sans aucune distinction technique'
-        ],
-        correctIndex: 0,
+        'La Livraison Continue supprime l’étape de compilation alors que le Déploiement Continu supprime les tests unitaires',
+        'Ce sont deux expressions rigoureusement synonymes sans aucune distinction technique',
+        'La Livraison Continue s’applique uniquement aux téléphones mobiles alors que le Déploiement Continu est réservé aux ordinateurs de bureau',
+        'La Livraison Continue conserve une décision ou validation manuelle avant la production, tandis que le Déploiement Continu automatise jusqu’à la production finale',
+      ],
+        correctIndex: 3,
         explanation: 'En Continuous Delivery, le paquet est prêt et validé mais requiert un déclenchement manuel pour aller en prod ; en Continuous Deployment, le flux est intégralement automatisé sans intervention humaine.'
       }
     },
@@ -216,11 +216,11 @@ export const coursePart5: CoursePart = {
       miniQuestion: {
         question: 'Que se produit-il par défaut dans un pipeline GitLab CI si un job échoue dans le stage "test" ?',
         options: [
-          'Le pipeline est marqué en échec et les stages suivants (comme le déploiement) sont bloqués',
-          'Le runner supprime automatiquement le compte du développeur sur le serveur',
-          'Le code est immédiatement forcé et déployé directement sur les serveurs de production',
-          'GitLab crée un diagramme de Gantt pour rattraper le temps perdu'
-        ],
+        'Le pipeline est marqué en échec et les stages suivants (comme le déploiement) sont bloqués',
+        'GitLab crée un diagramme de Gantt pour rattraper le temps perdu',
+        'Le code est immédiatement forcé et déployé directement sur les serveurs de production',
+        'Le runner supprime automatiquement le compte du développeur sur le serveur',
+      ],
         correctIndex: 0,
         explanation: 'Par sécurité, l’échec d’un job de test interrompt le pipeline et empêche les stages ultérieurs (déploiement) d’être exécutés.'
       }
@@ -286,12 +286,12 @@ export const coursePart5: CoursePart = {
       miniQuestion: {
         question: 'Où doit être obligatoirement placé le fichier ".gitlab-ci.yml" pour que GitLab déclenche le pipeline ?',
         options: [
-          'À la racine exacte du dépôt Git du projet',
-          'Dans le sous-dossier caché .git/hooks/ du développeur',
-          'Sur le bureau de l’ordinateur du Scrum Master',
-          'Dans la base de données de l’outil de gestion Jira'
-        ],
-        correctIndex: 0,
+        'Sur le bureau de l’ordinateur du Scrum Master',
+        'À la racine exacte du dépôt Git du projet',
+        'Dans le sous-dossier caché .git/hooks/ du développeur',
+        'Dans la base de données de l’outil de gestion Jira',
+      ],
+        correctIndex: 1,
         explanation: 'GitLab recherche impérativement le fichier `.gitlab-ci.yml` à la racine même de la branche pour interpréter les instructions du pipeline.'
       }
     }

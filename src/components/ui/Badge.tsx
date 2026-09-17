@@ -8,13 +8,13 @@ export interface BadgeProps extends React.HTMLAttributes<HTMLDivElement> {
 
 export function Badge({ className, variant = 'default', size = 'md', children, ...props }: BadgeProps) {
   const variants = {
-    default: "bg-slate-100 text-slate-700 border-slate-200",
-    primary: "bg-primary-light text-primary border-indigo-200",
-    accent: "bg-accent-light text-accent-dark border-teal-200",
-    success: "bg-success-light text-success border-success-border",
-    warning: "bg-warning-light text-amber-800 border-warning-border",
-    danger: "bg-danger-light text-danger border-danger-border",
-    outline: "bg-white text-slate-600 border-slate-200",
+    default: "bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-white/10",
+    primary: "bg-indigo-50 dark:bg-indigo-500/20 text-indigo-700 dark:text-indigo-300 border-indigo-200 dark:border-indigo-500/30",
+    accent: "bg-cyan-50 dark:bg-cyan-500/20 text-cyan-700 dark:text-cyan-300 border-cyan-200 dark:border-cyan-500/30",
+    success: "bg-emerald-50 dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 border-emerald-200 dark:border-emerald-500/30",
+    warning: "bg-amber-50 dark:bg-amber-500/20 text-amber-800 dark:text-amber-300 border-amber-200 dark:border-amber-500/30",
+    danger: "bg-red-50 dark:bg-red-500/20 text-red-700 dark:text-red-300 border-red-200 dark:border-red-500/30",
+    outline: "bg-white/80 dark:bg-slate-900/60 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-white/15",
   };
 
   const sizes = {

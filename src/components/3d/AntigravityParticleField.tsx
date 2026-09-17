@@ -283,7 +283,7 @@ export function AntigravityParticleField() {
   return (
     <canvas
       ref={canvasRef}
-      className="fixed inset-0 w-full h-full pointer-events-none select-none z-[1] opacity-90"
+      className="fixed inset-0 w-full h-full pointer-events-none select-none z-[1] opacity-50 dark:opacity-90 transition-opacity duration-300"
       aria-hidden="true"
     />
   );

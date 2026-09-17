@@ -71,12 +71,12 @@ export const coursePart1: CoursePart = {
       miniQuestion: {
         question: 'Parmi les situations suivantes, laquelle constitue un véritable PROJET selon les standards OFPPT ?',
         options: [
-          'La refonte complète du portail web stagiaires livrée dans 6 mois',
-          'La gestion quotidienne des demandes d’assistance bureautique',
-          'La maintenance corrective habituelle des serveurs de messagerie',
-          'La sauvegarde automatique programmée chaque vendredi soir'
-        ],
-        correctIndex: 0,
+        'La sauvegarde automatique programmée chaque vendredi soir',
+        'La maintenance corrective habituelle des serveurs de messagerie',
+        'La gestion quotidienne des demandes d’assistance bureautique',
+        'La refonte complète du portail web stagiaires livrée dans 6 mois',
+      ],
+        correctIndex: 3,
         explanation: 'La refonte du portail a un objectif précis, un résultat unique et une fin programmée dans 6 mois, contrairement aux tâches de maintenance récurrentes.'
       }
     },
@@ -141,12 +141,12 @@ export const coursePart1: CoursePart = {
       miniQuestion: {
         question: 'Qui est contractuellement responsable de valider la conformité fonctionnelle de la solution développée ?',
         options: [
-          'La Maîtrise d’Ouvrage (MOA)',
-          'La Maîtrise d’Œuvre (MOE)',
-          'Le développeur backend',
-          'L’administrateur système'
-        ],
-        correctIndex: 0,
+        'Le développeur backend',
+        'La Maîtrise d’Ouvrage (MOA)',
+        'L’administrateur système',
+        'La Maîtrise d’Œuvre (MOE)',
+      ],
+        correctIndex: 1,
         explanation: 'La MOA représente le commanditaire métier : c’est elle qui formule le besoin et valide la recette fonctionnelle des livrables.'
       }
     },
@@ -213,12 +213,12 @@ export const coursePart1: CoursePart = {
       miniQuestion: {
         question: 'Dans une matrice RACI, que risque l’organisation si plusieurs personnes se voient attribuer la lettre "A" pour une même tâche ?',
         options: [
-          'Une confusion et une dilution de la responsabilité décisionnelle',
-          'Une augmentation automatique de la vélocité des développeurs',
-          'Une suppression des tests de sécurité nécessaires',
-          'Un passage obligatoire et immédiat à la méthode Scrum'
-        ],
-        correctIndex: 0,
+        'Un passage obligatoire et immédiat à la méthode Scrum',
+        'Une suppression des tests de sécurité nécessaires',
+        'Une confusion et une dilution de la responsabilité décisionnelle',
+        'Une augmentation automatique de la vélocité des développeurs',
+      ],
+        correctIndex: 2,
         explanation: 'Dans la méthode RACI, il doit y avoir strictement un seul Accountable par activité pour garantir qu’une décision claire soit prise sans conflit de pouvoir.'
       }
     },
@@ -282,11 +282,11 @@ export const coursePart1: CoursePart = {
       miniQuestion: {
         question: 'Quelle est la principale force de l’approche Agile par rapport au modèle en cascade classique ?',
         options: [
-          'La capacité à intégrer le changement grâce aux retours utilisateurs réguliers',
-          'La suppression complète du besoin d’effectuer des tests logiciels',
-          'L’absence totale de contraintes budgétaires ou temporelles',
-          'La rédaction de spécifications techniques exhaustives et figées'
-        ],
+        'La capacité à intégrer le changement grâce aux retours utilisateurs réguliers',
+        'La rédaction de spécifications techniques exhaustives et figées',
+        'L’absence totale de contraintes budgétaires ou temporelles',
+        'La suppression complète du besoin d’effectuer des tests logiciels',
+      ],
         correctIndex: 0,
         explanation: 'L’approche Agile privilégie la collaboration client et l’adaptation au changement grâce à des cycles courts avec démonstrations concrètes.'
       }

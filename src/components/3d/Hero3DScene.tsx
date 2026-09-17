@@ -5,15 +5,11 @@ import {
   Zap, 
   CheckCircle2, 
   GraduationCap, 
-  Server, 
-  Terminal, 
-  Layers, 
-  Sparkles 
+  Terminal 
 } from 'lucide-react';
 
 export function Hero3DScene() {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-  const [isHovered, setIsHovered] = useState(false);
   const containerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -49,8 +45,6 @@ export function Hero3DScene() {
   return (
     <div 
       ref={containerRef}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
       className="relative w-full h-[420px] sm:h-[480px] flex items-center justify-center perspective-1200 select-none overflow-visible"
     >
       {/* Dynamic Ambient Backlight that follows cursor */}
@@ -151,15 +145,15 @@ export function Hero3DScene() {
           transform: `translate3d(${mousePos.x * -22}px, ${mousePos.y * -20}px, 60px)`,
         }}
       >
-        <div className="animate-float-subtle rounded-xl bg-slate-900/90 backdrop-blur-md p-3 border border-cyan-500/30 shadow-xl shadow-cyan-500/10">
+        <div className="animate-float-subtle rounded-xl bg-white/95 dark:bg-slate-900/90 backdrop-blur-md p-3 border border-cyan-300 dark:border-cyan-500/30 shadow-lg dark:shadow-xl shadow-cyan-500/10">
           <div className="flex items-center gap-2 mb-1.5">
-            <Code2 className="h-3.5 w-3.5 text-cyan-400" />
-            <span className="text-[10px] font-mono font-bold text-cyan-300">.gitlab-ci.yml</span>
+            <Code2 className="h-3.5 w-3.5 text-cyan-600 dark:text-cyan-400" />
+            <span className="text-[10px] font-mono font-bold text-cyan-700 dark:text-cyan-300">.gitlab-ci.yml</span>
           </div>
-          <div className="font-mono text-[9px] text-slate-400 space-y-0.5">
-            <div><span className="text-purple-400">stages:</span> [test, deploy]</div>
-            <div><span className="text-emerald-400">script:</span> npm run test:agile</div>
-            <div className="text-cyan-400 font-bold">status: 200 OK ✓</div>
+          <div className="font-mono text-[9px] text-slate-600 dark:text-slate-400 space-y-0.5">
+            <div><span className="text-purple-600 dark:text-purple-400 font-semibold">stages:</span> [test, deploy]</div>
+            <div><span className="text-emerald-600 dark:text-emerald-400 font-semibold">script:</span> npm run test:agile</div>
+            <div className="text-cyan-700 dark:text-cyan-400 font-bold">status: 200 OK ✓</div>
           </div>
         </div>
       </div>
@@ -171,13 +165,13 @@ export function Hero3DScene() {
           transform: `translate3d(${mousePos.x * -26}px, ${mousePos.y * -24}px, 50px)`,
         }}
       >
-        <div className="animate-float-reverse rounded-xl bg-slate-900/90 backdrop-blur-md p-3 border border-emerald-500/30 shadow-xl shadow-emerald-500/10 flex items-center gap-2.5">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+        <div className="animate-float-reverse rounded-xl bg-white/95 dark:bg-slate-900/90 backdrop-blur-md p-3 border border-emerald-300 dark:border-emerald-500/30 shadow-lg dark:shadow-xl shadow-emerald-500/10 flex items-center gap-2.5">
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-100 dark:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 border border-emerald-300 dark:border-emerald-500/30">
             <Database className="h-4 w-4" />
           </div>
           <div>
-            <div className="text-[10px] font-bold text-slate-200">Base SGBD / SQL</div>
-            <div className="text-[9px] font-mono text-emerald-400">MCD ➔ Relations 1:N</div>
+            <div className="text-[10px] font-bold text-slate-800 dark:text-slate-200">Base SGBD / SQL</div>
+            <div className="text-[9px] font-mono text-emerald-600 dark:text-emerald-400 font-semibold">MCD ➔ Relations 1:N</div>
           </div>
         </div>
       </div>
@@ -189,13 +183,13 @@ export function Hero3DScene() {
           transform: `translate3d(${mousePos.x * 24}px, ${mousePos.y * 22}px, 70px)`,
         }}
       >
-        <div className="animate-float-subtle rounded-xl bg-slate-900/90 backdrop-blur-md p-3 border border-indigo-500/30 shadow-xl shadow-indigo-500/10">
+        <div className="animate-float-subtle rounded-xl bg-white/95 dark:bg-slate-900/90 backdrop-blur-md p-3 border border-indigo-300 dark:border-indigo-500/30 shadow-lg dark:shadow-xl shadow-indigo-500/10">
           <div className="flex items-center gap-2 mb-1">
-            <div className="h-2 w-2 rounded-full bg-indigo-400 animate-ping" />
-            <span className="text-[10px] font-bold text-indigo-300 uppercase tracking-wide">Scrum Board 2A</span>
+            <div className="h-2 w-2 rounded-full bg-indigo-500 animate-ping" />
+            <span className="text-[10px] font-bold text-indigo-700 dark:text-indigo-300 uppercase tracking-wide">Scrum Board 2A</span>
           </div>
-          <div className="text-[11px] font-bold text-white">Sprint 04 : In Progress</div>
-          <div className="text-[9px] text-slate-400 mt-0.5">Velocity: 42 Story Points</div>
+          <div className="text-[11px] font-bold text-slate-900 dark:text-white">Sprint 04 : In Progress</div>
+          <div className="text-[9px] text-slate-600 dark:text-slate-400 mt-0.5 font-medium">Velocity: 42 Story Points</div>
         </div>
       </div>
 
@@ -206,13 +200,13 @@ export function Hero3DScene() {
           transform: `translate3d(${mousePos.x * 28}px, ${mousePos.y * 26}px, 55px)`,
         }}
       >
-        <div className="animate-float-reverse rounded-xl bg-slate-900/90 backdrop-blur-md p-2.5 sm:p-3 border border-amber-500/30 shadow-xl shadow-amber-500/10 flex items-center gap-2.5">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-amber-500/20 text-amber-400 border border-amber-500/30">
+        <div className="animate-float-reverse rounded-xl bg-white/95 dark:bg-slate-900/90 backdrop-blur-md p-2.5 sm:p-3 border border-amber-300 dark:border-amber-500/30 shadow-lg dark:shadow-xl shadow-amber-500/10 flex items-center gap-2.5">
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-amber-100 dark:bg-amber-500/20 text-amber-600 dark:text-amber-400 border border-amber-300 dark:border-amber-500/30">
             <GraduationCap className="h-4 w-4" />
           </div>
           <div>
-            <div className="text-[10px] font-bold text-slate-200">Examen Blanc</div>
-            <div className="text-[9px] font-bold text-amber-400 flex items-center gap-1">
+            <div className="text-[10px] font-bold text-slate-800 dark:text-slate-200">Examen Blanc</div>
+            <div className="text-[9px] font-bold text-amber-600 dark:text-amber-400 flex items-center gap-1">
               <CheckCircle2 className="h-3 w-3" /> Score 50/50 QCM
             </div>
           </div>

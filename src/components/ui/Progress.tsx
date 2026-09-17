@@ -14,7 +14,7 @@ export function Progress({ className, value = 0, indicatorColor = "bg-primary", 
       aria-valuemin={0}
       aria-valuemax={100}
       aria-valuenow={Math.round(safeValue)}
-      className={cn("relative h-2 w-full overflow-hidden rounded-full bg-slate-800 border border-white/10", className)}
+      className={cn("relative h-2 w-full overflow-hidden rounded-full bg-slate-200 dark:bg-slate-800 border border-slate-300/60 dark:border-white/10", className)}
       {...props}
     >
       <div

@@ -71,11 +71,11 @@ export const coursePart3: CoursePart = {
       miniQuestion: {
         question: 'D’après le Manifeste Agile, que doit-on privilégier face à un contrat figé négocié à l’avance ?',
         options: [
-          'La collaboration continue avec les clients',
-          'L’obligation stricte de respecter le cahier des charges initial',
-          'La rédaction de pénalités de retard contractuelles',
-          'L’interruption immédiate de toutes les réunions de travail'
-        ],
+        'La collaboration continue avec les clients',
+        'L’interruption immédiate de toutes les réunions de travail',
+        'La rédaction de pénalités de retard contractuelles',
+        'L’obligation stricte de respecter le cahier des charges initial',
+      ],
         correctIndex: 0,
         explanation: 'La 3e valeur du Manifeste Agile stipule explicitement : "La collaboration avec les clients de préférence à la négociation contractuelle".'
       }
@@ -141,12 +141,12 @@ export const coursePart3: CoursePart = {
       miniQuestion: {
         question: 'Quel est le rôle principal du Scrum Master au sein d’une équipe Scrum ?',
         options: [
-          'Faciliter l’application de Scrum et éliminer les obstacles rencontrés par l’équipe',
-          'Attribuer individuellement les tâches quotidiennes à chaque développeur',
-          'Rédiger seul l’ensemble des User Stories et fixer les prix de vente',
-          'Remplacer le client lors des tests de recette finale en production'
-        ],
-        correctIndex: 0,
+        'Rédiger seul l’ensemble des User Stories et fixer les prix de vente',
+        'Attribuer individuellement les tâches quotidiennes à chaque développeur',
+        'Remplacer le client lors des tests de recette finale en production',
+        'Faciliter l’application de Scrum et éliminer les obstacles rencontrés par l’équipe',
+      ],
+        correctIndex: 3,
         explanation: 'Le Scrum Master est un coach et facilitateur méthodologique qui aide l’équipe à appliquer Scrum et à lever les bloquages opérationnels.'
       }
     },
@@ -215,12 +215,12 @@ export const coursePart3: CoursePart = {
       miniQuestion: {
         question: 'Quelle est la différence fondamentale entre la Sprint Review et la Sprint Retrospective ?',
         options: [
-          'La Review porte sur le produit avec les parties prenantes, la Rétrospective sur l’amélioration de l’équipe',
-          'La Review a lieu au début du Sprint et la Rétrospective se déroule chaque matin debout',
-          'La Review sert à estimer les coûts financiers et la Rétrospective à écrire le code informatique',
-          'Il n’y a aucune différence, ce sont deux appellations interchangeables dans le guide Scrum'
-        ],
-        correctIndex: 0,
+        'Il n’y a aucune différence, ce sont deux appellations interchangeables dans le guide Scrum',
+        'La Review a lieu au début du Sprint et la Rétrospective se déroule chaque matin debout',
+        'La Review porte sur le produit avec les parties prenantes, la Rétrospective sur l’amélioration de l’équipe',
+        'La Review sert à estimer les coûts financiers et la Rétrospective à écrire le code informatique',
+      ],
+        correctIndex: 2,
         explanation: 'La Sprint Review permet de montrer l’incrément de produit aux clients et parties prenantes, alors que la Rétrospective est une réunion interne d’amélioration continue des pratiques de l’équipe.'
       }
     },
@@ -286,12 +286,12 @@ export const coursePart3: CoursePart = {
       miniQuestion: {
         question: 'Dans une User Story rédigée selon les règles de l’art, quelle information apporte la clause "Afin de..." ?',
         options: [
-          'La valeur métier ou le bénéfice attendu par l’utilisateur final',
-          'Le nom du développeur qui prendra en charge la tâche dans Jira',
-          'La durée exacte en heures requise pour écrire les tests unitaires',
-          'L’adresse IP du serveur où sera déployée la nouvelle fonctionnalité'
-        ],
-        correctIndex: 0,
+        'La durée exacte en heures requise pour écrire les tests unitaires',
+        'La valeur métier ou le bénéfice attendu par l’utilisateur final',
+        'Le nom du développeur qui prendra en charge la tâche dans Jira',
+        'L’adresse IP du serveur où sera déployée la nouvelle fonctionnalité',
+      ],
+        correctIndex: 1,
         explanation: 'La clause "afin de..." explicite la finalité et la valeur ajoutée apportée au métier ou à l’utilisateur.'
       }
     }

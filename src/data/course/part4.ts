@@ -74,12 +74,12 @@ export const coursePart4: CoursePart = {
       miniQuestion: {
         question: 'À quoi sert précisément la commande "git add" dans le cycle de travail Git ?',
         options: [
-          'Placer des modifications spécifiques dans la zone d’index (Staging Area) avant le commit',
-          'Envoyer instantanément les modifications vers le serveur distant GitLab',
-          'Supprimer définitivement les fichiers modifiés par erreur dans le projet',
-          'Créer un compte utilisateur sur la plateforme cloud de l’entreprise'
-        ],
-        correctIndex: 0,
+        'Supprimer définitivement les fichiers modifiés par erreur dans le projet',
+        'Envoyer instantanément les modifications vers le serveur distant GitLab',
+        'Créer un compte utilisateur sur la plateforme cloud de l’entreprise',
+        'Placer des modifications spécifiques dans la zone d’index (Staging Area) avant le commit',
+      ],
+        correctIndex: 3,
         explanation: 'La commande `git add` prépare les changements en les indexant dans la Staging Area avant de les enregistrer dans l’historique avec `git commit`.'
       }
     },
@@ -144,11 +144,11 @@ export const coursePart4: CoursePart = {
       miniQuestion: {
         question: 'Que doit impérativement faire le développeur après avoir nettoyé manuellement les balises de conflit dans un fichier source ?',
         options: [
-          'Exécuter "git add" sur le fichier résolu puis créer le commit de fusion',
-          'Supprimer complètement le dossier caché .git pour réinitialiser le projet',
-          'Éteindre le serveur distant GitLab pendant au moins une heure',
-          'Créer un nouveau ticket dans Jira avec la priorité bloquante'
-        ],
+        'Exécuter "git add" sur le fichier résolu puis créer le commit de fusion',
+        'Supprimer complètement le dossier caché .git pour réinitialiser le projet',
+        'Créer un nouveau ticket dans Jira avec la priorité bloquante',
+        'Éteindre le serveur distant GitLab pendant au moins une heure',
+      ],
         correctIndex: 0,
         explanation: 'Une fois le fichier nettoyé des marqueurs de conflit, il faut l’indexer avec `git add` pour signaler à Git que le conflit est résolu, puis enregistrer avec `git commit`.'
       }
@@ -214,12 +214,12 @@ export const coursePart4: CoursePart = {
       miniQuestion: {
         question: 'Laquelle des propositions suivantes définit avec exactitude la relation entre Git et GitLab ?',
         options: [
-          'Git est l’outil de gestion de versions local, GitLab est une plateforme web d’hébergement et de CI/CD',
-          'GitLab est un langage de programmation compilé alors que Git est un simple serveur de base de données',
-          'Git ne fonctionne que sur Windows tandis que GitLab est une distribution Linux pour serveurs',
-          'Ce sont deux versions identiques développées par la même équipe Scrum sous deux marques différentes'
-        ],
-        correctIndex: 0,
+        'Ce sont deux versions identiques développées par la même équipe Scrum sous deux marques différentes',
+        'Git ne fonctionne que sur Windows tandis que GitLab est une distribution Linux pour serveurs',
+        'Git est l’outil de gestion de versions local, GitLab est une plateforme web d’hébergement et de CI/CD',
+        'GitLab est un langage de programmation compilé alors que Git est un simple serveur de base de données',
+      ],
+        correctIndex: 2,
         explanation: 'Git est l’outil de versionnement distribué ; GitLab est une plateforme collaborative web qui héberge les dépôts Git et propose des outils DevOps comme GitLab CI.'
       }
     },
@@ -286,12 +286,12 @@ export const coursePart4: CoursePart = {
       miniQuestion: {
         question: 'Dans SonarQube, que désigne le concept de "Quality Gate" ?',
         options: [
-          'Un ensemble de critères de qualité indispensables qu’un projet doit valider pour être jugé livrable',
-          'La porte d’entrée sécurisée par badge du centre de données hébergeant les serveurs',
-          'La liste des mots de passe des administrateurs système du projet',
-          'Une méthode de calcul de chemin critique utilisée lors de la planification PERT'
-        ],
-        correctIndex: 0,
+        'La liste des mots de passe des administrateurs système du projet',
+        'Un ensemble de critères de qualité indispensables qu’un projet doit valider pour être jugé livrable',
+        'La porte d’entrée sécurisée par badge du centre de données hébergeant les serveurs',
+        'Une méthode de calcul de chemin critique utilisée lors de la planification PERT',
+      ],
+        correctIndex: 1,
         explanation: 'La Quality Gate est un ensemble d’indicateurs seuils (ex: couverture minimale, zéro vulnérabilité critique) garantissant que le code respecte les standards avant livraison.'
       }
     }

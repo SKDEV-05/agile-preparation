@@ -1,6 +1,6 @@
 import React from 'react';
 import { CreatorCard } from './CreatorCard';
-import { Heart, BookOpen, FlaskConical, GraduationCap, ChevronRight } from 'lucide-react';
+import { BookOpen, FlaskConical, GraduationCap, ChevronRight } from 'lucide-react';
 import { ActiveView } from './Sidebar';
 import logoImg from '../../assets/logo.webp';
 
@@ -18,29 +18,29 @@ export function Footer({ onNavigate }: FooterProps) {
   };
 
   return (
-    <footer className="mt-16 border-t border-white/10 pt-10 pb-12 text-slate-400">
+    <footer className="mt-16 border-t border-slate-200 dark:border-white/10 pt-10 pb-12 text-slate-600 dark:text-slate-400 transition-colors">
       {/* 1. Saad Korma Creator Highlight Card */}
       <div className="mb-10">
         <CreatorCard variant="full" />
       </div>
 
       {/* 2. SEO Crawlable Semantic Links Grid (Accelerates Google Sitelinks & Subpage Indexing) */}
-      <div className="mb-10 rounded-2xl border border-white/10 bg-[#070B14]/80 p-6 sm:p-8 backdrop-blur-md">
+      <div className="mb-10 rounded-2xl border border-slate-200/90 dark:border-white/10 bg-slate-50/80 dark:bg-[#070B14]/80 p-6 sm:p-8 backdrop-blur-md shadow-xs dark:shadow-none">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-xs">
           {/* Col 1: Course Parts */}
           <div>
-            <div className="flex items-center gap-2 text-indigo-400 font-bold uppercase tracking-wider mb-3">
+            <div className="flex items-center gap-2 text-indigo-600 dark:text-indigo-400 font-bold uppercase tracking-wider mb-3">
               <BookOpen className="h-4 w-4" />
               <span>Programme EFM · Approche Agile</span>
             </div>
-            <ul className="space-y-2 text-slate-300">
+            <ul className="space-y-2 text-slate-700 dark:text-slate-300">
               <li>
                 <a
                   href="/course/part1"
                   onClick={(e) => handleLinkClick(e, 'part1')}
-                  className="hover:text-cyan-300 transition-colors flex items-center gap-1.5"
+                  className="hover:text-indigo-600 dark:hover:text-cyan-300 transition-colors flex items-center gap-1.5"
                 >
-                  <ChevronRight className="h-3 w-3 text-slate-500" />
+                  <ChevronRight className="h-3 w-3 text-slate-400 dark:text-slate-500" />
                   <span>Partie 1 : Fondamentaux & Cycle de vie</span>
                 </a>
               </li>
@@ -48,9 +48,9 @@ export function Footer({ onNavigate }: FooterProps) {
                 <a
                   href="/course/part2"
                   onClick={(e) => handleLinkClick(e, 'part2')}
-                  className="hover:text-cyan-300 transition-colors flex items-center gap-1.5"
+                  className="hover:text-indigo-600 dark:hover:text-cyan-300 transition-colors flex items-center gap-1.5"
                 >
-                  <ChevronRight className="h-3 w-3 text-slate-500" />
+                  <ChevronRight className="h-3 w-3 text-slate-400 dark:text-slate-500" />
                   <span>Partie 2 : Réseau PERT & Diagramme de Gantt</span>
                 </a>
               </li>
@@ -58,9 +58,9 @@ export function Footer({ onNavigate }: FooterProps) {
                 <a
                   href="/course/part3"
                   onClick={(e) => handleLinkClick(e, 'part3')}
-                  className="hover:text-cyan-300 transition-colors flex items-center gap-1.5"
+                  className="hover:text-indigo-600 dark:hover:text-cyan-300 transition-colors flex items-center gap-1.5"
                 >
-                  <ChevronRight className="h-3 w-3 text-slate-500" />
+                  <ChevronRight className="h-3 w-3 text-slate-400 dark:text-slate-500" />
                   <span>Partie 3 : Méthode Agile, Scrum & Jira</span>
                 </a>
               </li>
@@ -68,9 +68,9 @@ export function Footer({ onNavigate }: FooterProps) {
                 <a
                   href="/course/part4"
                   onClick={(e) => handleLinkClick(e, 'part4')}
-                  className="hover:text-cyan-300 transition-colors flex items-center gap-1.5"
+                  className="hover:text-indigo-600 dark:hover:text-cyan-300 transition-colors flex items-center gap-1.5"
                 >
-                  <ChevronRight className="h-3 w-3 text-slate-500" />
+                  <ChevronRight className="h-3 w-3 text-slate-400 dark:text-slate-500" />
                   <span>Partie 4 : Architecture Git 4 Zones & Sonar</span>
                 </a>
               </li>
@@ -78,9 +78,9 @@ export function Footer({ onNavigate }: FooterProps) {
                 <a
                   href="/course/part5"
                   onClick={(e) => handleLinkClick(e, 'part5')}
-                  className="hover:text-cyan-300 transition-colors flex items-center gap-1.5"
+                  className="hover:text-indigo-600 dark:hover:text-cyan-300 transition-colors flex items-center gap-1.5"
                 >
-                  <ChevronRight className="h-3 w-3 text-slate-500" />
+                  <ChevronRight className="h-3 w-3 text-slate-400 dark:text-slate-500" />
                   <span>Partie 5 : Culture DevOps & GitLab CI</span>
                 </a>
               </li>
@@ -89,18 +89,18 @@ export function Footer({ onNavigate }: FooterProps) {
 
           {/* Col 2: Laboratory Simulators */}
           <div>
-            <div className="flex items-center gap-2 text-cyan-400 font-bold uppercase tracking-wider mb-3">
+            <div className="flex items-center gap-2 text-cyan-600 dark:text-cyan-400 font-bold uppercase tracking-wider mb-3">
               <FlaskConical className="h-4 w-4" />
               <span>Simulateurs Pratiques</span>
             </div>
-            <ul className="space-y-2 text-slate-300">
+            <ul className="space-y-2 text-slate-700 dark:text-slate-300">
               <li>
                 <a
                   href="/simulators"
                   onClick={(e) => handleLinkClick(e, 'simulators')}
-                  className="hover:text-cyan-300 transition-colors flex items-center gap-1.5"
+                  className="hover:text-cyan-600 dark:hover:text-cyan-300 transition-colors flex items-center gap-1.5"
                 >
-                  <ChevronRight className="h-3 w-3 text-slate-500" />
+                  <ChevronRight className="h-3 w-3 text-slate-400 dark:text-slate-500" />
                   <span>Calculateur Réseau PERT & Marges</span>
                 </a>
               </li>
@@ -108,9 +108,9 @@ export function Footer({ onNavigate }: FooterProps) {
                 <a
                   href="/simulators"
                   onClick={(e) => handleLinkClick(e, 'simulators')}
-                  className="hover:text-cyan-300 transition-colors flex items-center gap-1.5"
+                  className="hover:text-cyan-600 dark:hover:text-cyan-300 transition-colors flex items-center gap-1.5"
                 >
-                  <ChevronRight className="h-3 w-3 text-slate-500" />
+                  <ChevronRight className="h-3 w-3 text-slate-400 dark:text-slate-500" />
                   <span>Diagramme de Gantt avec Dépendances</span>
                 </a>
               </li>
@@ -118,9 +118,9 @@ export function Footer({ onNavigate }: FooterProps) {
                 <a
                   href="/simulators"
                   onClick={(e) => handleLinkClick(e, 'simulators')}
-                  className="hover:text-cyan-300 transition-colors flex items-center gap-1.5"
+                  className="hover:text-cyan-600 dark:hover:text-cyan-300 transition-colors flex items-center gap-1.5"
                 >
-                  <ChevronRight className="h-3 w-3 text-slate-500" />
+                  <ChevronRight className="h-3 w-3 text-slate-400 dark:text-slate-500" />
                   <span>Scrum Board & Poker Planning</span>
                 </a>
               </li>
@@ -128,9 +128,9 @@ export function Footer({ onNavigate }: FooterProps) {
                 <a
                   href="/simulators"
                   onClick={(e) => handleLinkClick(e, 'simulators')}
-                  className="hover:text-cyan-300 transition-colors flex items-center gap-1.5"
+                  className="hover:text-cyan-600 dark:hover:text-cyan-300 transition-colors flex items-center gap-1.5"
                 >
-                  <ChevronRight className="h-3 w-3 text-slate-500" />
+                  <ChevronRight className="h-3 w-3 text-slate-400 dark:text-slate-500" />
                   <span>Terminal Git CLI & 4 Zones interactives</span>
                 </a>
               </li>
@@ -138,9 +138,9 @@ export function Footer({ onNavigate }: FooterProps) {
                 <a
                   href="/simulators"
                   onClick={(e) => handleLinkClick(e, 'simulators')}
-                  className="hover:text-cyan-300 transition-colors flex items-center gap-1.5"
+                  className="hover:text-cyan-600 dark:hover:text-cyan-300 transition-colors flex items-center gap-1.5"
                 >
-                  <ChevronRight className="h-3 w-3 text-slate-500" />
+                  <ChevronRight className="h-3 w-3 text-slate-400 dark:text-slate-500" />
                   <span>Pipeline CI/CD .gitlab-ci.yml</span>
                 </a>
               </li>
@@ -149,18 +149,18 @@ export function Footer({ onNavigate }: FooterProps) {
 
           {/* Col 3: Exams & Tools */}
           <div>
-            <div className="flex items-center gap-2 text-amber-400 font-bold uppercase tracking-wider mb-3">
+            <div className="flex items-center gap-2 text-amber-600 dark:text-amber-400 font-bold uppercase tracking-wider mb-3">
               <GraduationCap className="h-4 w-4" />
               <span>Examens & Entraînements</span>
             </div>
-            <ul className="space-y-2 text-slate-300">
+            <ul className="space-y-2 text-slate-700 dark:text-slate-300">
               <li>
                 <a
                   href="/exam"
                   onClick={(e) => handleLinkClick(e, 'final-exam')}
-                  className="hover:text-amber-300 transition-colors flex items-center gap-1.5"
+                  className="hover:text-amber-600 dark:hover:text-amber-300 transition-colors flex items-center gap-1.5"
                 >
-                  <ChevronRight className="h-3 w-3 text-slate-500" />
+                  <ChevronRight className="h-3 w-3 text-slate-400 dark:text-slate-500" />
                   <span>Examen Blanc 50 QCM (Chronomètre 45 min)</span>
                 </a>
               </li>
@@ -168,9 +168,9 @@ export function Footer({ onNavigate }: FooterProps) {
                 <a
                   href="/flashcards"
                   onClick={(e) => handleLinkClick(e, 'flashcards')}
-                  className="hover:text-amber-300 transition-colors flex items-center gap-1.5"
+                  className="hover:text-amber-600 dark:hover:text-amber-300 transition-colors flex items-center gap-1.5"
                 >
-                  <ChevronRight className="h-3 w-3 text-slate-500" />
+                  <ChevronRight className="h-3 w-3 text-slate-400 dark:text-slate-500" />
                   <span>Flashcards 3D de Révision Rapide</span>
                 </a>
               </li>
@@ -178,9 +178,9 @@ export function Footer({ onNavigate }: FooterProps) {
                 <a
                   href="/errors"
                   onClick={(e) => handleLinkClick(e, 'errors')}
-                  className="hover:text-amber-300 transition-colors flex items-center gap-1.5"
+                  className="hover:text-amber-600 dark:hover:text-amber-300 transition-colors flex items-center gap-1.5"
                 >
-                  <ChevronRight className="h-3 w-3 text-slate-500" />
+                  <ChevronRight className="h-3 w-3 text-slate-400 dark:text-slate-500" />
                   <span>Carnet Pédagogique des Erreurs</span>
                 </a>
               </li>
@@ -190,25 +190,25 @@ export function Footer({ onNavigate }: FooterProps) {
       </div>
 
       {/* 3. Platform Branding & Copyright */}
-      <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-400">
+      <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-500 dark:text-slate-400">
         <div className="flex items-center gap-2.5">
-          <div className="h-7 w-7 rounded-lg overflow-hidden border border-white/10 shrink-0">
+          <div className="h-7 w-7 rounded-lg overflow-hidden border border-slate-200 dark:border-white/10 shrink-0 shadow-xs">
             <img src={logoImg} alt="Logo FullStack 2A" width={28} height={28} loading="lazy" decoding="async" className="h-full w-full object-cover" />
           </div>
-          <span className="font-bold text-white">FULLSTACK <span className="text-indigo-400">2A</span></span>
-          <span className="text-slate-600">|</span>
+          <span className="font-bold text-slate-900 dark:text-white">FULLSTACK <span className="text-indigo-600 dark:text-indigo-400">2A</span></span>
+          <span className="text-slate-400 dark:text-slate-600">|</span>
           <span>Développement Digital · Web & Mobile</span>
         </div>
 
-        <div className="flex flex-wrap items-center justify-center gap-3 text-[11px] font-medium text-slate-400">
+        <div className="flex flex-wrap items-center justify-center gap-3 text-[11px] font-medium text-slate-500 dark:text-slate-400">
           <span>200 Questions d'examen</span>
           <span>•</span>
           <span>5 Simulateurs temps réel</span>
           <span>•</span>
           <span>Modèles 3D Interactifs</span>
           <span>•</span>
-          <span className="flex items-center gap-1.5 text-slate-300 font-semibold bg-slate-900/90 border border-white/10 px-3 py-1 rounded-lg">
-            Conçu avec <Heart className="h-3 w-3 text-rose-500 fill-rose-500" /> pour les stagiaires de la filière Développement Digital (Full Stack 2ème Année) · OFPPT Maroc
+          <span className="flex items-center gap-1.5 text-slate-800 dark:text-slate-300 font-semibold bg-slate-100 dark:bg-slate-900/90 border border-slate-200 dark:border-white/10 px-3 py-1 rounded-lg">
+            Conçu pour les stagiaires de la filière Développement Digital (Full Stack 2ème Année) · OFPPT Maroc
           </span>
         </div>
       </div>

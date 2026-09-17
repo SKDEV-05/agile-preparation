@@ -1,59 +1,197 @@
 @import "tailwindcss";
 
-@theme {
-  --color-background: #070B14;
-  --color-surface: #0D1526;
-  --color-surface-elevated: #141F36;
-  --color-surface-card: #0F172A;
-  --color-primary: #6366F1;
-  --color-primary-hover: #4F46E5;
-  --color-primary-light: #1E1B4B;
-  --color-primary-dark: #3730A3;
-  --color-accent: #06B6D4;
-  --color-accent-hover: #0891B2;
-  --color-accent-light: #083344;
-  --color-accent-dark: #0E7490;
-  --color-success: #10B981;
-  --color-success-light: #064E3B;
-  --color-success-border: #047857;
-  --color-warning: #F59E0B;
-  --color-warning-light: #451A03;
-  --color-warning-border: #B45309;
-  --color-danger: #EF4444;
-  --color-danger-light: #450A0A;
-  --color-danger-border: #B91C1C;
-  --font-sans: "Plus Jakarta Sans", "Inter", system-ui, -apple-system, sans-serif;
-  --font-mono: "JetBrains Mono", monospace;
-  --shadow-card: 0 4px 20px -2px rgba(0, 0, 0, 0.5), 0 2px 6px -1px rgba(0, 0, 0, 0.4);
-  --shadow-hover: 0 20px 40px -10px rgba(99, 102, 241, 0.2), 0 10px 20px -5px rgba(0, 0, 0, 0.5);
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ═══════════════════════════════════════════════════════════════
+   SEMANTIC DESIGN TOKENS & DUAL-THEME ARCHITECTURE (Light / Dark)
+   ═══════════════════════════════════════════════════════════════ */
+
+:root {
+  /* Surface Layers (Light Mode: layered slate-offwhite depth) */
+  --bg-base: #f8fafc;
+  --bg-surface: #ffffff;
+  --bg-surface-secondary: #f1f5f9;
+  --bg-surface-tertiary: #e2e8f0;
+  --bg-surface-elevated: #ffffff;
+  --bg-surface-card: #ffffff;
+  --bg-header: rgba(248, 250, 252, 0.85);
+  --bg-sidebar: #ffffff;
+  --bg-overlay: rgba(15, 23, 42, 0.5);
+  --bg-input: #ffffff;
+  --bg-terminal: #0f172a;
+
+  /* Typography & Foreground */
+  --text-primary: #0f172a;
+  --text-secondary: #334155;
+  --text-muted: #64748b;
+  --text-subtle: #94a3b8;
+  --text-inverse: #ffffff;
+
+  /* Borders & Dividers */
+  --border-subtle: rgba(15, 23, 42, 0.08);
+  --border-default: rgba(15, 23, 42, 0.14);
+  --border-strong: rgba(15, 23, 42, 0.24);
+  --border-focus: #4f46e5;
+
+  /* Brand / Primary */
+  --primary: #4f46e5;
+  --primary-hover: #4338ca;
+  --primary-light: #eef2ff;
+  --primary-dark: #3730a3;
+
+  /* Accent (Cyan) */
+  --accent: #0891b2;
+  --accent-hover: #0e7490;
+  --accent-light: #ecfeff;
+  --accent-dark: #155e75;
+
+  /* Status Colors */
+  --success: #059669;
+  --success-light: #ecfdf5;
+  --success-border: #a7f3d0;
+  --warning: #d97706;
+  --warning-light: #fffbeb;
+  --warning-border: #fde68a;
+  --danger: #dc2626;
+  --danger-light: #fef2f2;
+  --danger-border: #fecaca;
+
+  /* Shadows (Soft organic elevation in light mode) */
+  --shadow-theme-card: 0 4px 20px -2px rgba(15, 23, 42, 0.06), 0 2px 6px -1px rgba(15, 23, 42, 0.03);
+  --shadow-theme-hover: 0 20px 35px -10px rgba(79, 70, 229, 0.15), 0 8px 16px -4px rgba(15, 23, 42, 0.06);
+  --shadow-theme-dialog: 0 25px 50px -12px rgba(15, 23, 42, 0.25);
+  --shadow-glow-indigo: 0 0 30px -5px rgba(79, 70, 229, 0.2);
+  --shadow-glow-cyan: 0 0 30px -5px rgba(8, 145, 178, 0.2);
+
+  /* Scrollbar */
+  --scrollbar-track: #f1f5f9;
+  --scrollbar-thumb: #cbd5e1;
+  --scrollbar-thumb-hover: #94a3b8;
+
+  color-scheme: light;
+}
+
+html.dark {
+  /* Surface Layers (Dark Mode: layered deep indigo-slate hierarchy) */
+  --bg-base: #070b14;
+  --bg-surface: #0d1526;
+  --bg-surface-secondary: #141f36;
+  --bg-surface-tertiary: #1e293b;
+  --bg-surface-elevated: #16223b;
+  --bg-surface-card: #0f172a;
+  --bg-header: rgba(7, 11, 20, 0.85);
+  --bg-sidebar: #0a0e1a;
+  --bg-overlay: rgba(0, 0, 0, 0.75);
+  --bg-input: #070b14;
+  --bg-terminal: #070b14;
+
+  /* Typography & Foreground */
+  --text-primary: #f8fafc;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
+  --text-subtle: #64748b;
+  --text-inverse: #0f172a;
+
+  /* Borders & Dividers */
+  --border-subtle: rgba(255, 255, 255, 0.07);
+  --border-default: rgba(255, 255, 255, 0.12);
+  --border-strong: rgba(255, 255, 255, 0.22);
+  --border-focus: #818cf8;
+
+  /* Brand / Primary */
+  --primary: #6366f1;
+  --primary-hover: #4f46e5;
+  --primary-light: #1e1b4b;
+  --primary-dark: #3730a3;
+
+  /* Accent (Cyan) */
+  --accent: #06b6d4;
+  --accent-hover: #0891b2;
+  --accent-light: #083344;
+  --accent-dark: #0e7490;
+
+  /* Status Colors */
+  --success: #10b981;
+  --success-light: #064e3b;
+  --success-border: #047857;
+  --warning: #f59e0b;
+  --warning-light: #451a03;
+  --warning-border: #b45309;
+  --danger: #ef4444;
+  --danger-light: #450a0a;
+  --danger-border: #b91c1c;
+
+  /* Shadows (Atmospheric glow elevation in dark mode) */
+  --shadow-theme-card: 0 4px 20px -2px rgba(0, 0, 0, 0.5), 0 2px 6px -1px rgba(0, 0, 0, 0.4);
+  --shadow-theme-hover: 0 20px 40px -10px rgba(99, 102, 241, 0.25), 0 10px 20px -5px rgba(0, 0, 0, 0.5);
+  --shadow-theme-dialog: 0 25px 60px -15px rgba(0, 0, 0, 0.85);
   --shadow-glow-indigo: 0 0 35px -5px rgba(99, 102, 241, 0.35);
   --shadow-glow-cyan: 0 0 35px -5px rgba(6, 182, 212, 0.35);
-  --shadow-dialog: 0 25px 60px -15px rgba(0, 0, 0, 0.85);
+
+  /* Scrollbar */
+  --scrollbar-track: #070b14;
+  --scrollbar-thumb: #1e293b;
+  --scrollbar-thumb-hover: #334155;
+
+  color-scheme: dark;
+}
+
+@theme {
+  --color-background: var(--bg-base);
+  --color-surface: var(--bg-surface);
+  --color-surface-secondary: var(--bg-surface-secondary);
+  --color-surface-elevated: var(--bg-surface-elevated);
+  --color-surface-card: var(--bg-surface-card);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-light: var(--primary-light);
+  --color-primary-dark: var(--primary-dark);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-light: var(--accent-light);
+  --color-accent-dark: var(--accent-dark);
+  --color-success: var(--success);
+  --color-success-light: var(--success-light);
+  --color-success-border: var(--success-border);
+  --color-warning: var(--warning);
+  --color-warning-light: var(--warning-light);
+  --color-warning-border: var(--warning-border);
+  --color-danger: var(--danger);
+  --color-danger-light: var(--danger-light);
+  --color-danger-border: var(--danger-border);
+  --font-sans: "Plus Jakarta Sans", "Inter", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+  --shadow-card: var(--shadow-theme-card);
+  --shadow-hover: var(--shadow-theme-hover);
+  --shadow-glow-indigo: var(--shadow-glow-indigo);
+  --shadow-glow-cyan: var(--shadow-glow-cyan);
+  --shadow-dialog: var(--shadow-theme-dialog);
 }
 
 /* Base Body Styles */
 body {
-  background-color: #070B14;
-  color: #F1F5F9;
+  background-color: var(--bg-base);
+  color: var(--text-primary);
   font-family: var(--font-sans);
   overflow-x: hidden;
+  transition: background-color 0.25s ease, color 0.25s ease;
 }
 
-/* Custom sleek dark scrollbar */
+/* Dual-Theme Scrollbar */
 ::-webkit-scrollbar {
   width: 7px;
   height: 7px;
 }
 ::-webkit-scrollbar-track {
-  background: #070B14;
+  background: var(--scrollbar-track);
 }
 ::-webkit-scrollbar-thumb {
-  background: #1E293B;
+  background: var(--scrollbar-thumb);
   border-radius: 9999px;
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-subtle);
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #334155;
+  background: var(--scrollbar-thumb-hover);
 }
 
 /* 3D Hardware Accelerated Utilities */
@@ -161,24 +299,36 @@ html {
   animation: error-shake 0.45s ease-in-out;
 }
 
-/* Glassmorphism Classes */
+/* Glassmorphism Classes (Dual-Theme Aware) */
 .glass-panel {
-  background: rgba(15, 23, 42, 0.75);
+  background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-default);
+  box-shadow: var(--shadow-theme-card);
+}
+
+html.dark .glass-panel {
+  background: rgba(15, 23, 42, 0.75);
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .glass-card {
-  background: linear-gradient(135deg, rgba(20, 31, 54, 0.7) 0%, rgba(13, 21, 38, 0.85) 100%);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.92) 0%, rgba(248, 250, 252, 0.98) 100%);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border-default);
+  box-shadow: var(--shadow-theme-card);
+}
+
+html.dark .glass-card {
+  background: linear-gradient(135deg, rgba(20, 31, 54, 0.7) 0%, rgba(13, 21, 38, 0.85) 100%);
   border: 1px solid rgba(255, 255, 255, 0.07);
 }
 
 .glass-card:hover {
   border-color: rgba(99, 102, 241, 0.35);
-  box-shadow: 0 12px 30px -8px rgba(0, 0, 0, 0.7), 0 0 25px -4px rgba(99, 102, 241, 0.2);
+  box-shadow: var(--shadow-theme-hover);
 }
 
 /* Reduced Motion Support */
@@ -227,6 +377,72 @@ html {
     opacity: 1 !important;
     transform: none !important;
     transition: none !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   PRINT & CHEAT SHEET EXPORT STYLES (@media print)
+   ═══════════════════════════════════════════════════════════════ */
+@media print {
+  @page {
+    margin: 1.2cm;
+    size: A4 portrait;
+  }
+
+  body, html {
+    background: #ffffff !important;
+    color: #0f172a !important;
+    font-size: 11pt !important;
+  }
+
+  /* Hide interactive and non-printable shell elements */
+  aside,
+  header,
+  nav,
+  footer,
+  canvas,
+  button,
+  .print\:hidden,
+  #theme-switch {
+    display: none !important;
+  }
+
+  /* Expand layout to 100% width with no sidebar padding */
+  .lg\:pl-72,
+  main {
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: 100% !important;
+  }
+
+  /* Ensure high-contrast text and crisp borders on paper */
+  * {
+    color-adjust: exact !important;
+    -webkit-print-color-adjust: exact !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    backdrop-filter: none !important;
+  }
+
+  /* Clean cards & avoid awkward page breaks */
+  article,
+  .rounded-3xl,
+  .rounded-2xl {
+    break-inside: avoid;
+    page-break-inside: avoid;
+    border: 1px solid #cbd5e1 !important;
+    background: #ffffff !important;
+    margin-bottom: 1rem !important;
+  }
+
+  h1, h2, h3 {
+    color: #0f172a !important;
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+
+  p, span, li {
+    color: #1e293b !important;
   }
 }
 

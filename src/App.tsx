@@ -195,7 +195,7 @@ export function App() {
   };
 
   return (
-    <div className="relative min-h-screen bg-[#070B14] text-slate-100 selection:bg-cyan-500/30 selection:text-cyan-200">
+    <div className="relative min-h-screen bg-slate-50 dark:bg-[#070B14] text-slate-900 dark:text-slate-100 transition-colors selection:bg-indigo-500/30 selection:text-indigo-600 dark:selection:text-indigo-200">
       {/* Global Google Antigravity Particle Field Canvas across ALL pages (Desktop only, Lazy & Non-Blocking) */}
       <DesktopParticleBackground />
 
