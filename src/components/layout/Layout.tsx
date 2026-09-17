@@ -23,7 +23,7 @@ export function Layout({ activeView, onNavigate, children }: LayoutProps) {
         <header className="sticky top-0 z-20 flex h-16 w-full items-center justify-between border-b border-white/10 bg-[#070B14]/80 px-4 sm:px-8 backdrop-blur-xl">
           <div className="flex items-center gap-3">
             <div className="h-9 w-9 rounded-xl overflow-hidden border border-white/15 shadow-md">
-              <img src="/logo.jpg" alt="FullStack Master Logo" className="h-full w-full object-cover" />
+              <img src="/logo.webp" alt="FullStack Master Logo" width={36} height={36} decoding="async" className="h-full w-full object-cover" />
             </div>
             <div>
               <span className="font-black text-white text-sm sm:text-base tracking-tight">

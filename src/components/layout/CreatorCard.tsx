@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import saadImage from '../../assets/saadimage.jpg';
-import { Mail, ExternalLink, Clock } from 'lucide-react';
+import saadImage from '../../assets/saadimage.webp';
+import { ExternalLink, Clock } from 'lucide-react';
 
 function InstagramIcon({ className = "h-4 w-4" }: { className?: string }) {
   return (
@@ -55,6 +55,10 @@ export function CreatorCard({ variant = 'full', className = '' }: CreatorCardPro
                 <img
                   src={saadImage}
                   alt="Saâd Korma"
+                  width={36}
+                  height={36}
+                  loading="lazy"
+                  decoding="async"
                   className="h-full w-full object-cover rounded-[6px]"
                 />
               </div>
@@ -109,6 +113,10 @@ export function CreatorCard({ variant = 'full', className = '' }: CreatorCardPro
                 <img
                   src={saadImage}
                   alt="Saâd Korma"
+                  width={80}
+                  height={80}
+                  loading="lazy"
+                  decoding="async"
                   className="h-full w-full object-cover rounded-[13px] filter contrast-[1.02]"
                 />
               </div>

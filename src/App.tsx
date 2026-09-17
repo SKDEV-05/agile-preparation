@@ -1,20 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, Suspense, lazy } from 'react';
 import { Layout } from './components/layout/Layout';
 import { ActiveView } from './components/layout/Sidebar';
-import { Dashboard } from './pages/Dashboard';
-import { LaboratoryPage } from './pages/Laboratory';
-import { FinalExamPage } from './pages/FinalExam';
-import { ErrorsPage } from './pages/Errors';
-import { FlashcardsPage } from './pages/Flashcards';
-import { CourseViewer } from './components/course/CourseViewer';
-import { QuizRunner } from './components/quiz/QuizRunner';
+import { CurriculumHub } from './pages/CurriculumHub';
+import { ViewSkeleton } from './components/common/ViewSkeleton';
 import { COURSE_MAP } from './data/course';
 import { QUESTIONS_BY_PART } from './data/questions';
 import { PartId } from './types';
-import { CurriculumHub } from './pages/CurriculumHub';
-import { AntigravityParticleField } from './components/3d/AntigravityParticleField';
 import { useScrollReveal } from './hooks/useScrollReveal';
 import { trackPageView, analytics } from './lib/analytics';
+
+// Lazy-load secondary views & heavy dependencies for optimal LCP/FCP
+const Dashboard = lazy(() => import('./pages/Dashboard').then(m => ({ default: m.Dashboard })));
+const LaboratoryPage = lazy(() => import('./pages/Laboratory').then(m => ({ default: m.LaboratoryPage })));
+const FinalExamPage = lazy(() => import('./pages/FinalExam').then(m => ({ default: m.FinalExamPage })));
+const ErrorsPage = lazy(() => import('./pages/Errors').then(m => ({ default: m.ErrorsPage })));
+const FlashcardsPage = lazy(() => import('./pages/Flashcards').then(m => ({ default: m.FlashcardsPage })));
+const CourseViewer = lazy(() => import('./components/course/CourseViewer').then(m => ({ default: m.CourseViewer })));
+const QuizRunner = lazy(() => import('./components/quiz/QuizRunner').then(m => ({ default: m.QuizRunner })));
+const AntigravityParticleField = lazy(() => import('./components/3d/AntigravityParticleField').then(m => ({ default: m.AntigravityParticleField })));
 
 // Map URL pathname to internal ActiveView
 function getInitialView(): ActiveView {
@@ -66,7 +69,6 @@ export function App() {
       'errors': 'Carnet Pédagogique de Révision des Erreurs | Full Stack 2A',
     };
 
-    const targetKey = quizPartId ? `Quiz ${quizPartId}` : activeView;
     if (titles[activeView]) {
       document.title = titles[activeView];
     }
@@ -84,7 +86,6 @@ export function App() {
 
   const handleNavigate = (view: ActiveView, partId?: PartId) => {
     setQuizPartId(null);
-    const target = partId || view;
     if (partId) {
       setActiveView(partId as ActiveView);
     } else {
@@ -182,13 +183,17 @@ export function App() {
 
   return (
     <div className="relative min-h-screen bg-[#070B14] text-slate-100 selection:bg-cyan-500/30 selection:text-cyan-200">
-      {/* Global Google Antigravity Particle Field Canvas across ALL pages */}
-      <AntigravityParticleField />
+      {/* Global Google Antigravity Particle Field Canvas across ALL pages (Lazy & Non-Blocking) */}
+      <Suspense fallback={null}>
+        <AntigravityParticleField />
+      </Suspense>
 
       {/* Foreground Website Content */}
       <div className="relative z-10">
         <Layout activeView={activeView} onNavigate={handleNavigate}>
-          {renderContent()}
+          <Suspense fallback={<ViewSkeleton />}>
+            {renderContent()}
+          </Suspense>
         </Layout>
       </div>
     </div>

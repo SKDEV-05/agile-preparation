@@ -2,7 +2,7 @@ import React from 'react';
 import { CreatorCard } from './CreatorCard';
 import { Heart, BookOpen, FlaskConical, GraduationCap, ChevronRight } from 'lucide-react';
 import { ActiveView } from './Sidebar';
-import logoImg from '../../assets/logo.jpg';
+import logoImg from '../../assets/logo.webp';
 
 interface FooterProps {
   onNavigate?: (view: ActiveView) => void;
@@ -193,7 +193,7 @@ export function Footer({ onNavigate }: FooterProps) {
       <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-400">
         <div className="flex items-center gap-2.5">
           <div className="h-7 w-7 rounded-lg overflow-hidden border border-white/10 shrink-0">
-            <img src={logoImg} alt="Logo FullStack 2A" className="h-full w-full object-cover" />
+            <img src={logoImg} alt="Logo FullStack 2A" width={28} height={28} loading="lazy" decoding="async" className="h-full w-full object-cover" />
           </div>
           <span className="font-bold text-white">FULLSTACK <span className="text-indigo-400">2A</span></span>
           <span className="text-slate-600">|</span>

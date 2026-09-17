@@ -18,7 +18,7 @@ import { useProgress } from '../../store/progressStore';
 import { Progress } from '../ui/Progress';
 import { CreatorCard } from './CreatorCard';
 import { cn } from '../../lib/utils';
-import logoImg from '../../assets/logo.jpg';
+import logoImg from '../../assets/logo.webp';
 
 export type ActiveView = 'curriculum-hub' | 'dashboard' | 'part1' | 'part2' | 'part3' | 'part4' | 'part5' | 'simulators' | 'flashcards' | 'errors' | 'final-exam';
 
@@ -62,7 +62,7 @@ export function Sidebar({ activeView, onNavigate, isOpenMobile, onCloseMobile }:
             className="flex items-center gap-3 text-left group focus:outline-none"
           >
             <div className="h-10 w-10 shrink-0 rounded-xl overflow-hidden shadow-md border border-white/15 transition-transform group-hover:scale-105">
-              <img src={logoImg} alt="Logo FullStack 2A" className="h-full w-full object-cover" />
+              <img src={logoImg} alt="Logo FullStack 2A" width={40} height={40} decoding="async" className="h-full w-full object-cover" />
             </div>
             <div>
               <div className="flex items-center gap-1 font-black tracking-tight text-white text-sm sm:text-base">

@@ -60,9 +60,9 @@ export function Header({ activeView, onNavigate, onOpenMobileSidebar }: HeaderPr
 
         {/* Title and subtitle */}
         <div className="truncate">
-          <h1 className="text-sm font-bold text-white sm:text-base leading-none truncate">
+          <div role="heading" aria-level={2} className="text-sm font-bold text-white sm:text-base leading-none truncate">
             {breadcrumb.title}
-          </h1>
+          </div>
           <p className="hidden sm:block text-xs text-slate-400 mt-1 truncate">
             {breadcrumb.subtitle}
           </p>
@@ -75,6 +75,7 @@ export function Header({ activeView, onNavigate, onOpenMobileSidebar }: HeaderPr
         {activeView !== 'curriculum-hub' && (
           <button
             onClick={() => onNavigate('curriculum-hub')}
+            aria-label="Revenir au choix des modules 2ème Année"
             className="hidden sm:inline-flex items-center gap-1.5 rounded-xl border border-white/10 bg-slate-900/90 px-3 py-1.5 text-xs font-bold text-slate-300 hover:bg-slate-800 hover:text-white transition-colors shadow-xs"
             title="Revenir au choix des matières 2ème Année"
           >
@@ -87,6 +88,7 @@ export function Header({ activeView, onNavigate, onOpenMobileSidebar }: HeaderPr
         {errorCount > 0 && (
           <button
             onClick={() => onNavigate('errors')}
+            aria-label={`Voir les ${errorCount} questions à réviser`}
             className="flex items-center gap-1.5 rounded-xl border border-amber-500/30 bg-amber-500/10 px-2.5 py-1.5 text-xs font-semibold text-amber-300 hover:bg-amber-500/20 active:bg-amber-500/30 transition-colors"
             title={`${errorCount} questions à revoir`}
           >

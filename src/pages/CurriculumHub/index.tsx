@@ -20,7 +20,7 @@ import {
 } from 'lucide-react';
 import { Button } from '../../components/ui/Button';
 import { Hero3DScene } from '../../components/3d/Hero3DScene';
-import logoImg from '../../assets/logo.jpg';
+import logoImg from '../../assets/logo.webp';
 
 interface CurriculumHubProps {
   onSelectAgile: () => void;
@@ -226,6 +226,10 @@ export function CurriculumHub({ onSelectAgile }: CurriculumHubProps) {
             <img 
               src={logoImg} 
               alt="Logo FullStack 2A" 
+              width={20}
+              height={20}
+              fetchPriority="high"
+              decoding="async"
               className="h-5 w-5 rounded-md object-cover ring-1 ring-indigo-400/50" 
             />
             <span>Cursus Développement Digital · 2ème Année</span>
