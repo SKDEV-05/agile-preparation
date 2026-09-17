@@ -122,7 +122,7 @@ export function CreatorCard({ variant = 'full', className = '' }: CreatorCardPro
                   className="h-full w-full object-cover rounded-[13px] filter contrast-[1.02]"
                 />
               </div>
-              <span className="absolute -bottom-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-emerald-500 ring-3 ring-slate-900 shadow-xs" title="En direct / En ligne">
+              <span aria-hidden="true" className="absolute -bottom-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-emerald-500 ring-3 ring-slate-900 shadow-xs" title="En direct / En ligne">
                 <span className="h-2 w-2 rounded-full bg-white animate-ping opacity-75" />
                 <span className="absolute h-2 w-2 rounded-full bg-white" />
               </span>
@@ -141,7 +141,7 @@ export function CreatorCard({ variant = 'full', className = '' }: CreatorCardPro
 
               <h3 className="mt-1.5 text-lg sm:text-xl font-black text-white flex items-center gap-2">
                 <span>Saâd Korma</span>
-                <span className="flex h-5 w-5 items-center justify-center rounded-full bg-blue-500 text-white text-[11px]" title="Créateur vérifié">
+                <span aria-label="Créateur vérifié" className="flex h-5 w-5 items-center justify-center rounded-full bg-blue-500 text-white text-[11px]" title="Créateur vérifié">
                   ✓
                 </span>
               </h3>
@@ -161,6 +161,7 @@ export function CreatorCard({ variant = 'full', className = '' }: CreatorCardPro
               href="https://www.instagram.com/saadkorma_dev/"
               target="_blank"
               rel="noopener noreferrer"
+              aria-label="Instagram de Saâd Korma @saadkorma_dev"
               className="flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-pink-500 via-purple-600 to-indigo-600 text-white text-xs font-bold shadow-md shadow-pink-500/20 hover:shadow-pink-500/40 hover:scale-105 transition-all"
             >
               <InstagramIcon className="h-4 w-4" />
