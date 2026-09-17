@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Générateur Canvas OG Image (1200x630)</title>
+  <style>
+    body {
+      background: #020617;
+      color: #F8FAFC;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+    h1 { font-size: 24px; margin: 0; }
+    p { color: #94A3B8; margin: 0; }
+    .controls {
+      display: flex;
+      gap: 15px;
+    }
+    button {
+      background: linear-gradient(135deg, #4F46E5, #06B6D4);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      font-size: 16px;
+      font-weight: 700;
+      border-radius: 10px;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(79, 70, 229, 0.4);
+    }
+    button:hover { opacity: 0.95; }
+    canvas {
+      width: 900px;
+      height: 472.5px; /* scale for preview, native is 1200x630 */
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 12px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+    }
+  </style>
+</head>
+<body>
+  <h1>Générateur Canvas · og-image.png (1200x630 px)</h1>
+  <p>Rendu natif HTML5 Canvas aux dimensions exactes Open Graph standard 1.91:1.</p>
+  <div class="controls">
+    <button onclick="downloadPNG()">Télécharger og-image.png</button>
+  </div>
+  <canvas id="ogCanvas" width="1200" height="630"></canvas>
+
+  <script>
+    const canvas = document.getElementById('ogCanvas');
+    const ctx = canvas.getContext('2d');
+
+    function render() {
+      const W = 1200, H = 630;
+
+      // 1. Fond sombre
+      const bg = ctx.createLinearGradient(0, 0, W, H);
+      bg.addColorStop(0, '#070B14');
+      bg.addColorStop(1, '#0A0F1D');
+      ctx.fillStyle = bg;
+      ctx.fillRect(0, 0, W, H);
+
+      // Glow Indigo top-left
+      const g1 = ctx.createRadialGradient(140, 80, 10, 140, 80, 500);
+      g1.addColorStop(0, 'rgba(79, 70, 229, 0.35)');
+      g1.addColorStop(1, 'rgba(79, 70, 229, 0)');
+      ctx.fillStyle = g1;
+      ctx.fillRect(0, 0, W, H);
+
+      // Glow Cyan bottom-right
+      const g2 = ctx.createRadialGradient(1060, 530, 10, 1060, 530, 500);
+      g2.addColorStop(0, 'rgba(6, 182, 212, 0.25)');
+      g2.addColorStop(1, 'rgba(6, 182, 212, 0)');
+      ctx.fillStyle = g2;
+      ctx.fillRect(0, 0, W, H);
+
+      // Glow Violet center-right
+      const g3 = ctx.createRadialGradient(800, 260, 10, 800, 260, 380);
+      g3.addColorStop(0, 'rgba(168, 85, 247, 0.18)');
+      g3.addColorStop(1, 'rgba(168, 85, 247, 0)');
+      ctx.fillStyle = g3;
+      ctx.fillRect(0, 0, W, H);
+
+      // Grille tech
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.025)';
+      ctx.lineWidth = 1;
+      for (let x = 0; x <= W; x += 40) {
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, H);
+        ctx.stroke();
+      }
+      for (let y = 0; y <= H; y += 40) {
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(W, y);
+        ctx.stroke();
+      }
+
+      // Cadre carte
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.09)';
+      ctx.lineWidth = 1;
+      roundRect(ctx, 20, 20, W - 40, H - 40, 24);
+      ctx.stroke();
+
+      // Top accent gradient bar
+      const topGrad = ctx.createLinearGradient(64, 0, W - 64, 0);
+      topGrad.addColorStop(0, '#4F46E5');
+      topGrad.addColorStop(0.5, '#06B6D4');
+      topGrad.addColorStop(1, '#10B981');
+      ctx.fillStyle = topGrad;
+      roundRect(ctx, 64, 23, W - 128, 3, 1.5);
+      ctx.fill();
+
+      // Header Brand
+      const hY = 56;
+      // Logo box
+      ctx.fillStyle = '#4F46E5';
+      roundRect(ctx, 64, hY, 52, 52, 14);
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
+      ctx.stroke();
+
+      // Diamond logo
+      ctx.fillStyle = '#FFFFFF';
+      ctx.beginPath();
+      ctx.moveTo(64 + 26, hY + 13);
+      ctx.lineTo(64 + 39, hY + 26);
+      ctx.lineTo(64 + 26, hY + 39);
+      ctx.lineTo(64 + 13, hY + 26);
+      ctx.closePath();
+      ctx.fill();
+
+      // Center teal dot
+      ctx.fillStyle = '#14B8A6';
+      ctx.beginPath();
+      ctx.arc(64 + 26, hY + 26, 4.5, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Brand Title
+      ctx.font = 'bold 26px "Segoe UI", -apple-system, sans-serif';
+      ctx.fillStyle = '#FFFFFF';
+      ctx.fillText('FULLSTACK', 132, hY + 26);
+      ctx.fillStyle = '#38BDF8';
+      ctx.fillText('2A', 286, hY + 26);
+
+      ctx.font = 'bold 12px monospace';
+      ctx.fillStyle = '#94A3B8';
+      ctx.fillText('DEVELOPPEMENT DIGITAL · OFPPT MAROC', 132, hY + 46);
+
+      // Top Right Pill
+      const pW = 300, pH = 42;
+      const pX = W - 64 - pW, pY = hY + 5;
+      ctx.fillStyle = 'rgba(15, 23, 42, 0.85)';
+      roundRect(ctx, pX, pY, pW, pH, 21);
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.12)';
+      ctx.stroke();
+
+      ctx.fillStyle = '#10B981';
+      ctx.beginPath();
+      ctx.arc(pX + 23, pY + 21, 5, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.font = 'bold 14px "Segoe UI", sans-serif';
+      ctx.fillStyle = '#E2E8F0';
+      ctx.fillText('Cursus Officiel & Examens EFM', pX + 40, pY + 26);
+
+      // Main Tag
+      const cY = 175;
+      ctx.strokeStyle = '#818CF8';
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.moveTo(64, cY + 2);
+      ctx.lineTo(84, cY + 2);
+      ctx.stroke();
+
+      ctx.font = 'bold 13px monospace';
+      ctx.fillStyle = '#818CF8';
+      ctx.fillText('REVISION CURSUS 2EME ANNEE · WEB FULL STACK', 94, cY + 6);
+
+      // Main Title
+      ctx.font = '900 54px "Segoe UI", sans-serif';
+      ctx.fillStyle = '#FFFFFF';
+      ctx.fillText('FullStack Master · 2ème Année', 64, cY + 68);
+
+      // Subtitle
+      ctx.font = '500 20px "Segoe UI", sans-serif';
+      ctx.fillStyle = '#CBD5E1';
+      ctx.fillText('Révisez le cursus Développement Digital OFPPT : cours interactifs, 200 QCM corrigés,', 64, cY + 115);
+      ctx.fillStyle = '#94A3B8';
+      ctx.fillText('simulateurs interactifs PERT/Gantt et préparation complète aux examens.', 64, cY + 145);
+
+      // Badges
+      const bY = cY + 195;
+      const badges = [
+        { text: '📝  200 QCM Corrigés', bg: 'rgba(79, 70, 229, 0.18)', border: 'rgba(99, 102, 241, 0.4)', fg: '#C7D2FE', w: 210 },
+        { text: '⚡  Simulateurs PERT & Gantt', bg: 'rgba(6, 182, 212, 0.15)', border: 'rgba(6, 182, 212, 0.4)', fg: '#A5F3FC', w: 265 },
+        { text: '🎯  Modules M201 - M204', bg: 'rgba(168, 85, 247, 0.15)', border: 'rgba(168, 85, 247, 0.4)', fg: '#E9D5FF', w: 235 },
+        { text: '🛡️  100% Conforme EFM', bg: 'rgba(16, 185, 129, 0.15)', border: 'rgba(16, 185, 129, 0.4)', fg: '#A7F3D0', w: 215 },
+      ];
+      let bX = 64;
+      ctx.font = 'bold 15px "Segoe UI", sans-serif';
+      badges.forEach(b => {
+        ctx.fillStyle = b.bg;
+        roundRect(ctx, bX, bY, b.w, 44, 12);
+        ctx.fill();
+        ctx.strokeStyle = b.border;
+        ctx.lineWidth = 1;
+        ctx.stroke();
+
+        ctx.fillStyle = b.fg;
+        ctx.fillText(b.text, bX + 16, bY + 28);
+        bX += b.w + 16;
+      });
+
+      // Divider
+      const divY = 512;
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(64, divY);
+      ctx.lineTo(W - 64, divY);
+      ctx.stroke();
+
+      // CTA Button
+      const ctaGrad = ctx.createLinearGradient(64, divY + 22, 64 + 345, divY + 78);
+      ctaGrad.addColorStop(0, '#4F46E5');
+      ctaGrad.addColorStop(0.5, '#4338CA');
+      ctaGrad.addColorStop(1, '#06B6D4');
+      ctx.fillStyle = ctaGrad;
+      roundRect(ctx, 64, divY + 22, 345, 56, 16);
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+      ctx.stroke();
+
+      ctx.font = '800 19px "Segoe UI", sans-serif';
+      ctx.fillStyle = '#FFFFFF';
+      ctx.fillText("Commencer l'entraînement →", 88, divY + 57);
+
+      // Trust Indicators
+      ctx.font = '600 15px "Segoe UI", sans-serif';
+      ctx.fillStyle = '#94A3B8';
+      ctx.fillText('✓  100% Libre & Gratuit', 685, divY + 56);
+
+      // Domain
+      ctx.fillStyle = 'rgba(56, 189, 248, 0.1)';
+      roundRect(ctx, W - 64 - 230, divY + 28, 230, 44, 10);
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(56, 189, 248, 0.3)';
+      ctx.stroke();
+
+      ctx.font = 'bold 14px monospace';
+      ctx.fillStyle = '#38BDF8';
+      ctx.fillText('fullstack-2a.vercel.app', W - 64 - 212, divY + 55);
+    }
+
+    function roundRect(ctx, x, y, width, height, radius) {
+      ctx.beginPath();
+      ctx.moveTo(x + radius, y);
+      ctx.lineTo(x + width - radius, y);
+      ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+      ctx.lineTo(x + width, y + height - radius);
+      ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+      ctx.lineTo(x + radius, y + height);
+      ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+      ctx.lineTo(x, y + radius);
+      ctx.quadraticCurveTo(x, y, x + radius, y);
+      ctx.closePath();
+    }
+
+    function downloadPNG() {
+      const link = document.createElement('a');
+      link.download = 'og-image.png';
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    }
+
+    window.onload = render;
+  </script>
+</body>
+</html>

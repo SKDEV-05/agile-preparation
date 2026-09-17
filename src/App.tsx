@@ -53,7 +53,7 @@ export function App() {
   // Sync document title and meta description per route for Googlebot indexing
   React.useEffect(() => {
     const titles: Record<string, string> = {
-      'curriculum-hub': 'Full Stack Web Master · 2ème Année | Plateforme d’Excellence OFPPT',
+      'curriculum-hub': 'FullStack Master · 2ème Année Développement Digital',
       'dashboard': 'Module Approche Agile & Gestion de Projet (M201) | Full Stack 2A',
       'part1': 'Partie 1 : Fondamentaux & Cycle de Vie Informatique | Full Stack 2A',
       'part2': 'Partie 2 : Planifier un projet · Réseau PERT & Gantt | Full Stack 2A',
