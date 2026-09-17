@@ -1,0 +1,32 @@
+# FullStack Master · 2ème Année Développement Digital
+
+> Plateforme éducative complète de révision et préparation aux examens de 2ème Année Développement Digital (Full Stack Web & Mobile) de l'OFPPT au Maroc. Cours interactifs synthétisés, 200 QCM officiels corrigés et 5 simulateurs professionnels (PERT, Gantt, Jira, Git, CI/CD).
+
+FullStack Master est un hub pédagogique d'excellence conçu pour les stagiaires de la filière Développement Digital. Il propose un cursus complet aligné sur le référentiel officiel OFPPT, couvrant l'Approche Agile (M201), le cycle en V, les calculs de réseaux PERT, la planification Gantt, le framework Scrum, les outils Jira, l'architecture Git 4 zones et les pipelines DevOps GitLab CI/CD.
+
+## Modules du Cursus
+
+- [Partie 1 : Fondamentaux & Cycle de Vie](https://fullstack-2a.vercel.app/course/part1): Cycle de vie du logiciel, cascade, cycle en V, comparaison approches prédictives et agiles.
+- [Partie 2 : Planifier un projet · Réseau PERT & Gantt](https://fullstack-2a.vercel.app/course/part2): Calcul PERT complet, dates au plus tôt, dates au plus tard, marges totales, marges libres, chemin critique et diagramme de Gantt.
+- [Partie 3 : Méthode Agile, Framework Scrum & Jira](https://fullstack-2a.vercel.app/course/part3): Rôles Scrum (PO, Scrum Master, Developers), cérémonies, Definition of Done, User Stories INVEST, Story Points et estimation Poker Planning.
+- [Partie 4 : Architecture Git 4 Zones & SonarQube](https://fullstack-2a.vercel.app/course/part4): Gestion de versions Git avancée, zones Working Tree, Index, Local Repo, Remote Repo, résolution de conflits et analyse statique SonarQube.
+- [Partie 5 : Culture DevOps & Pipelines GitLab CI/CD](https://fullstack-2a.vercel.app/course/part5): Culture CALMS, automatisation de tests, syntaxe de configuration .gitlab-ci.yml, jobs, stages et runners.
+
+## Simulateurs Interactifs & Laboratoire
+
+- [Calculateur de Réseau PERT](https://fullstack-2a.vercel.app/simulators): Simulateur interactif de graphe PERT avec calcul dynamique automatique du chemin critique et des marges.
+- [Diagramme de Gantt Dynamique](https://fullstack-2a.vercel.app/simulators): Visualiseur de calendrier de tâches avec jalons et dépendances de projet.
+- [Tableau Scrum & Poker Planning](https://fullstack-2a.vercel.app/simulators): Simulateur de gestion de sprint, manipulation de User Stories et estimation en Story Points.
+- [Terminal Git Interactif](https://fullstack-2a.vercel.app/simulators): Simulateur des flux entre les 4 zones Git avec visualisation graphique des commandes.
+- [Simulateur de Pipeline CI/CD](https://fullstack-2a.vercel.app/simulators): Exécution visuelle de pipelines de build, test et déploiement continu.
+
+## Examens & Entraînements
+
+- [Examen Blanc Officiel (50 QCM)](https://fullstack-2a.vercel.app/final-exam): Examen complet chronométré de 45 minutes conforme aux épreuves de fin de module (EFM) avec bilan analytique par domaine.
+- [Flashcards 3D de Mémorisation](https://fullstack-2a.vercel.app/flashcards): 18 cartes mémo interactives 3D pour réviser rapidement les concepts et définitions clés.
+- [Carnet Pédagogique des Erreurs](https://fullstack-2a.vercel.app/errors): Système d'auto-remédiation ciblant spécifiquement les questions non maîtrisées.
+
+## Informations Complémentaires
+
+- [Auteur & Concepteur : Saâd Korma](https://www.instagram.com/saadkorma_dev/): Développeur Web & Mobile Full Stack, créateur de la plateforme.
+- [Version complète pour LLM](https://fullstack-2a.vercel.app/llms-full.txt): Documentation exhaustive au format texte enrichi pour assistants d'intelligence artificielle et agents autonomes.

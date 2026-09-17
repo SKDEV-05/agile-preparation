@@ -1,0 +1,69 @@
+# FullStack Master · 2ème Année Développement Digital (Documentation Complète)
+
+> Plateforme éducative complète de révision et préparation aux examens de 2ème Année Développement Digital (Full Stack Web & Mobile) de l'OFPPT au Maroc. Cours interactifs synthétisés, 200 QCM officiels corrigés et 5 simulateurs professionnels (PERT, Gantt, Jira, Git, CI/CD). Conçu par Saâd Korma.
+
+Site Web officiel : https://fullstack-2a.vercel.app/
+
+---
+
+## 1. Vue d'Ensemble & Objectifs Pédagogiques
+
+FullStack Master est spécialement conçu pour accompagner les étudiants et stagiaires de la filière Développement Digital (Option Web & Mobile Full Stack) au Maroc dans la réussite de leurs examens de passage et examens de fin de module (EFM).
+
+La plateforme regroupe :
+- 5 parties de cours magistraux synthétisés et vulgarisés.
+- 5 simulateurs interactifs en temps réel pour expérimenter les outils d'ingénierie logicielle.
+- Plus de 200 questions à choix multiples (QCM) officielles conformes aux exigences d'évaluation OFPPT.
+- Un mode Examen Blanc chronométré de 50 questions simulant les conditions réelles d'examen.
+- 18 Flashcards 3D pour la mémorisation active des définitions clés.
+- Un carnet pédagogique de révision des erreurs enregistrées.
+
+---
+
+## 2. Programme Détaillé du Module Approche Agile (M201)
+
+### Partie 1 : Fondamentaux & Cycle de Vie Informatique
+- URL : https://fullstack-2a.vercel.app/course/part1
+- Concepts clés : Cycle de vie du logiciel, modèle en cascade (Waterfall), cycle en V, limites des méthodes prédictives face aux changements d'exigences, émergence du Manifeste Agile (2001), 4 valeurs et 12 principes agiles.
+
+### Partie 2 : Planifier un Projet · Réseau PERT & Diagramme de Gantt
+- URL : https://fullstack-2a.vercel.app/course/part2
+- Concepts clés : Décomposition en tâches élémentaires (WBS), antécédences, calcul des dates au plus tôt (Early Start/Finish), calcul des dates au plus tard (Late Start/Finish), marge totale (Late Start - Early Start), marge libre, identification du chemin critique (marge totale nulle), tracé du réseau PERT et calendrier prévisionnel de Gantt avec gestion des dépendances.
+
+### Partie 3 : Méthode Agile, Framework Scrum & Outils Jira
+- URL : https://fullstack-2a.vercel.app/course/part3
+- Concepts clés : Les 3 piliers Scrum (Transparence, Inspection, Adaptation), les 3 rôles (Product Owner responsable de la valeur, Scrum Master garant du cadre, Developers pluridisciplinaires auto-organisés), les 5 événements timeboxés (Sprint 1-4 semaines, Sprint Planning, Daily Scrum 15 min debout, Sprint Review, Rétrospective d'équipe), les 3 artefacts et leurs engagements (Product Backlog & Product Goal, Sprint Backlog & Sprint Goal, Increment & Definition of Done), rédaction de User Stories selon le critère INVEST, estimation relative en Story Points, suite de Fibonacci et animation de Planning Poker.
+
+### Partie 4 : Architecture Git 4 Zones & Qualité SonarQube
+- URL : https://fullstack-2a.vercel.app/course/part4
+- Concepts clés : Gestion de versions distribuée, anatomie des 4 zones (Working Directory, Staging Area / Index, Local Repository, Remote Repository), commandes fondamentales (status, add, commit, push, pull, fetch, branch, checkout, switch, merge, rebase, cherry-pick), résolution méthodique des conflits de merge, stratégie de branching Git Flow et GitHub Flow, intégration de l'analyse statique de code SonarQube, Clean as You Code et Quality Gates.
+
+### Partie 5 : Culture DevOps & Pipelines GitLab CI/CD
+- URL : https://fullstack-2a.vercel.app/course/part5
+- Concepts clés : Philosophie DevOps, modèle CALMS (Culture, Automation, Lean, Measurement, Sharing), cycle de vie CI/CD (Intégration Continue, Livraison Continue, Déploiement Continu), structure syntaxique du fichier .gitlab-ci.yml, définition des stages (build, test, deploy), jobs, artifacts, variables d'environnement secrètes, cache et architecture des GitLab Runners (Docker, Shell, Kubernetes).
+
+---
+
+## 3. Simulateurs Temps Réel (Laboratoire)
+
+- **Calculateur Réseau PERT** (https://fullstack-2a.vercel.app/simulators) : Permet de saisir des tâches avec durées et antécédents, et calcule instantanément le graphe d'ordonnancement, les marges et le chemin critique.
+- **Gantt Planning Interactif** (https://fullstack-2a.vercel.app/simulators) : Visualisation chronologique sur calendrier avec barres déplaçables et liaisons de dépendance.
+- **Scrum Board & Poker Planning** (https://fullstack-2a.vercel.app/simulators) : Tableau Kanban interactif avec colonnes To Do, In Progress, Done, et jeu de cartes Fibonacci.
+- **Terminal Git 4 Zones** (https://fullstack-2a.vercel.app/simulators) : Environnement CLI interactif simulant l'effet des commandes Git sur les 4 zones mémoires.
+- **Simulateur DevOps Pipeline** (https://fullstack-2a.vercel.app/simulators) : Visualisation des étapes de compilation, tests unitaires, analyse SonarQube et déploiement en direct.
+
+---
+
+## 4. Outils d'Évaluation & Entraînement
+
+- **Examen Blanc Officiel** (https://fullstack-2a.vercel.app/final-exam) : 50 questions tirées au sort, 45 minutes chrono, analyse des points forts et points faibles par domaine à la fin.
+- **Flashcards 3D** (https://fullstack-2a.vercel.app/flashcards) : Révision rapide des définitions avec bascule 3D rectoverso.
+- **Carnet des Erreurs** (https://fullstack-2a.vercel.app/errors) : Historique personnalisé des questions manquées avec explications détaillées.
+
+---
+
+## 5. Données Techniques & Auteur
+
+- Développeur & Auteur : Saâd Korma (https://www.instagram.com/saadkorma_dev/)
+- Stack Technique : React 19, TypeScript, Tailwind CSS v4, Vite 8, Vercel Edge Network
+- Hébergement : https://fullstack-2a.vercel.app/

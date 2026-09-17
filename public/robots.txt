@@ -4,3 +4,7 @@ Allow: /
 
 # Sitemap index
 Sitemap: https://fullstack-2a.vercel.app/sitemap.xml
+
+# LLM Documentation
+# llms-txt: https://fullstack-2a.vercel.app/llms.txt
+
