@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { ActiveView } from './Sidebar';
+import { Footer } from './Footer';
 import { PartId } from '../../types';
 import { ShareButton } from '../common/ShareButton';
 
 const Sidebar = React.lazy(() => import('./Sidebar').then(m => ({ default: m.Sidebar })));
 const Header = React.lazy(() => import('./Header').then(m => ({ default: m.Header })));
-const Footer = React.lazy(() => import('./Footer').then(m => ({ default: m.Footer })));
 
 interface LayoutProps {
   activeView: ActiveView;
@@ -48,9 +48,7 @@ export function Layout({ activeView, onNavigate, children }: LayoutProps) {
         {/* Hub Content */}
         <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           {children}
-          <React.Suspense fallback={null}>
-            <Footer onNavigate={onNavigate} />
-          </React.Suspense>
+          <Footer onNavigate={onNavigate} />
         </main>
       </div>
     );
@@ -80,9 +78,7 @@ export function Layout({ activeView, onNavigate, children }: LayoutProps) {
         </React.Suspense>
         <main className="flex-1 px-3 py-5 sm:px-6 sm:py-8 lg:px-8 max-w-7xl w-full mx-auto">
           {children}
-          <React.Suspense fallback={null}>
-            <Footer onNavigate={onNavigate} />
-          </React.Suspense>
+          <Footer onNavigate={onNavigate} />
         </main>
       </div>
     </div>
