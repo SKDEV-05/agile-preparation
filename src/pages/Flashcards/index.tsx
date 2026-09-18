@@ -168,7 +168,6 @@ export function FlashcardsPage() {
                   <span className="rounded-lg bg-[#10B981]/15 text-[#10B981] border border-[#10B981]/30 px-2.5 py-1 text-xs font-mono font-bold">
                     Réponse & Synthèse Pédagogique
                   </span>
-                  <span className="text-[11px] font-mono font-bold text-[#10B981]">Concept Clé 2A</span>
                 </div>
 
                 <div className="my-auto overflow-y-auto max-h-48 pr-1 text-left no-scrollbar">

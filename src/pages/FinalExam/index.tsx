@@ -373,13 +373,10 @@ export function FinalExamPage({ onExit, onGoToErrors }: FinalExamProps) {
                 <span className="text-xs font-bold text-[#10B981] bg-[#10B981]/10 border border-[#10B981]/30 px-2.5 py-1 rounded-lg font-mono">
                   Question {currentIndex + 1} / {totalQuestions}
                 </span>
-                <Badge variant="outline" size="sm" className="bg-black/5 dark:bg-white/5 text-black dark:text-white border-black/10 dark:border-white/10 font-mono">
+                <Badge variant="outline" size="sm" className="bg-black/5 rounded-lg dark:bg-white/5 text-black dark:text-white border-transparent dark:border-white/10 font-mono">
                   {currentQuestion.tag}
                 </Badge>
-              </div>
-
-              {/* Flag button */}
-              <button
+                <button
                 onClick={() => toggleFlag(currentQuestion.id)}
                 className={`flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1.5 rounded-lg border transition-colors cursor-pointer ${
                   isFlagged
@@ -390,6 +387,10 @@ export function FinalExamPage({ onExit, onGoToErrors }: FinalExamProps) {
                 <Flag className={`h-3.5 w-3.5 ${isFlagged ? 'fill-[#22C55E] text-[#22C55E]' : ''}`} />
                 <span>{isFlagged ? 'Marquée' : 'Marquer pour révision'}</span>
               </button>
+              </div>
+
+              {/* Flag button */}
+              
             </div>
 
             {/* Question Text */}

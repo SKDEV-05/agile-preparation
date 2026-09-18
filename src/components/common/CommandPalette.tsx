@@ -194,7 +194,7 @@ export function CommandPalette({ isOpen, onClose, onNavigate }: CommandPalettePr
               setSelectedIndex(0);
             }}
             placeholder="Rechercher un cours, une notion, un simulateur, une question..."
-            className="flex-1 bg-transparent text-sm sm:text-base font-medium text-[#0A0A0A] dark:text-white placeholder-[#0A0A0A]/40 dark:placeholder-white/40 focus:outline-none"
+            className="flex-1 bg-transparent text-sm sm:text-base font-medium text-[#0A0A0A] dark:text-white placeholder-[#0A0A0A]/40 dark:placeholder-white/40 border-none outline-none ring-0 focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0 shadow-none"
           />
           {query && (
             <button

@@ -214,10 +214,18 @@ body {
   accent-color: #10b981;
 }
 
-/* Modern Web Guidance: Accessible Focus Visible */
-:focus-visible {
+/* Modern Web Guidance: Accessible Focus Visible (excluding inputs/textareas) */
+:focus-visible:not(input):not(textarea) {
   outline: 2px solid #10b981;
   outline-offset: 2px;
+}
+
+input:focus,
+input:focus-visible,
+textarea:focus,
+textarea:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
 }
 
 /* Modern Web Guidance: Balanced and Pretty Typography */

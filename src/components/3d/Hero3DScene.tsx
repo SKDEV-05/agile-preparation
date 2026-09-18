@@ -281,10 +281,7 @@ export function Hero3DScene() {
               <Sparkles className="h-3.5 w-3.5 text-[#10B981]" />
               <span>Studio interactif FullStack 2A</span>
             </span>
-            <span className="text-[#10B981] font-bold flex items-center gap-1 hover:underline cursor-pointer">
-              <span>Programme complet</span>
-              <ChevronRight className="h-3 w-3" />
-            </span>
+            
           </div>
         </div>
       </div>
