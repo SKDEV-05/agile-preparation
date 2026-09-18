@@ -160,55 +160,49 @@ export function CurriculumHub({ onSelectAgile, onOpenMethodology }: CurriculumHu
   ];
 
   return (
-    <div className="min-h-screen bg-transparent text-[#0A0A0A] dark:text-white py-6 sm:py-10 px-4 sm:px-6 lg:px-8 space-y-12 sm:space-y-14 transition-colors select-none">
+    <div className="min-h-screen bg-transparent text-[#0A0A0A] dark:text-white py-2 sm:py-8 px-0 sm:px-2 space-y-8 sm:space-y-12 transition-colors select-none w-full max-w-full overflow-hidden">
 
       {/* ═══════════════════════════════════════════════════════════════
           1. HERO COMMAND DECK (GENERAL FOR OFPPT FULLSTACK 2A)
           ═══════════════════════════════════════════════════════════════ */}
-      <section className="relative max-w-7xl mx-auto rounded-3xl overflow-hidden border border-black/10 dark:border-white/10 bg-gradient-to-b from-white/95 to-white/70 dark:from-[#0A0A0A]/95 dark:to-[#0A0A0A]/80 backdrop-blur-xl shadow-xl p-5 sm:p-8 lg:p-10">
+      <section className="relative max-w-7xl mx-auto rounded-2xl sm:rounded-3xl overflow-hidden border border-black/10 dark:border-white/10 bg-gradient-to-b from-white/95 to-white/70 dark:from-[#0A0A0A]/95 dark:to-[#0A0A0A]/80 backdrop-blur-xl shadow-lg p-3.5 sm:p-7 lg:p-10 w-full min-w-0">
         {/* Luminescent background aura */}
         <div className="absolute -right-20 -top-20 h-72 w-72 rounded-full bg-[#10B981]/15 blur-3xl pointer-events-none" />
         <div className="absolute left-1/4 -bottom-20 h-64 w-64 rounded-full bg-[#22C55E]/10 blur-3xl pointer-events-none" />
 
-        {/* TOP-RIGHT ACTIVE BADGE (HIGH Z-INDEX) */}
-        <div className="absolute top-4 sm:top-6 right-4 sm:right-6 z-20">
-          <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#10B981]/15 text-[#10B981] border-2 border-[#10B981] shadow-[0_0_20px_rgba(16,185,129,0.35)] text-xs font-bold font-mono">
-            <span className="h-2.5 w-2.5 rounded-full bg-[#10B981] animate-pulse" />
-            <span>Référentiel Officiel · 2A OFPPT</span>
-          </div>
-        </div>
-
         {/* Main 2-Column Hero Content */}
-        <div className="relative z-10 grid lg:grid-cols-12 gap-8 items-center pt-2">
+        <div className="relative z-10 grid lg:grid-cols-12 gap-6 sm:gap-8 items-center pt-1 w-full min-w-0">
 
           {/* Left Column: Brand + Headline + General Curriculum Copy + Mini Squares + Actions */}
-          <div className="lg:col-span-7 space-y-5 text-left">
+          <div className="lg:col-span-7 space-y-3.5 sm:space-y-5 text-left w-full min-w-0">
 
             {/* Logo Pill */}
-            <div className="inline-flex items-center gap-2 rounded-full bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 px-3.5 py-1 text-xs shadow-2xs">
+            <div className="inline-flex items-center gap-1.5 sm:gap-2 rounded-full bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 px-2.5 sm:px-3.5 py-1 text-xs shadow-2xs max-w-full min-w-0">
               <img
                 src={logoImg}
                 alt="Logo FullStack 2A"
-                width={20}
-                height={20}
-                className="h-5 w-5 rounded-md object-cover ring-1 ring-[#10B981]/40"
+                width={18}
+                height={18}
+                className="h-4.5 w-4.5 sm:h-5 sm:w-5 rounded-md object-cover ring-1 ring-[#10B981]/40 shrink-0"
               />
-              <span className="font-handwriting text-2xl font-black text-[#0A0A0A] dark:text-white leading-none">
+              <span className="font-handwriting text-xl sm:text-2xl font-black text-[#0A0A0A] dark:text-white leading-none shrink-0">
                 FullStack <span className="text-[#10B981]">2A</span>
               </span>
-              <span className="text-black/25 dark:text-white/25">·</span>
-              <span className="font-semibold text-xs text-[#0A0A0A]/75 dark:text-white/75">Développement Digital OFPPT</span>
+              <span className="text-black/25 dark:text-white/25 shrink-0">·</span>
+              <span className="font-semibold text-[11px] sm:text-xs text-[#0A0A0A]/75 dark:text-white/75 truncate">
+                Développement Digital OFPPT
+              </span>
             </div>
 
             {/* Headline */}
-            <div className="space-y-2">
-              <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-[#0A0A0A] dark:text-white leading-[1.08]">
+            <div className="space-y-1.5 sm:space-y-2">
+              <h1 className="text-2xl sm:text-5xl lg:text-6xl font-black tracking-tight text-[#0A0A0A] dark:text-white leading-[1.12]">
                 Apprendre avec méthode.{' '}
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#10B981] via-[#22C55E] to-[#10B981] block sm:inline">
                   Pratiquer en direct.
                 </span>
               </h1>
-              <p className="text-sm sm:text-base font-bold text-[#0A0A0A]/85 dark:text-white/85 tracking-tight">
+              <p className="text-xs sm:text-base font-bold text-[#0A0A0A]/85 dark:text-white/85 tracking-tight leading-snug">
                 La plateforme moderne pour réussir tes examens de 2ème année Full Stack.
               </p>
             </div>
@@ -221,37 +215,37 @@ export function CurriculumHub({ onSelectAgile, onOpenMethodology }: CurriculumHu
             </p>
 
             {/* MINI SQUARE INFORMATION CARDS (GENERAL CURRICULUM OVERVIEW) */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 pt-1">
-              <div className="rounded-2xl border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.04] p-3 shadow-xs hover:border-[#10B981]/40 transition-colors">
-                <div className="flex items-center gap-2 text-[#10B981] mb-1">
-                  <Layers className="h-4 w-4 text-[#10B981]" />
-                  <span className="text-xs font-mono font-bold">4 Modules</span>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-2.5 pt-1 w-full min-w-0">
+              <div className="rounded-xl sm:rounded-2xl border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.04] p-2.5 sm:p-3 shadow-xs min-w-0 overflow-hidden">
+                <div className="flex items-center gap-1.5 text-[#10B981] mb-0.5 sm:mb-1">
+                  <Layers className="h-3.5 w-3.5 shrink-0 text-[#10B981]" />
+                  <span className="text-xs font-mono font-bold truncate">4 Modules</span>
                 </div>
-                <div className="text-[11px] font-medium text-[#0A0A0A]/70 dark:text-white/70">Curriculum 2A</div>
+                <div className="text-[10px] sm:text-[11px] font-medium text-[#0A0A0A]/70 dark:text-white/70 truncate">Curriculum 2A</div>
               </div>
 
-              <div className="rounded-2xl border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.04] p-3 shadow-xs hover:border-[#22C55E]/40 transition-colors">
-                <div className="flex items-center gap-2 text-[#22C55E] mb-1">
-                  <Award className="h-4 w-4 text-[#22C55E]" />
-                  <span className="text-xs font-mono font-bold">650+ QCM</span>
+              <div className="rounded-xl sm:rounded-2xl border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.04] p-2.5 sm:p-3 shadow-xs min-w-0 overflow-hidden">
+                <div className="flex items-center gap-1.5 text-[#22C55E] mb-0.5 sm:mb-1">
+                  <Award className="h-3.5 w-3.5 shrink-0 text-[#22C55E]" />
+                  <span className="text-xs font-mono font-bold truncate">650+ QCM</span>
                 </div>
-                <div className="text-[11px] font-medium text-[#0A0A0A]/70 dark:text-white/70">Banque Corrigée</div>
+                <div className="text-[10px] sm:text-[11px] font-medium text-[#0A0A0A]/70 dark:text-white/70 truncate">Banque Corrigée</div>
               </div>
 
-              <div className="rounded-2xl border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.04] p-3 shadow-xs hover:border-[#10B981]/40 transition-colors">
-                <div className="flex items-center gap-2 text-[#10B981] mb-1">
-                  <FlaskConical className="h-4 w-4 text-[#10B981]" />
-                  <span className="text-xs font-mono font-bold">Labs Live</span>
+              <div className="rounded-xl sm:rounded-2xl border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.04] p-2.5 sm:p-3 shadow-xs min-w-0 overflow-hidden">
+                <div className="flex items-center gap-1.5 text-[#10B981] mb-0.5 sm:mb-1">
+                  <FlaskConical className="h-3.5 w-3.5 shrink-0 text-[#10B981]" />
+                  <span className="text-xs font-mono font-bold truncate">Labs Live</span>
                 </div>
-                <div className="text-[11px] font-medium text-[#0A0A0A]/70 dark:text-white/70">Simulateurs Pratiques</div>
+                <div className="text-[10px] sm:text-[11px] font-medium text-[#0A0A0A]/70 dark:text-white/70 truncate">Simulateurs</div>
               </div>
 
-              <div className="rounded-2xl border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.04] p-3 shadow-xs hover:border-[#22C55E]/40 transition-colors">
-                <div className="flex items-center gap-2 text-[#22C55E] mb-1">
-                  <Clock className="h-4 w-4 text-[#22C55E]" />
-                  <span className="text-xs font-mono font-bold">Barème EFM</span>
+              <div className="rounded-xl sm:rounded-2xl border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.04] p-2.5 sm:p-3 shadow-xs min-w-0 overflow-hidden">
+                <div className="flex items-center gap-1.5 text-[#22C55E] mb-0.5 sm:mb-1">
+                  <Clock className="h-3.5 w-3.5 shrink-0 text-[#22C55E]" />
+                  <span className="text-xs font-mono font-bold truncate">Barème EFM</span>
                 </div>
-                <div className="text-[11px] font-medium text-[#0A0A0A]/70 dark:text-white/70">Examens Blancs</div>
+                <div className="text-[10px] sm:text-[11px] font-medium text-[#0A0A0A]/70 dark:text-white/70 truncate">Examens Blancs</div>
               </div>
             </div>
 

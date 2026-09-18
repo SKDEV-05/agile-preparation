@@ -6,6 +6,7 @@ import {
   Award, 
   AlertTriangle, 
   ArrowRight, 
+  ArrowLeft,
   CheckCircle2, 
   Sparkles
 } from 'lucide-react';
@@ -115,7 +116,22 @@ export function MethodologyPage({ onNavigate }: MethodologyPageProps) {
   ];
 
   return (
-    <div className="max-w-5xl mx-auto py-4 space-y-8 sm:space-y-12 select-none">
+    <div className="max-w-5xl mx-auto py-2 sm:py-4 space-y-6 sm:space-y-10 select-none">
+      {/* Top Back Navigation Bar */}
+      <div className="flex items-center justify-between">
+        <button
+          onClick={() => onNavigate('curriculum-hub')}
+          className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl border border-black/15 dark:border-white/15 bg-white dark:bg-[#0A0A0A] text-xs font-bold text-[#0A0A0A] dark:text-white hover:border-[#10B981] hover:text-[#10B981] transition-all cursor-pointer shadow-xs active:scale-95"
+        >
+          <ArrowLeft className="h-4 w-4 text-[#10B981]" />
+          <span>Retour à l’accueil des modules</span>
+        </button>
+
+        <span className="text-xs font-mono text-[#0A0A0A]/50 dark:text-white/50 hidden sm:inline">
+          Guide Pédagogique 2A · OFPPT
+        </span>
+      </div>
+
       {/* Hero Header */}
       <section className="relative rounded-3xl border border-black/15 dark:border-white/15 bg-white dark:bg-[#0A0A0A] p-6 sm:p-10 shadow-xl overflow-hidden">
         <div className="absolute -right-20 -top-20 h-72 w-72 rounded-full bg-[#10B981]/10 blur-3xl pointer-events-none" />
@@ -143,8 +159,17 @@ export function MethodologyPage({ onNavigate }: MethodologyPageProps) {
               onClick={() => onNavigate('dashboard')}
               className="gap-2 font-bold"
             >
-              <span>Accéder à mon tableau de bord</span>
+              <span>Accéder au module M201 (Agile)</span>
               <ArrowRight className="h-4 w-4" />
+            </Button>
+            <Button
+              variant="outline"
+              size="md"
+              onClick={() => onNavigate('curriculum-hub')}
+              className="gap-2 font-semibold"
+            >
+              <ArrowLeft className="h-4 w-4 text-[#10B981]" />
+              <span>Retour aux modules</span>
             </Button>
             <Button
               variant="outline"

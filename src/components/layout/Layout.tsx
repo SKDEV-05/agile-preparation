@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { ArrowLeft } from 'lucide-react';
 import { ActiveView } from './Sidebar';
 import { Footer } from './Footer';
 import { PartId } from '../../types';
@@ -23,49 +24,67 @@ export function Layout({
   children
 }: LayoutProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const isCurriculumHub = activeView === 'curriculum-hub';
+  const isPortalLayout = activeView === 'curriculum-hub' || activeView === 'methodology';
 
-  // 1. Full-width Portal Layout when choosing a module (Curriculum Hub)
-  if (isCurriculumHub) {
+  // 1. Full-width Portal Layout (Curriculum Hub & Standalone Methodology Guide)
+  if (isPortalLayout) {
     return (
       <div className="min-h-screen bg-transparent text-[#0A0A0A] dark:text-white flex flex-col transition-colors">
-        {/* Minimal sleek header for Hub */}
-        <header className="sticky top-0 z-20 flex h-16 w-full items-center justify-between border-b border-black/15 dark:border-white/15 bg-white/95 dark:bg-[#0A0A0A]/95 px-4 sm:px-8 backdrop-blur-xl transition-colors select-none">
+        {/* Minimal sleek header */}
+        <header className="sticky top-0 z-20 flex h-16 w-full items-center justify-between border-b border-black/15 dark:border-white/15 bg-white/95 dark:bg-[#0A0A0A]/95 px-3 sm:px-6 lg:px-8 backdrop-blur-xl transition-colors select-none">
           <div className="flex items-center gap-3">
-            <div className="h-9 w-9 rounded-xl overflow-hidden border border-black/15 dark:border-white/15 shadow-2xs">
-              <img src="/logo.webp" alt="FullStack Master Logo" width={36} height={36} fetchPriority="high" loading="eager" decoding="async" className="h-full w-full object-cover" />
-            </div>
-            <div className="flex items-baseline gap-2">
-              <span className="font-handwriting text-2xl sm:text-3xl font-black text-[#0A0A0A] dark:text-white tracking-wide leading-none">
-                FullStack <span className="text-[#10B981]">2A</span>
-              </span>
-              <span className="hidden sm:inline-block text-xs font-mono font-bold text-[#0A0A0A]/60 dark:text-white/60">· 2ème Année OFPPT</span>
-            </div>
+            <button
+              onClick={() => onNavigate('curriculum-hub')}
+              className="flex items-center gap-2.5 sm:gap-3 hover:opacity-85 transition-opacity cursor-pointer text-left"
+              title="Retour aux modules 2A"
+            >
+              <div className="h-8.5 w-8.5 sm:h-9 sm:w-9 rounded-xl overflow-hidden border border-black/15 dark:border-white/15 shadow-2xs shrink-0">
+                <img src="/logo.webp" alt="FullStack Master Logo" width={36} height={36} fetchPriority="high" loading="eager" decoding="async" className="h-full w-full object-cover" />
+              </div>
+              <div className="flex items-baseline gap-2">
+                <span className="font-handwriting text-2xl sm:text-3xl font-black text-[#0A0A0A] dark:text-white tracking-wide leading-none">
+                  FullStack <span className="text-[#10B981]">2A</span>
+                </span>
+                <span className="hidden sm:inline-block text-xs font-mono font-bold text-[#0A0A0A]/60 dark:text-white/60">· 2ème Année OFPPT</span>
+              </div>
+            </button>
           </div>
 
-          <div className="flex items-center gap-2 sm:gap-3">
+          <div className="flex items-center gap-1.5 sm:gap-3">
+            {activeView === 'methodology' && (
+              <button
+                onClick={() => onNavigate('curriculum-hub')}
+                className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-xl border border-black/15 dark:border-white/15 bg-white dark:bg-[#0A0A0A] text-xs font-bold text-[#0A0A0A] dark:text-white hover:border-[#10B981] hover:text-[#10B981] transition-all cursor-pointer shadow-2xs"
+                title="Revenir à l'accueil"
+              >
+                <ArrowLeft className="h-3.5 w-3.5 text-[#10B981]" />
+                <span className="hidden xs:inline">Retour aux modules</span>
+                <span className="xs:hidden">Retour</span>
+              </button>
+            )}
+
             {onOpenSearch && (
               <button
                 onClick={onOpenSearch}
-                className="flex items-center gap-1.5 rounded-xl border border-black/15 dark:border-white/15 px-2.5 py-1.5 text-xs text-[#0A0A0A]/70 dark:text-white/70 hover:border-[#10B981] hover:text-[#10B981] transition-all cursor-pointer shadow-2xs"
+                className="hidden sm:flex items-center gap-1.5 rounded-xl border border-black/15 dark:border-white/15 px-2.5 py-1.5 text-xs text-[#0A0A0A]/70 dark:text-white/70 hover:border-[#10B981] hover:text-[#10B981] transition-all cursor-pointer shadow-2xs"
                 title="Rechercher (Ctrl+K)"
               >
-                <span className="font-medium hidden sm:inline">Rechercher</span>
+                <span className="font-medium">Rechercher</span>
                 <kbd className="px-1 py-0.2 text-[9px] font-mono rounded bg-black/5 dark:bg-white/10">⌘K</kbd>
               </button>
             )}
             <ThemeToggle />
-            <ShareButton variant="full" />
-            <span className="rounded-full bg-[#10B981] px-3 py-1 text-xs font-bold text-white flex items-center gap-1.5">
-              <span className="h-2 w-2 rounded-full bg-white animate-pulse"></span>
+            <ShareButton variant="minimal" />
+            <span className="rounded-full bg-[#10B981] px-2 sm:px-3 py-0.5 sm:py-1 text-[11px] sm:text-xs font-bold text-white flex items-center gap-1.5 shrink-0">
+              <span className="h-1.5 w-1.5 rounded-full bg-white animate-pulse"></span>
               <span className="hidden sm:inline">1 Module Actif</span>
               <span className="sm:hidden">Agile</span>
             </span>
           </div>
         </header>
 
-        {/* Hub Content */}
-        <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 pb-20 lg:pb-6">
+        {/* Content Container */}
+        <main className="flex-1 w-full max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-6 pb-20 lg:pb-6 overflow-x-hidden">
           {children}
           <Footer onNavigate={onNavigate} />
         </main>

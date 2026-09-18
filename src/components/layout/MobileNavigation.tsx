@@ -21,15 +21,31 @@ export function MobileNavigation({
       id: 'dashboard',
       label: 'Accueil',
       icon: LayoutDashboard,
-      isActive: activeView === 'dashboard' || activeView === 'curriculum-hub',
-      action: () => onNavigate('dashboard')
+      isActive: activeView === 'curriculum-hub' || activeView === 'dashboard',
+      action: () => {
+        if (activeView === 'curriculum-hub') {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+          onNavigate('curriculum-hub');
+        }
+      }
     },
     {
       id: 'courses',
       label: 'Cours',
       icon: BookOpen,
       isActive: isCourseActive,
-      action: () => onNavigate('part1')
+      action: () => {
+        const el = document.getElementById('courses-catalogue-section');
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else {
+          onNavigate('curriculum-hub');
+          setTimeout(() => {
+            document.getElementById('courses-catalogue-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }, 150);
+        }
+      }
     },
     {
       id: 'simulators',
