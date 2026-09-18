@@ -11,7 +11,10 @@ import {
   AlertTriangle,
   Award,
   ChevronRight,
-  X
+  Sparkles,
+  Settings,
+  X,
+  CheckCircle2
 } from 'lucide-react';
 import { PartId } from '../../types';
 import { useProgress } from '../../store/progressStore';
@@ -22,7 +25,20 @@ import { InstallButton } from '../common/InstallButton';
 import { cn } from '../../lib/utils';
 import logoImg from '../../assets/logo.webp';
 
-export type ActiveView = 'curriculum-hub' | 'dashboard' | 'part1' | 'part2' | 'part3' | 'part4' | 'part5' | 'simulators' | 'flashcards' | 'errors' | 'final-exam';
+export type ActiveView = 
+  | 'curriculum-hub' 
+  | 'dashboard' 
+  | 'methodology' 
+  | 'profile-settings' 
+  | 'part1' 
+  | 'part2' 
+  | 'part3' 
+  | 'part4' 
+  | 'part5' 
+  | 'simulators' 
+  | 'flashcards' 
+  | 'errors' 
+  | 'final-exam';
 
 interface SidebarProps {
   activeView: ActiveView;
@@ -35,18 +51,29 @@ export function Sidebar({ activeView, onNavigate, isOpenMobile, onCloseMobile }:
   const { progress, overallPercentage } = useProgress();
   const errorCount = progress.wrongQuestionIds.length;
 
+  const mainNavItems = [
+    { id: 'dashboard', label: 'Accueil · Tableau de bord', icon: LayoutDashboard },
+    { id: 'methodology', label: 'Comment Apprendre', icon: Sparkles, badge: 'Méthode' },
+  ];
+
   const learnItems = [
-    { id: 'part1', order: '01', label: 'Fondamentaux', icon: Layers, partId: 'part1' as PartId },
+    { id: 'part1', order: '01', label: 'Fondamentaux Gestion de Projet', icon: Layers, partId: 'part1' as PartId },
     { id: 'part2', order: '02', label: 'Planification Gantt & PERT', icon: CalendarRange, partId: 'part2' as PartId },
     { id: 'part3', order: '03', label: 'Agile · Scrum & Jira', icon: Zap, partId: 'part3' as PartId },
-    { id: 'part4', order: '04', label: 'Git · GitLab & Sonar', icon: GitBranch, partId: 'part4' as PartId },
-    { id: 'part5', order: '05', label: 'DevOps & CI/CD', icon: Rocket, partId: 'part5' as PartId },
+    { id: 'part4', order: '04', label: 'Git · GitLab & SonarQube', icon: GitBranch, partId: 'part4' as PartId },
+    { id: 'part5', order: '05', label: 'DevOps & CI/CD Pipelines', icon: Rocket, partId: 'part5' as PartId },
   ];
 
   const practiceItems = [
     { id: 'simulators', label: 'Laboratoire interactif', icon: FlaskConical, badge: '5 Labs' },
     { id: 'flashcards', label: 'Flashcards 3D', icon: CreditCard, badge: '18 cartes' },
-    { id: 'errors', label: 'Mes erreurs', icon: AlertTriangle, badge: errorCount > 0 ? `${errorCount}` : undefined, badgeColor: errorCount > 0 ? 'bg-amber-500/20 text-amber-600 dark:text-amber-300 border border-amber-500/30' : undefined },
+    { 
+      id: 'errors', 
+      label: 'Mes erreurs ciblées', 
+      icon: AlertTriangle, 
+      badge: errorCount > 0 ? `${errorCount}` : undefined, 
+      badgeColor: errorCount > 0 ? 'bg-[#22C55E] text-white border-transparent' : undefined 
+    },
   ];
 
   const handleNav = (view: ActiveView, partId?: PartId) => {
@@ -55,29 +82,33 @@ export function Sidebar({ activeView, onNavigate, isOpenMobile, onCloseMobile }:
   };
 
   const content = (
-    <div className="flex min-h-full flex-col justify-between p-3.5 sm:p-4 pb-8 sm:pb-10 gap-4 sm:gap-5 text-slate-800 dark:text-slate-200">
+    <div className="flex min-h-full flex-col justify-between p-4 pb-8 sm:pb-10 gap-4 text-[#0A0A0A] dark:text-white select-none">
       {/* Brand Header & Nav */}
       <div>
-        <div className="flex items-center justify-between pb-4 border-b border-slate-200 dark:border-white/10">
+        {/* Top Logo & App Title */}
+        <div className="flex items-center justify-between pb-3.5 border-b border-black/10 dark:border-white/10">
           <button
             onClick={() => handleNav('dashboard')}
-            className="flex items-center gap-3 text-left group focus:outline-none"
+            className="flex items-center gap-3 text-left group focus:outline-none cursor-pointer"
           >
-            <div className="h-10 w-10 shrink-0 rounded-xl overflow-hidden shadow-md border border-slate-200 dark:border-white/15 transition-transform group-hover:scale-105">
+            <div className="h-10 w-10 shrink-0 rounded-2xl overflow-hidden shadow-xs border border-black/15 dark:border-white/15 ring-2 ring-[#10B981]/20 transition-transform group-hover:scale-105">
               <img src={logoImg} alt="Logo FullStack 2A" width={40} height={40} decoding="async" className="h-full w-full object-cover" />
             </div>
             <div>
-              <div className="flex items-center gap-1 font-black tracking-tight text-slate-900 dark:text-white text-sm sm:text-base">
-                <span>FULLSTACK</span>
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 to-cyan-500 dark:from-indigo-400 dark:to-cyan-400">2A</span>
+              <div className="font-handwriting flex items-center gap-1.5 font-bold tracking-wide text-[#0A0A0A] dark:text-white text-[28px] leading-none">
+                <span>FullStack</span>
+                <span className="text-[#10B981]">2A</span>
               </div>
-              <p className="text-[10px] font-mono font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide">2ème Année · Web</p>
+              <p className="text-[10px] font-mono font-bold text-[#0A0A0A]/60 dark:text-white/60 uppercase tracking-wider mt-0.5 flex items-center gap-1.5">
+                <span className="h-1.5 w-1.5 rounded-full bg-[#10B981] animate-pulse"></span>
+                <span>OFPPT · Cursus Digital</span>
+              </p>
             </div>
           </button>
           {isOpenMobile && (
             <button
               onClick={onCloseMobile}
-              className="lg:hidden h-9 w-9 flex items-center justify-center rounded-xl text-slate-500 dark:text-slate-400 hover:text-slate-950 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors border border-slate-200 dark:border-white/5"
+              className="lg:hidden h-9 w-9 flex items-center justify-center rounded-xl text-[#0A0A0A]/70 dark:text-white/70 hover:text-[#10B981] hover:bg-[#10B981]/10 transition-colors border border-black/15 dark:border-white/15 cursor-pointer"
               aria-label="Fermer le menu"
             >
               <X className="h-5 w-5" />
@@ -85,65 +116,92 @@ export function Sidebar({ activeView, onNavigate, isOpenMobile, onCloseMobile }:
           )}
         </div>
 
-        {/* Module Switcher button to return to 2nd year track hub */}
+        {/* Quick Hub Switcher button */}
         <div className="mt-3">
           <button
             onClick={() => handleNav('curriculum-hub')}
-            className="flex w-full items-center justify-between rounded-xl border border-indigo-500/30 bg-indigo-50/80 dark:bg-indigo-950/40 hover:bg-indigo-100 dark:hover:bg-indigo-900/50 px-3 py-2 text-xs font-bold text-indigo-700 dark:text-indigo-200 transition-all group shadow-xs"
+            className="flex w-full items-center justify-between rounded-2xl border border-[#10B981]/30 bg-[#10B981]/5 hover:bg-[#10B981]/10 px-3.5 py-2 text-xs font-bold text-[#10B981] transition-all group shadow-2xs cursor-pointer"
           >
-            <span className="flex items-center gap-1.5 truncate">
-              <span className="h-2 w-2 rounded-full bg-indigo-500 dark:bg-indigo-400 animate-pulse"></span>
+            <span className="flex items-center gap-2 truncate">
+              <span className="h-2 w-2 rounded-full bg-[#10B981]"></span>
               <span className="truncate">Changer de matière (Cursus 2A)</span>
             </span>
-            <ChevronRight className="h-3.5 w-3.5 text-indigo-500 dark:text-indigo-400 group-hover:translate-x-0.5 transition-transform shrink-0 ml-1" />
+            <ChevronRight className="h-3.5 w-3.5 text-[#10B981] group-hover:translate-x-1 transition-transform shrink-0 ml-1" />
           </button>
         </div>
 
-        {/* Navigation Section */}
+        {/* Navigation Sections */}
         <nav className="mt-4 space-y-4">
-          {/* Dashboard Item */}
-          <div>
-            <button
-              onClick={() => handleNav('dashboard')}
-              className={cn(
-                "flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-colors",
-                activeView === 'dashboard'
-                  ? "bg-indigo-600 text-white font-semibold shadow-md shadow-indigo-600/30"
-                  : "text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/60 hover:text-slate-950 dark:hover:text-white"
-              )}
-            >
-              <LayoutDashboard className="h-4 w-4" />
-              <span>Accueil</span>
-            </button>
+          {/* Main Navigation Items */}
+          <div className="space-y-1">
+            {mainNavItems.map(item => {
+              const Icon = item.icon;
+              const isActive = activeView === item.id;
+              return (
+                <button
+                  key={item.id}
+                  onClick={() => handleNav(item.id as ActiveView)}
+                  className={cn(
+                    "relative flex w-full items-center justify-between rounded-2xl px-3 py-2.5 text-xs font-bold transition-all cursor-pointer group",
+                    isActive
+                      ? "bg-[#10B981]/15 text-[#10B981] border border-[#10B981]/30 shadow-2xs"
+                      : "text-[#0A0A0A]/75 dark:text-white/75 hover:bg-black/5 dark:hover:bg-white/5 hover:text-[#0A0A0A] dark:hover:text-white border border-transparent"
+                  )}
+                >
+                  {isActive && (
+                    <span className="absolute left-0 top-2 bottom-2 w-1 rounded-r-full bg-[#10B981]" />
+                  )}
+                  <div className="flex items-center gap-2.5">
+                    <Icon className={cn("h-4 w-4 transition-colors", isActive ? "text-[#10B981]" : "text-[#0A0A0A]/60 dark:text-white/60 group-hover:text-[#10B981]")} />
+                    <span>{item.label}</span>
+                  </div>
+                  {item.badge && (
+                    <span className={cn(
+                      "rounded-md px-1.5 py-0.5 text-[9px] font-bold font-mono",
+                      isActive ? "bg-[#10B981] text-white" : "bg-[#10B981]/15 text-[#10B981]"
+                    )}>
+                      {item.badge}
+                    </span>
+                  )}
+                </button>
+              );
+            })}
           </div>
 
-          {/* Group: APPRENDRE */}
+          {/* Group: APPRENDRE (5 Modules EFM) */}
           <div>
-            <span className="px-3 text-[11px] font-mono font-bold tracking-wider text-slate-500 uppercase">
-              Apprendre
-            </span>
-            <div className="mt-2 space-y-1">
+            <div className="flex items-center justify-between px-3 mb-1.5">
+              <span className="text-[10px] font-mono font-bold tracking-wider text-[#0A0A0A]/50 dark:text-white/50 uppercase">
+                Apprendre (5 Modules)
+              </span>
+              <span className="text-[9px] font-mono text-[#10B981] font-bold">M201</span>
+            </div>
+            <div className="space-y-1">
               {learnItems.map(item => {
                 const isActive = activeView === item.id;
                 const partProgress = progress.parts[item.partId];
                 const bestScore = partProgress?.bestScore || 0;
                 const isCompleted = partProgress?.quizCompleted;
+                const completedSections = partProgress?.completedSections.length || 0;
 
                 return (
                   <button
                     key={item.id}
                     onClick={() => handleNav(item.id as ActiveView, item.partId)}
                     className={cn(
-                      "group flex w-full items-center justify-between rounded-xl px-3 py-2 text-xs font-medium transition-all text-left",
+                      "relative group flex w-full items-center justify-between rounded-2xl px-3 py-2 text-xs font-bold transition-all text-left cursor-pointer",
                       isActive
-                        ? "bg-indigo-50 dark:bg-indigo-500/20 text-indigo-700 dark:text-indigo-300 font-semibold border border-indigo-200 dark:border-indigo-500/30"
-                        : "text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/60 hover:text-slate-950 dark:hover:text-white"
+                        ? "bg-[#10B981]/15 text-[#10B981] border border-[#10B981]/30 shadow-2xs"
+                        : "text-[#0A0A0A]/75 dark:text-white/75 hover:bg-black/5 dark:hover:bg-white/5 hover:text-[#0A0A0A] dark:hover:text-white border border-transparent"
                     )}
                   >
+                    {isActive && (
+                      <span className="absolute left-0 top-2 bottom-2 w-1 rounded-r-full bg-[#10B981]" />
+                    )}
                     <div className="flex items-center gap-2.5 min-w-0">
                       <span className={cn(
-                        "font-mono text-[10px] w-5",
-                        isActive ? "text-indigo-600 dark:text-indigo-400 font-bold" : "text-slate-400 dark:text-slate-500 group-hover:text-slate-600 dark:group-hover:text-slate-400"
+                        "font-mono text-[10px] w-5 font-bold",
+                        isActive ? "text-[#10B981]" : "text-[#0A0A0A]/40 dark:text-white/40 group-hover:text-[#10B981]"
                       )}>
                         {item.order}
                       </span>
@@ -152,13 +210,17 @@ export function Sidebar({ activeView, onNavigate, isOpenMobile, onCloseMobile }:
 
                     <div className="flex items-center gap-1.5 shrink-0">
                       {isCompleted ? (
-                        <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 dark:bg-emerald-400"></span>
+                        <CheckCircle2 className="h-3.5 w-3.5 text-[#10B981]" />
+                      ) : completedSections > 0 ? (
+                        <span className="text-[9px] font-mono text-[#10B981] font-bold bg-[#10B981]/15 px-1 rounded">
+                          {completedSections}n
+                        </span>
                       ) : bestScore > 0 ? (
-                        <span className="font-mono text-[10px] text-indigo-600 dark:text-indigo-400 font-bold">{bestScore}%</span>
+                        <span className={cn("font-mono text-[10px] font-bold", isActive ? "text-[#10B981]" : "text-[#10B981]")}>{bestScore}%</span>
                       ) : null}
                       <ChevronRight className={cn(
                         "h-3 w-3 transition-transform",
-                        isActive ? "text-indigo-600 dark:text-indigo-400 translate-x-0.5" : "text-slate-400 dark:text-slate-600 group-hover:text-slate-600 dark:group-hover:text-slate-400"
+                        isActive ? "text-[#10B981] translate-x-0.5" : "text-[#0A0A0A]/30 dark:text-white/30 group-hover:text-[#10B981]"
                       )} />
                     </div>
                   </button>
@@ -167,12 +229,12 @@ export function Sidebar({ activeView, onNavigate, isOpenMobile, onCloseMobile }:
             </div>
           </div>
 
-          {/* Group: PRATIQUER */}
+          {/* Group: PRATIQUER & OUTILS */}
           <div>
-            <span className="px-3 text-[11px] font-mono font-bold tracking-wider text-slate-500 uppercase">
-              Pratiquer
+            <span className="px-3 text-[10px] font-mono font-bold tracking-wider text-[#0A0A0A]/50 dark:text-white/50 uppercase block mb-1.5">
+              Pratiquer & Outils
             </span>
-            <div className="mt-2 space-y-1">
+            <div className="space-y-1">
               {practiceItems.map(item => {
                 const Icon = item.icon;
                 const isActive = activeView === item.id;
@@ -182,20 +244,23 @@ export function Sidebar({ activeView, onNavigate, isOpenMobile, onCloseMobile }:
                     key={item.id}
                     onClick={() => handleNav(item.id as ActiveView)}
                     className={cn(
-                      "flex w-full items-center justify-between rounded-xl px-3 py-2 text-xs font-medium transition-colors text-left",
+                      "relative flex w-full items-center justify-between rounded-2xl px-3 py-2 text-xs font-bold transition-all text-left cursor-pointer group",
                       isActive
-                        ? "bg-indigo-50 dark:bg-indigo-500/20 text-indigo-700 dark:text-indigo-300 font-semibold border border-indigo-200 dark:border-indigo-500/30"
-                        : "text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/60 hover:text-slate-950 dark:hover:text-white"
+                        ? "bg-[#10B981]/15 text-[#10B981] border border-[#10B981]/30 shadow-2xs"
+                        : "text-[#0A0A0A]/75 dark:text-white/75 hover:bg-black/5 dark:hover:bg-white/5 hover:text-[#0A0A0A] dark:hover:text-white border border-transparent"
                     )}
                   >
+                    {isActive && (
+                      <span className="absolute left-0 top-2 bottom-2 w-1 rounded-r-full bg-[#10B981]" />
+                    )}
                     <div className="flex items-center gap-2.5">
-                      <Icon className="h-4 w-4 shrink-0" />
+                      <Icon className={cn("h-4 w-4 shrink-0 transition-colors", isActive ? "text-[#10B981]" : "text-[#0A0A0A]/60 dark:text-white/60 group-hover:text-[#10B981]")} />
                       <span>{item.label}</span>
                     </div>
                     {item.badge && (
                       <span className={cn(
                         "rounded-full px-2 py-0.5 text-[10px] font-bold font-mono",
-                        item.badgeColor || "bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-300/60 dark:border-white/5"
+                        isActive ? "bg-[#10B981] text-white" : item.badgeColor || "bg-black/5 dark:bg-white/10 text-[#0A0A0A] dark:text-white border border-black/10 dark:border-white/10"
                       )}>
                         {item.badge}
                       </span>
@@ -206,60 +271,84 @@ export function Sidebar({ activeView, onNavigate, isOpenMobile, onCloseMobile }:
             </div>
           </div>
 
-          {/* Group: EVALUATION */}
+          {/* Group: EVALUATION EFM */}
           <div>
-            <span className="px-3 text-[11px] font-mono font-bold tracking-wider text-slate-500 uppercase">
-              Évaluation
+            <span className="px-3 text-[10px] font-mono font-bold tracking-wider text-[#0A0A0A]/50 dark:text-white/50 uppercase block mb-1.5">
+              Évaluation Finale
             </span>
-            <div className="mt-2">
+            <div>
               <button
                 onClick={() => handleNav('final-exam')}
                 className={cn(
-                  "flex w-full items-center justify-between rounded-xl px-3 py-2.5 text-xs font-semibold transition-all border",
+                  "relative flex w-full items-center justify-between rounded-2xl px-3.5 py-2.5 text-xs font-bold transition-all border cursor-pointer",
                   activeView === 'final-exam'
-                    ? "bg-indigo-600 text-white border-indigo-500 shadow-md shadow-indigo-600/30"
-                    : "bg-slate-100 dark:bg-slate-900/60 text-slate-800 dark:text-slate-200 border-indigo-500/30 hover:bg-indigo-50 dark:hover:bg-indigo-950/40 hover:border-indigo-500/50"
+                    ? "bg-[#10B981] text-white border-[#10B981] shadow-xs"
+                    : "bg-white dark:bg-[#0A0A0A] text-[#0A0A0A] dark:text-white border-black/15 dark:border-white/15 hover:border-[#10B981] hover:text-[#10B981]"
                 )}
               >
                 <div className="flex items-center gap-2.5">
-                  <Award className={cn("h-4 w-4", activeView === 'final-exam' ? "text-white" : "text-indigo-600 dark:text-indigo-400")} />
-                  <span>Examen Final</span>
+                  <Award className={cn("h-4 w-4", activeView === 'final-exam' ? "text-white" : "text-[#10B981]")} />
+                  <span>Examen Blanc EFM</span>
                 </div>
                 <span className={cn(
-                  "rounded-md px-1.5 py-0.5 text-[10px] font-bold font-mono",
-                  activeView === 'final-exam' ? "bg-white/20 text-white" : "bg-indigo-500/20 text-indigo-700 dark:text-indigo-300"
+                  "rounded-lg px-2 py-0.5 text-[10px] font-bold font-mono",
+                  activeView === 'final-exam' ? "bg-white/20 text-white" : "bg-[#10B981]/15 text-[#10B981] border border-[#10B981]/30"
                 )}>
                   50 QCM
                 </span>
               </button>
             </div>
           </div>
+
+          {/* Group: ESPACE PERSONNEL */}
+          <div>
+            <button
+              onClick={() => handleNav('profile-settings')}
+              className={cn(
+                "relative flex w-full items-center justify-between rounded-2xl px-3 py-2 text-xs font-bold transition-all cursor-pointer group",
+                activeView === 'profile-settings'
+                  ? "bg-[#10B981]/15 text-[#10B981] border border-[#10B981]/30 shadow-2xs"
+                  : "text-[#0A0A0A]/75 dark:text-white/75 hover:bg-black/5 dark:hover:bg-white/5 hover:text-[#0A0A0A] dark:hover:text-white border border-transparent"
+              )}
+            >
+              {activeView === 'profile-settings' && (
+                <span className="absolute left-0 top-2 bottom-2 w-1 rounded-r-full bg-[#10B981]" />
+              )}
+              <div className="flex items-center gap-2.5">
+                <Settings className={cn("h-4 w-4 transition-colors", activeView === 'profile-settings' ? "text-[#10B981]" : "text-[#0A0A0A]/60 dark:text-white/60 group-hover:text-[#10B981]")} />
+                <span>Profil & Paramètres</span>
+              </div>
+            </button>
+          </div>
         </nav>
       </div>
 
-      {/* Bottom Area: Theme Selector + Progress Card + Creator Card */}
-      <div className="space-y-2.5 pt-3 border-t border-slate-200 dark:border-white/10 pb-4 mb-2">
-        {/* Tactile Dark / Light Mode Switch (Mobile Drawer only - Desktop uses top Header toggle) */}
+      {/* Bottom Area: Progress Card + Creator Card + Install Button */}
+      <div className="space-y-2.5 pt-3 border-t border-black/10 dark:border-white/10 pb-2">
+        {/* Tactile Dark / Light Mode Switch (Mobile Drawer only) */}
         <div className="lg:hidden">
           <ThemeToggle variant="switch" showLabel />
         </div>
 
-        {/* Progress Card */}
-        <div className="rounded-xl border border-slate-200 dark:border-white/10 bg-slate-100/80 dark:bg-slate-900/60 p-2.5 backdrop-blur-sm">
-          <div className="flex items-center justify-between text-xs font-semibold text-slate-700 dark:text-slate-300">
-            <span>Maîtrise globale</span>
-            <span className="text-indigo-600 dark:text-indigo-400 font-mono font-bold">{overallPercentage}%</span>
+        {/* Global Progress Card */}
+        <div className="rounded-2xl border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.02] p-3 shadow-2xs">
+          <div className="flex items-center justify-between text-xs font-bold text-[#0A0A0A] dark:text-white">
+            <span className="flex items-center gap-1.5">
+              <Sparkles className="h-3.5 w-3.5 text-[#10B981]" />
+              <span>Maîtrise globale</span>
+            </span>
+            <span className="text-[#10B981] font-mono font-bold">{overallPercentage}%</span>
           </div>
-          <div className="mt-1.5">
+          <div className="mt-2">
             <Progress value={overallPercentage} className="h-1.5" />
           </div>
-          <p className="mt-1.5 text-[10px] text-slate-500 dark:text-slate-400 leading-snug">
-            Progression enregistrée en temps réel.
+          <p className="mt-1.5 text-[10px] text-[#0A0A0A]/55 dark:text-white/55 font-mono">
+            Progression enregistrée localement
           </p>
         </div>
 
         {/* Install Mobile App / PWA Button */}
-        <div className="pt-1">
+        <div className="pt-0.5">
           <InstallButton variant="sidebar" />
         </div>
 
@@ -274,7 +363,7 @@ export function Sidebar({ activeView, onNavigate, isOpenMobile, onCloseMobile }:
   return (
     <>
       {/* Desktop Sticky Sidebar */}
-      <aside className="hidden lg:flex w-72 flex-col fixed inset-y-0 left-0 z-30 bg-white dark:bg-[#0A0E1A] border-r border-slate-200 dark:border-white/10 h-screen overflow-y-auto pb-6 transition-colors">
+      <aside className="hidden lg:flex w-72 flex-col fixed inset-y-0 left-0 z-30 bg-white dark:bg-[#0A0A0A] border-r border-black/15 dark:border-white/15 h-screen overflow-y-auto pb-6 transition-colors shadow-xs">
         {content}
       </aside>
 
@@ -283,9 +372,9 @@ export function Sidebar({ activeView, onNavigate, isOpenMobile, onCloseMobile }:
         <div className="lg:hidden fixed inset-0 z-50 flex">
           <div
             onClick={onCloseMobile}
-            className="fixed inset-0 bg-black/50 dark:bg-black/75 backdrop-blur-sm transition-opacity"
+            className="fixed inset-0 bg-[#0A0A0A]/75 backdrop-blur-xs transition-opacity"
           />
-          <div className="relative flex w-[85%] max-w-xs flex-1 flex-col bg-white dark:bg-[#0A0E1A] border-r border-slate-200 dark:border-white/10 shadow-2xl h-[100dvh] overflow-y-auto overscroll-contain pb-6 transition-colors">
+          <div className="relative flex w-[85%] max-w-xs flex-1 flex-col bg-white dark:bg-[#0A0A0A] border-r border-black/15 dark:border-white/15 shadow-2xl h-[100dvh] overflow-y-auto overscroll-contain pb-6 transition-colors">
             {content}
           </div>
         </div>
@@ -293,4 +382,3 @@ export function Sidebar({ activeView, onNavigate, isOpenMobile, onCloseMobile }:
     </>
   );
 }
-

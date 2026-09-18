@@ -1,227 +1,293 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
-  Code2, 
-  Database, 
-  Zap, 
-  CheckCircle2, 
-  GraduationCap, 
-  Terminal 
+  Terminal, 
+  Check, 
+  Sparkles,
+  ChevronRight,
+  Code2,
+  Server,
+  Database,
+  Layers,
+  CheckCircle2
 } from 'lucide-react';
+import { cn } from '../../lib/utils';
 
 export function Hero3DScene() {
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-  const containerRef = useRef<HTMLDivElement | null>(null);
+  const [activeTab, setActiveTab] = useState<'react' | 'laravel' | 'sgbd' | 'agile'>('react');
+  const [isPaused, setIsPaused] = useState(false);
 
+  // Auto-cycle tabs every 4.5 seconds unless hovered/paused
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const isTouch = window.innerWidth < 1024 || window.matchMedia('(hover: none)').matches;
-      if (isTouch) return;
-    }
+    if (isPaused) return;
+    const tabs: Array<'react' | 'laravel' | 'sgbd' | 'agile'> = ['react', 'laravel', 'sgbd', 'agile'];
+    const timer = setInterval(() => {
+      setActiveTab(current => {
+        const nextIndex = (tabs.indexOf(current) + 1) % tabs.length;
+        return tabs[nextIndex];
+      });
+    }, 4500);
 
-    const handleGlobalMouseMove = (e: MouseEvent) => {
-      if (!containerRef.current) return;
-      const rect = containerRef.current.getBoundingClientRect();
-      // Calculate offset relative to center of component (-1 to 1)
-      const centerX = rect.left + rect.width / 2;
-      const centerY = rect.top + rect.height / 2;
-      const x = (e.clientX - centerX) / (window.innerWidth / 2);
-      const y = (e.clientY - centerY) / (window.innerHeight / 2);
-
-      // Clamp between -1 and 1
-      const clampedX = Math.max(-1, Math.min(1, x));
-      const clampedY = Math.max(-1, Math.min(1, y));
-
-      setMousePos({ x: clampedX, y: clampedY });
-    };
-
-    window.addEventListener('mousemove', handleGlobalMouseMove, { passive: true });
-    return () => window.removeEventListener('mousemove', handleGlobalMouseMove);
-  }, []);
-
-  // Subtle 2 to 4 degree tilt
-  const laptopRotateX = -mousePos.y * 3.5;
-  const laptopRotateY = mousePos.x * 4.5;
+    return () => clearInterval(timer);
+  }, [isPaused]);
 
   return (
     <div 
-      ref={containerRef}
-      className="relative w-full h-[420px] sm:h-[480px] flex items-center justify-center perspective-1200 select-none overflow-visible"
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+      className="relative w-full max-w-lg mx-auto select-none"
     >
-      {/* Dynamic Ambient Backlight that follows cursor */}
-      <div 
-        className="absolute w-72 h-72 rounded-full bg-gradient-to-tr from-indigo-600/30 via-cyan-500/20 to-purple-600/25 blur-3xl pointer-events-none transition-transform duration-700 ease-out"
-        style={{
-          transform: `translate3d(${mousePos.x * 35}px, ${mousePos.y * 35}px, -100px)`,
-        }}
-      />
+      {/* Ambient background glow */}
+      <div className="absolute -inset-1 bg-gradient-to-r from-[#10B981]/20 to-[#22C55E]/20 rounded-3xl blur-2xl opacity-75 pointer-events-none" />
 
-      {/* Floating 3D Main Laptop Unit */}
-      <div 
-        className="relative z-10 w-[310px] sm:w-[390px] transition-transform duration-200 ease-out transform-style-preserve-3d"
-        style={{
-          transform: `rotateX(${laptopRotateX}deg) rotateY(${laptopRotateY}deg) translateZ(10px)`,
-        }}
-      >
-        {/* Laptop Screen Bezel */}
-        <div className="relative rounded-2xl bg-gradient-to-b from-slate-800 to-slate-950 p-2.5 shadow-2xl border border-white/15 ring-1 ring-black/80">
-          {/* Top Camera Notch */}
-          <div className="flex justify-center mb-1.5 items-center gap-1">
-            <div className="h-1.5 w-1.5 rounded-full bg-slate-700"></div>
-            <div className="h-1 w-1 rounded-full bg-emerald-500/80"></div>
+      {/* Main Studio Frame Window */}
+      <div className="relative rounded-3xl border border-black/15 dark:border-white/15 bg-white/95 dark:bg-[#0A0A0A]/95 backdrop-blur-2xl shadow-2xl overflow-hidden text-[#0A0A0A] dark:text-white transition-all">
+        {/* Top Window Chrome Header */}
+        <div className="flex items-center justify-between px-4 py-3 bg-black/[0.03] dark:bg-white/[0.04] border-b border-black/10 dark:border-white/10">
+          <div className="flex items-center gap-2">
+            <div className="h-3 w-3 rounded-full bg-[#22C55E]/80"></div>
+            <div className="h-3 w-3 rounded-full bg-[#10B981]/80"></div>
+            <div className="h-3 w-3 rounded-full bg-black/20 dark:bg-white/20"></div>
           </div>
 
-          {/* Screen Content: FullStack 2A Live Mini Dashboard */}
-          <div className="rounded-xl bg-[#0B0F19] overflow-hidden border border-white/10 shadow-inner font-sans text-xs">
-            {/* Window title bar */}
-            <div className="flex items-center justify-between px-3 py-1.5 bg-slate-900/90 border-b border-white/5">
-              <div className="flex items-center gap-1.5">
-                <div className="h-2 w-2 rounded-full bg-rose-500/80"></div>
-                <div className="h-2 w-2 rounded-full bg-amber-500/80"></div>
-                <div className="h-2 w-2 rounded-full bg-emerald-500/80"></div>
+          <div className="flex items-center gap-1.5 text-xs font-mono text-[#0A0A0A]/70 dark:text-white/70 font-semibold">
+            <Terminal className="h-3.5 w-3.5 text-[#10B981]" />
+            <span>fullstack-2a.ofppt/studio-live</span>
+          </div>
+
+          <div className="flex items-center gap-1.5 bg-[#10B981]/15 px-2 py-0.5 rounded-full border border-[#10B981]/30">
+            <span className="h-2 w-2 rounded-full bg-[#10B981] animate-pulse"></span>
+            <span className="text-[10px] font-mono font-bold text-[#10B981]">2A OFPPT</span>
+          </div>
+        </div>
+
+        {/* Interactive Navigation Tabs for the 4 Key Curriculum Domains */}
+        <div className="flex items-center border-b border-black/10 dark:border-white/10 bg-black/[0.01] dark:bg-white/[0.02] p-1.5 gap-1 overflow-x-auto no-scrollbar text-xs font-bold">
+          <button
+            onClick={() => setActiveTab('react')}
+            className={cn(
+              "flex-1 flex items-center justify-center gap-1.5 py-2 px-2 rounded-xl transition-all cursor-pointer truncate text-[11px]",
+              activeTab === 'react'
+                ? "bg-[#10B981] text-white shadow-xs"
+                : "text-[#0A0A0A]/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5"
+            )}
+          >
+            <Code2 className="h-3.5 w-3.5 shrink-0" />
+            <span className="truncate">React.js</span>
+          </button>
+
+          <button
+            onClick={() => setActiveTab('laravel')}
+            className={cn(
+              "flex-1 flex items-center justify-center gap-1.5 py-2 px-2 rounded-xl transition-all cursor-pointer truncate text-[11px]",
+              activeTab === 'laravel'
+                ? "bg-[#10B981] text-white shadow-xs"
+                : "text-[#0A0A0A]/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5"
+            )}
+          >
+            <Server className="h-3.5 w-3.5 shrink-0" />
+            <span className="truncate">Laravel</span>
+          </button>
+
+          <button
+            onClick={() => setActiveTab('sgbd')}
+            className={cn(
+              "flex-1 flex items-center justify-center gap-1.5 py-2 px-2 rounded-xl transition-all cursor-pointer truncate text-[11px]",
+              activeTab === 'sgbd'
+                ? "bg-[#10B981] text-white shadow-xs"
+                : "text-[#0A0A0A]/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5"
+            )}
+          >
+            <Database className="h-3.5 w-3.5 shrink-0" />
+            <span className="truncate">SGBD SQL</span>
+          </button>
+
+          <button
+            onClick={() => setActiveTab('agile')}
+            className={cn(
+              "flex-1 flex items-center justify-center gap-1.5 py-2 px-2 rounded-xl transition-all cursor-pointer truncate text-[11px]",
+              activeTab === 'agile'
+                ? "bg-[#10B981] text-white shadow-xs"
+                : "text-[#0A0A0A]/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5"
+            )}
+          >
+            <Layers className="h-3.5 w-3.5 shrink-0" />
+            <span className="truncate">Agile & DevOps</span>
+          </button>
+        </div>
+
+        {/* Tab Content Display */}
+        <div className="p-5 sm:p-6 min-h-[310px] flex flex-col justify-between">
+          
+          {/* TAB 1: FRONTEND REACT.JS */}
+          {activeTab === 'react' && (
+            <div className="space-y-4 animate-in fade-in duration-300">
+              <div className="flex items-center justify-between pb-2 border-b border-black/10 dark:border-white/10">
+                <div className="flex items-center gap-2">
+                  <Code2 className="h-3.5 w-3.5 text-[#10B981]" />
+                  <span className="text-xs font-mono font-bold text-[#10B981] uppercase">Module M202 · React & Hooks</span>
+                </div>
+                <span className="text-[10px] font-mono font-bold bg-[#10B981]/15 text-[#10B981] px-2 py-0.5 rounded-md border border-[#10B981]/30">
+                  Virtual DOM · 60 FPS
+                </span>
               </div>
-              <div className="text-[10px] font-mono text-slate-400 font-semibold flex items-center gap-1">
-                <Terminal className="h-2.5 w-2.5 text-cyan-400" />
-                <span>fullstack-2a.ofppt/workspace</span>
+
+              {/* Code Snippet Box */}
+              <div className="rounded-2xl border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 p-3 font-mono text-[11px] space-y-1 text-[#0A0A0A]/85 dark:text-white/85">
+                <div><span className="text-[#10B981] font-bold">function</span> <span className="text-[#22C55E]">StagiaireApp</span>() &#123;</div>
+                <div className="pl-3"><span className="text-[#10B981] font-bold">const</span> [efm, setEfm] = <span className="text-[#22C55E]">useState</span>(&#123; note: <span className="text-[#22C55E] font-bold">19.5</span>, mention: <span className="text-[#10B981]">'Très Bien'</span> &#125;);</div>
+                <div className="pl-3"><span className="text-[#10B981] font-bold">return</span> &lt;<span className="text-[#22C55E]">ExamBadge</span> filiere=<span className="text-[#10B981]">"FullStack 2A"</span> score=&#123;efm.note&#125; /&gt;;</div>
+                <div>&#125;</div>
               </div>
-              <div className="flex items-center gap-1">
-                <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                <span className="text-[9px] text-emerald-400 font-bold">LIVE</span>
+
+              {/* Live Rendered Component Box */}
+              <div className="rounded-2xl border border-[#10B981]/40 bg-[#10B981]/10 p-3 flex items-center justify-between">
+                <div className="flex items-center gap-2.5">
+                  <div className="h-8 w-8 rounded-xl bg-[#10B981] text-white flex items-center justify-center font-bold text-xs">
+                    FS
+                  </div>
+                  <div>
+                    <div className="text-xs font-bold text-[#0A0A0A] dark:text-white">Filière FullStack 2A · OFPPT</div>
+                    <div className="text-[10px] text-[#0A0A0A]/60 dark:text-white/60 font-mono">React v18 + Redux Toolkit</div>
+                  </div>
+                </div>
+                <div className="flex items-center gap-1 text-xs font-mono font-bold text-[#10B981] bg-white dark:bg-[#0A0A0A] px-2.5 py-1 rounded-lg border border-[#10B981]/30">
+                  <Check className="h-3.5 w-3.5" />
+                  <span>19.5/20 EFM</span>
+                </div>
               </div>
             </div>
+          )}
 
-            {/* Inner Dashboard View */}
-            <div className="p-3.5 space-y-3 bg-gradient-to-b from-slate-900/80 to-[#070B14]">
-              {/* Mini Stats Bar */}
-              <div className="grid grid-cols-3 gap-2">
-                <div className="rounded-lg bg-slate-800/60 p-2 border border-white/5">
-                  <div className="text-[9px] text-slate-400 uppercase font-bold">Progression</div>
-                  <div className="text-sm font-black text-indigo-400">100% EFM</div>
+          {/* TAB 2: BACKEND LARAVEL */}
+          {activeTab === 'laravel' && (
+            <div className="space-y-4 animate-in fade-in duration-300">
+              <div className="flex items-center justify-between pb-2 border-b border-black/10 dark:border-white/10">
+                <div className="flex items-center gap-2">
+                  <Server className="h-3.5 w-3.5 text-[#22C55E]" />
+                  <span className="text-xs font-mono font-bold text-[#22C55E] uppercase">Module M203 · Laravel API REST</span>
                 </div>
-                <div className="rounded-lg bg-slate-800/60 p-2 border border-white/5">
-                  <div className="text-[9px] text-slate-400 uppercase font-bold">QCM Corrigés</div>
-                  <div className="text-sm font-black text-cyan-400">200 / 200</div>
-                </div>
-                <div className="rounded-lg bg-slate-800/60 p-2 border border-white/5">
-                  <div className="text-[9px] text-slate-400 uppercase font-bold">Labs Simus</div>
-                  <div className="text-sm font-black text-emerald-400">5 Actifs</div>
-                </div>
+                <span className="text-[10px] font-mono font-bold bg-[#22C55E]/15 text-[#22C55E] px-2 py-0.5 rounded-md border border-[#22C55E]/30">
+                  HTTP 200 OK · 18ms
+                </span>
               </div>
 
-              {/* Code / Agile Sprint Mini Board */}
-              <div className="rounded-lg bg-black/50 p-2.5 border border-indigo-500/20 font-mono text-[10px] text-slate-300 space-y-1">
-                <div className="flex items-center justify-between text-slate-400 pb-1 border-b border-white/5">
-                  <span className="text-indigo-400 font-bold flex items-center gap-1">
-                    <Zap className="h-3 w-3 text-amber-400" /> Sprint M201 : Approche Agile
-                  </span>
-                  <span className="text-emerald-400 text-[9px]">4/4 Notions</span>
+              {/* Code Snippet Box */}
+              <div className="rounded-2xl border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 p-3 font-mono text-[11px] space-y-1 text-[#0A0A0A]/85 dark:text-white/85">
+                <div><span className="text-[#22C55E] font-bold">Route::</span>get(<span className="text-[#10B981]">'/api/v1/efm-stagiaires'</span>, <span className="text-[#10B981] font-bold">function</span> () &#123;</div>
+                <div className="pl-3"><span className="text-[#10B981] font-bold">return</span> <span className="text-[#22C55E]">Stagiaire::</span>with(<span className="text-[#10B981]">'notes'</span>)-&gt;where(<span className="text-[#10B981]">'annee'</span>, 2)-&gt;get();</div>
+                <div>&#125;);</div>
+              </div>
+
+              {/* JSON Response Live Preview */}
+              <div className="rounded-2xl border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.02] p-3 font-mono text-[10px] space-y-0.5">
+                <div className="text-[#0A0A0A]/50 dark:text-white/50">// Réponse JSON normalisée API REST</div>
+                <div className="text-[#10B981]">&#123; "status": 200, "filiere": "Développement Digital 2A", "efm_ready": true &#125;</div>
+              </div>
+            </div>
+          )}
+
+          {/* TAB 3: SGBD & SQL AVANCÉ */}
+          {activeTab === 'sgbd' && (
+            <div className="space-y-4 animate-in fade-in duration-300">
+              <div className="flex items-center justify-between pb-2 border-b border-black/10 dark:border-white/10">
+                <div className="flex items-center gap-2">
+                  <Database className="h-3.5 w-3.5 text-[#10B981]" />
+                  <span className="text-xs font-mono font-bold text-[#10B981] uppercase">Module M204 · SGBD & SQL</span>
                 </div>
-                <div className="pt-1 text-[9px] text-slate-400 flex items-center justify-between">
-                  <span>Calcul Réseau PERT & Marges</span>
-                  <span className="text-indigo-400 font-bold">Chemin Critique ✓</span>
+                <span className="text-[10px] font-mono font-bold bg-[#10B981]/15 text-[#10B981] px-2 py-0.5 rounded-md border border-[#10B981]/30">
+                  Transactions ACID · 0.4ms
+                </span>
+              </div>
+
+              {/* SQL Query Snippet */}
+              <div className="rounded-2xl border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 p-3 font-mono text-[11px] space-y-1 text-[#0A0A0A]/85 dark:text-white/85">
+                <div><span className="text-[#10B981] font-bold">SELECT</span> m.code, AVG(e.note) <span className="text-[#10B981] font-bold">AS</span> moyenne</div>
+                <div><span className="text-[#10B981] font-bold">FROM</span> examens e <span className="text-[#22C55E] font-bold">JOIN</span> modules m <span className="text-[#10B981] font-bold">ON</span> e.mod_id = m.id</div>
+                <div><span className="text-[#10B981] font-bold">GROUP BY</span> m.code <span className="text-[#22C55E] font-bold">HAVING</span> moyenne &gt;= 16;</div>
+              </div>
+
+              {/* Data Table Result Preview */}
+              <div className="rounded-2xl border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.02] p-2.5 font-mono text-[10px]">
+                <div className="grid grid-cols-3 text-[#0A0A0A]/50 dark:text-white/50 pb-1 border-b border-black/10 dark:border-white/10 font-bold">
+                  <span>MODULE</span>
+                  <span>STATUT</span>
+                  <span className="text-right">RÉSULTAT</span>
                 </div>
-                <div className="text-[9px] text-slate-400 flex items-center justify-between">
-                  <span>Framework Scrum & Cérémonies</span>
-                  <span className="text-cyan-400 font-bold">PO / SM / Dev ✓</span>
+                <div className="grid grid-cols-3 pt-1 text-[#10B981] font-semibold">
+                  <span>M201 Agile</span>
+                  <span>Validé</span>
+                  <span className="text-right">18.5/20</span>
                 </div>
-                <div className="text-[9px] text-slate-400 flex items-center justify-between">
-                  <span>DevOps Git & GitLab CI Pipelines</span>
-                  <span className="text-emerald-400 font-bold">Passed ✓</span>
+                <div className="grid grid-cols-3 pt-0.5 text-[#22C55E] font-semibold">
+                  <span>M202 React</span>
+                  <span>Validé</span>
+                  <span className="text-right">17.0/20</span>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
+          )}
 
-        {/* Laptop Bottom Base / Keyboard lip */}
-        <div className="h-3.5 w-full bg-gradient-to-r from-slate-700 via-slate-600 to-slate-700 rounded-b-xl shadow-lg border-t border-white/10 flex justify-center items-center">
-          <div className="w-16 h-1 rounded-full bg-slate-800"></div>
-        </div>
-      </div>
+          {/* TAB 4: AGILE & DEVOPS */}
+          {activeTab === 'agile' && (
+            <div className="space-y-4 animate-in fade-in duration-300">
+              <div className="flex items-center justify-between pb-2 border-b border-black/10 dark:border-white/10">
+                <div className="flex items-center gap-2">
+                  <Layers className="h-3.5 w-3.5 text-[#10B981]" />
+                  <span className="text-xs font-mono font-bold text-[#10B981] uppercase">Module M201 · Approche Agile & CI/CD</span>
+                </div>
+                <span className="text-[10px] font-mono font-bold bg-[#10B981]/15 text-[#10B981] px-2 py-0.5 rounded-md border border-[#10B981]/30">
+                  Sprint 04 · Done
+                </span>
+              </div>
 
-      {/* SATELLITE 1: Floating Code Snippet Card (Top Left) */}
-      <div 
-        className="absolute top-2 -left-2 sm:-left-8 z-20 transition-transform duration-300 ease-out transform-style-preserve-3d"
-        style={{
-          transform: `translate3d(${mousePos.x * -22}px, ${mousePos.y * -20}px, 60px)`,
-        }}
-      >
-        <div className="animate-float-subtle rounded-xl bg-white/95 dark:bg-slate-900/90 backdrop-blur-md p-3 border border-cyan-300 dark:border-cyan-500/30 shadow-lg dark:shadow-xl shadow-cyan-500/10">
-          <div className="flex items-center gap-2 mb-1.5">
-            <Code2 className="h-3.5 w-3.5 text-cyan-600 dark:text-cyan-400" />
-            <span className="text-[10px] font-mono font-bold text-cyan-700 dark:text-cyan-300">.gitlab-ci.yml</span>
-          </div>
-          <div className="font-mono text-[9px] text-slate-600 dark:text-slate-400 space-y-0.5">
-            <div><span className="text-purple-600 dark:text-purple-400 font-semibold">stages:</span> [test, deploy]</div>
-            <div><span className="text-emerald-600 dark:text-emerald-400 font-semibold">script:</span> npm run test:agile</div>
-            <div className="text-cyan-700 dark:text-cyan-400 font-bold">status: 200 OK ✓</div>
-          </div>
-        </div>
-      </div>
+              {/* 3 Columns Mini Kanban */}
+              <div className="grid grid-cols-3 gap-2 text-xs">
+                <div className="rounded-xl border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.02] p-2 space-y-1">
+                  <div className="text-[9px] font-mono font-bold text-[#0A0A0A]/50 dark:text-white/50 uppercase">To Do</div>
+                  <div className="rounded-lg bg-white dark:bg-[#0A0A0A] border border-black/10 dark:border-white/10 p-1.5 text-[9px] font-medium">
+                    Calcul PERT
+                  </div>
+                </div>
+                <div className="rounded-xl border border-[#10B981]/30 bg-[#10B981]/5 p-2 space-y-1">
+                  <div className="text-[9px] font-mono font-bold text-[#10B981] uppercase">In Dev</div>
+                  <div className="rounded-lg bg-white dark:bg-[#0A0A0A] border border-[#10B981]/30 p-1.5 text-[9px] font-bold text-[#10B981]">
+                    Sprint Scrum
+                  </div>
+                </div>
+                <div className="rounded-xl border border-[#22C55E]/30 bg-[#22C55E]/5 p-2 space-y-1">
+                  <div className="text-[9px] font-mono font-bold text-[#22C55E] uppercase">Done</div>
+                  <div className="rounded-lg bg-white dark:bg-[#0A0A0A] border border-[#22C55E]/30 p-1.5 text-[9px] font-bold text-[#22C55E]">
+                    GitLab CI/CD ✓
+                  </div>
+                </div>
+              </div>
 
-      {/* SATELLITE 2: 3D Database Cylinder / SQL Card (Bottom Left) */}
-      <div 
-        className="absolute bottom-4 -left-3 sm:-left-6 z-20 transition-transform duration-300 ease-out transform-style-preserve-3d"
-        style={{
-          transform: `translate3d(${mousePos.x * -26}px, ${mousePos.y * -24}px, 50px)`,
-        }}
-      >
-        <div className="animate-float-reverse rounded-xl bg-white/95 dark:bg-slate-900/90 backdrop-blur-md p-3 border border-emerald-300 dark:border-emerald-500/30 shadow-lg dark:shadow-xl shadow-emerald-500/10 flex items-center gap-2.5">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-100 dark:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 border border-emerald-300 dark:border-emerald-500/30">
-            <Database className="h-4 w-4" />
-          </div>
-          <div>
-            <div className="text-[10px] font-bold text-slate-800 dark:text-slate-200">Base SGBD / SQL</div>
-            <div className="text-[9px] font-mono text-emerald-600 dark:text-emerald-400 font-semibold">MCD ➔ Relations 1:N</div>
-          </div>
-        </div>
-      </div>
-
-      {/* SATELLITE 3: Agile Sprint Card (Top Right) */}
-      <div 
-        className="absolute -top-3 -right-2 sm:-right-8 z-20 transition-transform duration-300 ease-out transform-style-preserve-3d"
-        style={{
-          transform: `translate3d(${mousePos.x * 24}px, ${mousePos.y * 22}px, 70px)`,
-        }}
-      >
-        <div className="animate-float-subtle rounded-xl bg-white/95 dark:bg-slate-900/90 backdrop-blur-md p-3 border border-indigo-300 dark:border-indigo-500/30 shadow-lg dark:shadow-xl shadow-indigo-500/10">
-          <div className="flex items-center gap-2 mb-1">
-            <div className="h-2 w-2 rounded-full bg-indigo-500 animate-ping" />
-            <span className="text-[10px] font-bold text-indigo-700 dark:text-indigo-300 uppercase tracking-wide">Scrum Board 2A</span>
-          </div>
-          <div className="text-[11px] font-bold text-slate-900 dark:text-white">Sprint 04 : In Progress</div>
-          <div className="text-[9px] text-slate-600 dark:text-slate-400 mt-0.5 font-medium">Velocity: 42 Story Points</div>
-        </div>
-      </div>
-
-      {/* SATELLITE 4: QCM 100% Score & Graduation Cap (Bottom Right) */}
-      <div 
-        className="absolute bottom-2 -right-3 sm:-right-6 z-20 transition-transform duration-300 ease-out transform-style-preserve-3d"
-        style={{
-          transform: `translate3d(${mousePos.x * 28}px, ${mousePos.y * 26}px, 55px)`,
-        }}
-      >
-        <div className="animate-float-reverse rounded-xl bg-white/95 dark:bg-slate-900/90 backdrop-blur-md p-2.5 sm:p-3 border border-amber-300 dark:border-amber-500/30 shadow-lg dark:shadow-xl shadow-amber-500/10 flex items-center gap-2.5">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-amber-100 dark:bg-amber-500/20 text-amber-600 dark:text-amber-400 border border-amber-300 dark:border-amber-500/30">
-            <GraduationCap className="h-4 w-4" />
-          </div>
-          <div>
-            <div className="text-[10px] font-bold text-slate-800 dark:text-slate-200">Examen Blanc</div>
-            <div className="text-[9px] font-bold text-amber-600 dark:text-amber-400 flex items-center gap-1">
-              <CheckCircle2 className="h-3 w-3" /> Score 50/50 QCM
+              <div className="rounded-2xl border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.02] p-2.5 text-[11px] flex items-center justify-between">
+                <div className="space-y-0.5">
+                  <div className="text-[9px] font-mono text-[#0A0A0A]/50 dark:text-white/50 uppercase font-bold">Formule EFM</div>
+                  <div className="font-mono text-[#0A0A0A] dark:text-white font-bold">Chemin Critique = 20j (Marge = 0)</div>
+                </div>
+                <div className="flex items-center gap-1 text-[#10B981] font-bold font-mono text-[10px]">
+                  <CheckCircle2 className="h-3.5 w-3.5" />
+                  <span>Prêt EFM</span>
+                </div>
+              </div>
             </div>
+          )}
+
+          {/* Bottom Interactive Status Bar */}
+          <div className="mt-4 pt-3 border-t border-black/10 dark:border-white/10 flex items-center justify-between text-xs font-mono">
+            <span className="text-[#0A0A0A]/60 dark:text-white/60 flex items-center gap-1.5">
+              <Sparkles className="h-3.5 w-3.5 text-[#10B981]" />
+              <span>Studio interactif FullStack 2A</span>
+            </span>
+            <span className="text-[#10B981] font-bold flex items-center gap-1 hover:underline cursor-pointer">
+              <span>Programme complet</span>
+              <ChevronRight className="h-3 w-3" />
+            </span>
           </div>
         </div>
       </div>
-
-      {/* Floating subtle ambient particles */}
-      <div 
-        className="absolute top-1/4 left-1/4 h-2 w-2 rounded-full bg-cyan-400/60 blur-[1px] animate-ping pointer-events-none"
-        style={{ animationDuration: '3s' }}
-      />
-      <div 
-        className="absolute bottom-1/4 right-1/3 h-1.5 w-1.5 rounded-full bg-indigo-400/60 blur-[1px] animate-ping pointer-events-none"
-        style={{ animationDuration: '4s' }}
-      />
     </div>
   );
 }

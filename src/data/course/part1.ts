@@ -7,7 +7,7 @@ export const coursePart1: CoursePart = {
   subtitle: 'Comprendre les bases, les acteurs clés, le triangle QCD et les approches prédictives vs agiles',
   description: 'Ce module pose le socle théorique indispensable de la gestion de projet : définitions normées, distinction projet / opérations récurrentes, rôles MOA/MOE, matrice RACI, gestion proactive des risques et comparaison rigoureuse entre cycle en V, cascade et approches agiles.',
   iconName: 'LayoutGrid',
-  colorTheme: 'indigo',
+  colorTheme: 'primary',
   sections: [
     {
       id: 'p1-s1',

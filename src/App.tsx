@@ -1,4 +1,4 @@
-import React, { useState, Suspense, lazy } from 'react';
+import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { Layout } from './components/layout/Layout';
 import { ActiveView } from './components/layout/Sidebar';
 import { CurriculumHub } from './pages/CurriculumHub';
@@ -6,39 +6,19 @@ import { ViewSkeleton } from './components/common/ViewSkeleton';
 import { PartId } from './types';
 import { useScrollReveal } from './hooks/useScrollReveal';
 import { trackPageView, analytics } from './lib/analytics';
+import { InteractiveGridBackground } from './components/common/InteractiveGridBackground';
+import { CommandPalette } from './components/common/CommandPalette';
 
 // Lazy-load secondary views & heavy dependencies for optimal LCP/FCP
 const Dashboard = lazy(() => import('./pages/Dashboard').then(m => ({ default: m.Dashboard })));
+const MethodologyPage = lazy(() => import('./pages/Methodology').then(m => ({ default: m.MethodologyPage })));
+const ProfileSettingsPage = lazy(() => import('./pages/ProfileSettings').then(m => ({ default: m.ProfileSettingsPage })));
 const LaboratoryPage = lazy(() => import('./pages/Laboratory').then(m => ({ default: m.LaboratoryPage })));
 const FinalExamPage = lazy(() => import('./pages/FinalExam').then(m => ({ default: m.FinalExamPage })));
 const ErrorsPage = lazy(() => import('./pages/Errors').then(m => ({ default: m.ErrorsPage })));
 const FlashcardsPage = lazy(() => import('./pages/Flashcards').then(m => ({ default: m.FlashcardsPage })));
 const CourseViewer = lazy(() => import('./components/course/CourseViewer').then(m => ({ default: m.CourseViewer })));
 const QuizRunner = lazy(() => import('./components/quiz/QuizRunner').then(m => ({ default: m.QuizRunner })));
-const AntigravityParticleField = lazy(() => import('./components/3d/AntigravityParticleField').then(m => ({ default: m.AntigravityParticleField })));
-
-function DesktopParticleBackground() {
-  const [canRender, setCanRender] = useState(() => 
-    typeof window !== 'undefined' && window.innerWidth >= 768 && !window.matchMedia('(pointer: coarse)').matches
-  );
-
-  React.useEffect(() => {
-    const handleResize = () => {
-      setCanRender(window.innerWidth >= 768 && !window.matchMedia('(pointer: coarse)').matches);
-    };
-    window.addEventListener('resize', handleResize, { passive: true });
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  if (!canRender) return null;
-
-  return (
-    <Suspense fallback={null}>
-      <AntigravityParticleField />
-    </Suspense>
-  );
-}
-
 
 // Map URL pathname to internal ActiveView
 function getInitialView(): ActiveView {
@@ -53,6 +33,8 @@ function getInitialView(): ActiveView {
   if (path === 'part1' || path === 'part2' || path === 'part3' || path === 'part4' || path === 'part5') {
     return path as ActiveView;
   }
+  if (path === 'methodology' || path === 'methode' || path === 'how-to-learn') return 'methodology';
+  if (path === 'profile' || path === 'settings' || path === 'profil') return 'profile-settings';
   if (path === 'simulators' || path === 'laboratory') return 'simulators';
   if (path === 'flashcards') return 'flashcards';
   if (path === 'final-exam' || path === 'exam') return 'final-exam';
@@ -73,12 +55,27 @@ export function App() {
   useScrollReveal();
   const [activeView, setActiveView] = useState<ActiveView>(getInitialView);
   const [quizPartId, setQuizPartId] = useState<PartId | null>(null);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+
+  // Global Ctrl+K / Cmd+K listener for Command Palette search
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        setIsSearchOpen(prev => !prev);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
   // Sync document title and meta description per route for Googlebot indexing
-  React.useEffect(() => {
+  useEffect(() => {
     const titles: Record<string, string> = {
       'curriculum-hub': 'FullStack Master · 2ème Année Développement Digital',
-      'dashboard': 'Module Approche Agile & Gestion de Projet (M201) | Full Stack 2A',
+      'dashboard': 'Tableau de bord · Module Approche Agile (M201) | Full Stack 2A',
+      'methodology': 'Comment Apprendre · Méthode active en 6 étapes | Full Stack 2A',
+      'profile-settings': 'Profil & Paramètres d’étude | Full Stack 2A',
       'part1': 'Partie 1 : Fondamentaux & Cycle de Vie Informatique | Full Stack 2A',
       'part2': 'Partie 2 : Planifier un projet · Réseau PERT & Gantt | Full Stack 2A',
       'part3': 'Partie 3 : Méthode Agile, Framework Scrum & Jira | Full Stack 2A',
@@ -96,7 +93,7 @@ export function App() {
   }, [activeView, quizPartId]);
 
   // Handle browser Back/Forward buttons (popstate)
-  React.useEffect(() => {
+  useEffect(() => {
     const handlePopState = () => {
       setActiveView(getInitialView());
       setQuizPartId(null);
@@ -132,6 +129,13 @@ export function App() {
     setQuizPartId(null);
   };
 
+  // Determine grid intensity based on active context
+  const gridIntensity = (activeView === 'curriculum-hub' || activeView === 'dashboard') 
+    ? 'hero' 
+    : (activeView.startsWith('part') || !!quizPartId) 
+    ? 'subtle' 
+    : 'default';
+
   // Render view based on active state
   const renderContent = () => {
     // 1. If currently in a Part Quiz (30 QCM)
@@ -148,12 +152,27 @@ export function App() {
       );
     }
 
-    // 1. Curriculum Hub (Choose from 2nd Year Modules: Agile, React, Laravel, Database)
+    // 2. Curriculum Hub (Choose from 2nd Year Modules: Agile, React, Laravel, Database)
     if (activeView === 'curriculum-hub') {
-      return <CurriculumHub onSelectAgile={() => handleNavigate('dashboard')} />;
+      return (
+        <CurriculumHub 
+          onSelectAgile={() => handleNavigate('dashboard')}
+          onOpenMethodology={() => handleNavigate('methodology')} 
+        />
+      );
     }
 
-    // 2. Final Exam Mode (50 QCM)
+    // 3. How to Learn Methodology Guide
+    if (activeView === 'methodology') {
+      return <MethodologyPage onNavigate={handleNavigate} />;
+    }
+
+    // 4. Student Profile & Settings
+    if (activeView === 'profile-settings') {
+      return <ProfileSettingsPage onBackToDashboard={() => handleNavigate('dashboard')} />;
+    }
+
+    // 5. Final Exam Mode (50 QCM)
     if (activeView === 'final-exam') {
       return (
         <FinalExamPage
@@ -163,22 +182,22 @@ export function App() {
       );
     }
 
-    // 3. Laboratory Mode
+    // 6. Laboratory Mode
     if (activeView === 'simulators') {
       return <LaboratoryPage />;
     }
 
-    // 4. Flashcards Mode
+    // 7. Flashcards Mode
     if (activeView === 'flashcards') {
       return <FlashcardsPage />;
     }
 
-    // 5. Errors Mode
+    // 8. Errors Mode
     if (activeView === 'errors') {
       return <ErrorsPage onBackToDashboard={() => setActiveView('dashboard')} />;
     }
 
-    // 6. Course Modules (part1, part2, part3, part4, part5)
+    // 9. Course Modules (part1, part2, part3, part4, part5)
     if (activeView.startsWith('part')) {
       const partId = activeView as PartId;
       return (
@@ -190,18 +209,29 @@ export function App() {
       );
     }
 
-    // 7. Default: Dashboard
+    // 10. Default: Dashboard
     return <Dashboard onNavigate={handleNavigate} />;
   };
 
   return (
-    <div className="relative min-h-screen bg-slate-50 dark:bg-[#070B14] text-slate-900 dark:text-slate-100 transition-colors selection:bg-indigo-500/30 selection:text-indigo-600 dark:selection:text-indigo-200">
-      {/* Global Google Antigravity Particle Field Canvas across ALL pages (Desktop only, Lazy & Non-Blocking) */}
-      <DesktopParticleBackground />
+    <div className="relative min-h-screen bg-white dark:bg-[#0A0A0A] text-[#0A0A0A] dark:text-white transition-colors selection:bg-[#10B981]/30 selection:text-[#10B981]">
+      {/* 2026 Digital Notebook Micro-Grid Background with Cursor Proximity Illumination */}
+      <InteractiveGridBackground intensity={gridIntensity} />
+
+      {/* Global Command Palette (Cmd+K / Ctrl+K) */}
+      <CommandPalette 
+        isOpen={isSearchOpen} 
+        onClose={() => setIsSearchOpen(false)} 
+        onNavigate={handleNavigate} 
+      />
 
       {/* Foreground Website Content */}
       <div className="relative z-10">
-        <Layout activeView={activeView} onNavigate={handleNavigate}>
+        <Layout 
+          activeView={activeView} 
+          onNavigate={handleNavigate}
+          onOpenSearch={() => setIsSearchOpen(true)}
+        >
           <Suspense fallback={<ViewSkeleton />}>
             {renderContent()}
           </Suspense>

@@ -21,16 +21,16 @@ export function InstallButton({ variant = 'minimal', className = '' }: InstallBu
       <>
         <button
           onClick={() => setIsOpen(true)}
-          className={`flex items-center gap-3 w-full px-3.5 py-2.5 rounded-2xl border border-indigo-200/80 dark:border-indigo-500/20 bg-indigo-50/70 dark:bg-indigo-950/30 text-indigo-700 dark:text-indigo-300 hover:bg-indigo-100 dark:hover:bg-indigo-900/40 font-bold text-xs transition-all shadow-xs group ${className}`}
+          className={`flex items-center gap-3 w-full px-3.5 py-2.5 rounded-2xl border border-[#10B981]/30 bg-[#10B981]/10 text-black dark:text-white hover:bg-[#10B981]/20 font-bold text-xs transition-all shadow-xs group ${className}`}
         >
-          <div className="flex h-7 w-7 items-center justify-center rounded-xl bg-indigo-600 text-white shadow-xs group-hover:scale-105 transition-transform shrink-0">
+          <div className="flex h-7 w-7 items-center justify-center rounded-xl bg-[#10B981] text-white shadow-xs group-hover:scale-105 transition-transform shrink-0">
             <Smartphone className="h-4 w-4" />
           </div>
           <div className="text-left flex-1">
-            <div className="leading-tight font-black text-slate-900 dark:text-white">Installer l'App</div>
-            <div className="text-[10px] text-indigo-600/80 dark:text-indigo-400 font-medium">Sur téléphone & APK</div>
+            <div className="leading-tight font-black text-black dark:text-white">Installer l'App</div>
+            <div className="text-[10px] text-[#10B981] font-medium">Sur téléphone & APK</div>
           </div>
-          <Download className="h-3.5 w-3.5 text-indigo-500 group-hover:translate-y-0.5 transition-transform" />
+          <Download className="h-3.5 w-3.5 text-[#10B981] group-hover:translate-y-0.5 transition-transform" />
         </button>
         <InstallModal open={isOpen} onOpenChange={setIsOpen} />
       </>
@@ -41,10 +41,10 @@ export function InstallButton({ variant = 'minimal', className = '' }: InstallBu
     <>
       <button
         onClick={() => setIsOpen(true)}
-        className={`inline-flex items-center gap-1.5 rounded-xl border border-indigo-200 dark:border-indigo-500/30 bg-indigo-50/90 dark:bg-indigo-950/40 px-3 py-1.5 text-xs font-bold text-indigo-700 dark:text-indigo-300 hover:bg-indigo-100 dark:hover:bg-indigo-900/60 transition-all shadow-xs group ${className}`}
+        className={`inline-flex items-center gap-1.5 rounded-xl border border-[#10B981]/30 bg-[#10B981]/10 px-3 py-1.5 text-xs font-bold text-black dark:text-white hover:bg-[#10B981]/20 transition-all shadow-xs group ${className}`}
         title="Installer l'application sur votre téléphone (PWA / APK)"
       >
-        <Smartphone className="h-3.5 w-3.5 text-indigo-600 dark:text-indigo-400 group-hover:scale-110 transition-transform" />
+        <Smartphone className="h-3.5 w-3.5 text-[#10B981] group-hover:scale-110 transition-transform" />
         {variant === 'full' ? (
           <span>Installer l'application</span>
         ) : (

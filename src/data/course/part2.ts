@@ -7,7 +7,7 @@ export const coursePart2: CoursePart = {
   subtitle: 'Du cahier des charges aux calculs avancés de réseau, antécédents, marges et chemin critique',
   description: 'Ce module approfondit les techniques d’ingénierie de planification de projet : analyse du cahier des charges, découpage des activités (WBS), visualisation chronologique sur diagramme de Gantt et maîtrise mathématique du réseau PERT (passage avant, passage arrière, marges et identification du chemin critique).',
   iconName: 'CalendarRange',
-  colorTheme: 'teal',
+  colorTheme: 'secondary',
   sections: [
     {
       id: 'p2-s1',

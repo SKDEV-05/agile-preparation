@@ -7,7 +7,7 @@ export const coursePart3: CoursePart = {
   subtitle: 'Maîtriser le Manifeste Agile, le framework Scrum complet, les User Stories et la gestion sur Jira',
   description: 'Ce module couvre l’intégralité des pratiques agiles modernes au programme de l’OFPPT : les 4 valeurs et 12 principes du Manifeste Agile, les rôles Scrum (Product Owner, Scrum Master, Developers), les cérémonies, les artefacts, les critères d’acceptation des User Stories, l’estimation en Story Points et le pilotage opérationnel d’un board Jira.',
   iconName: 'Zap',
-  colorTheme: 'violet',
+  colorTheme: 'primary',
   sections: [
     {
       id: 'p3-s1',

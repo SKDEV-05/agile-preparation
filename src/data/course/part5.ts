@@ -7,7 +7,7 @@ export const coursePart5: CoursePart = {
   subtitle: 'Culture collaborative, modèle CALMS, automatisation des tests et conception de pipelines avec .gitlab-ci.yml',
   description: 'Ce module relie l’agilité au déploiement en production : les origines et la culture DevOps, le modèle de maturité CALMS (Culture, Automation, Lean, Measurement, Sharing), la distinction rigoureuse entre Intégration Continue (CI), Livraison Continue et Déploiement Continu (CD), ainsi que la syntaxe opérationnelle des pipelines GitLab CI.',
   iconName: 'Rocket',
-  colorTheme: 'rose',
+  colorTheme: 'primary',
   sections: [
     {
       id: 'p5-s1',

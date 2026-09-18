@@ -8,10 +8,10 @@ export function ViewSkeleton() {
       className="max-w-7xl mx-auto p-4 sm:p-8 space-y-8 animate-pulse"
     >
       {/* Header skeleton */}
-      <div className="rounded-2xl border border-slate-200 dark:border-white/10 bg-slate-100/70 dark:bg-slate-900/50 p-6 sm:p-8 space-y-4">
-        <div className="h-6 w-36 rounded-full bg-slate-200 dark:bg-slate-800/80" />
-        <div className="h-10 w-3/4 max-w-lg rounded-xl bg-slate-200 dark:bg-slate-800/60" />
-        <div className="h-4 w-1/2 max-w-md rounded-lg bg-slate-200 dark:bg-slate-800/40" />
+      <div className="rounded-2xl border border-black/10 dark:border-white/10 bg-white dark:bg-[#0A0A0A] p-6 sm:p-8 space-y-4">
+        <div className="h-6 w-36 rounded-full bg-black/10 dark:bg-white/10" />
+        <div className="h-10 w-3/4 max-w-lg rounded-xl bg-black/10 dark:bg-white/10" />
+        <div className="h-4 w-1/2 max-w-md rounded-lg bg-black/5 dark:bg-white/5" />
       </div>
 
       {/* Content grid skeleton */}
@@ -19,14 +19,14 @@ export function ViewSkeleton() {
         {[1, 2, 3, 4, 5, 6].map((i) => (
           <div 
             key={i} 
-            className="rounded-2xl border border-slate-200/80 dark:border-white/5 bg-slate-100/60 dark:bg-slate-900/40 p-6 space-y-4 min-h-[180px] flex flex-col justify-between"
+            className="rounded-2xl border border-black/10 dark:border-white/10 bg-white dark:bg-[#0A0A0A] p-6 space-y-4 min-h-[180px] flex flex-col justify-between"
           >
             <div className="space-y-2">
-              <div className="h-5 w-2/3 rounded-lg bg-slate-200 dark:bg-slate-800/70" />
-              <div className="h-3.5 w-full rounded-md bg-slate-200 dark:bg-slate-800/40" />
-              <div className="h-3.5 w-4/5 rounded-md bg-slate-200 dark:bg-slate-800/30" />
+              <div className="h-5 w-2/3 rounded-lg bg-black/10 dark:bg-white/10" />
+              <div className="h-3.5 w-full rounded-md bg-black/5 dark:bg-white/5" />
+              <div className="h-3.5 w-4/5 rounded-md bg-black/5 dark:bg-white/5" />
             </div>
-            <div className="h-9 w-28 rounded-xl bg-indigo-500/20" />
+            <div className="h-9 w-28 rounded-xl bg-[#10B981]/20" />
           </div>
         ))}
       </div>

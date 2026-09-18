@@ -123,12 +123,10 @@ export function DevOpsPipeline() {
     // Sequential step simulation
     defaultStages.forEach((stage, idx) => {
       setTimeout(() => {
-        // Set current to running
         setStages(prev => prev.map((s, i) => i === idx ? { ...s, status: 'running' } : s));
         setSelectedStageId(stage.id);
 
         setTimeout(() => {
-          // Set to passed
           setStages(prev => prev.map((s, i) => i === idx ? { ...s, status: 'passed' } : s));
           if (idx === defaultStages.length - 1) {
             setIsRunning(false);
@@ -192,16 +190,16 @@ deploy_to_server:
 `;
 
   return (
-    <Card className="rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0D1526]/90 shadow-sm dark:shadow-2xl">
+    <Card className="rounded-3xl border border-black/10 dark:border-white/10 bg-white dark:bg-[#0A0A0A] shadow-xl">
       <CardHeader>
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
             <div className="flex items-center gap-2">
-              <Badge variant="danger" size="sm">Laboratoire 05</Badge>
-              <Badge variant="outline" size="sm" className="border-slate-200 dark:border-white/15 text-slate-700 dark:text-slate-300">GitLab CI / CD</Badge>
+              <Badge variant="accent" size="sm">Laboratoire 05</Badge>
+              <Badge variant="outline" size="sm" className="border-black/10 dark:border-white/15 text-black dark:text-white">GitLab CI / CD</Badge>
             </div>
-            <CardTitle className="text-xl sm:text-2xl mt-1 text-slate-900 dark:text-white">DevOps Lab · Pipeline CI/CD Vivant</CardTitle>
-            <CardDescription className="text-slate-600 dark:text-slate-300">
+            <CardTitle className="text-xl sm:text-2xl mt-1 text-black dark:text-white">DevOps Lab · Pipeline CI/CD Vivant</CardTitle>
+            <CardDescription className="text-black/60 dark:text-white/60">
               Lance l’exécution séquentielle du pipeline de livraison. Clique sur chaque étape pour inspecter les commandes exécutées et les journaux réels du Runner.
             </CardDescription>
           </div>
@@ -211,9 +209,9 @@ deploy_to_server:
               variant="outline"
               size="sm"
               onClick={() => setViewYaml(!viewYaml)}
-              className="gap-1.5 border-slate-200 dark:border-white/15 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/5"
+              className="gap-1.5 border-black/10 dark:border-white/15 text-black dark:text-white hover:bg-black/5 dark:hover:bg-white/5"
             >
-              <FileCode className="h-4 w-4 text-slate-500" />
+              <FileCode className="h-4 w-4 text-[#10B981]" />
               <span>{viewYaml ? 'Voir le Pipeline' : 'Voir .gitlab-ci.yml'}</span>
             </Button>
             <Button
@@ -221,12 +219,12 @@ deploy_to_server:
               size="sm"
               disabled={isRunning}
               onClick={runPipeline}
-              className="gap-2 font-bold shadow-sm"
+              className="gap-2 font-bold shadow-md shadow-[#10B981]/25 bg-[#10B981] hover:bg-[#22C55E] text-white"
             >
               <Play className="h-4 w-4" />
               <span>{isRunning ? 'Exécution en cours...' : 'Lancer le Pipeline'}</span>
             </Button>
-            <Button variant="outline" size="sm" onClick={handleReset} className="border-slate-200 dark:border-white/15 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/5">
+            <Button variant="outline" size="sm" onClick={handleReset} className="border-black/10 dark:border-white/15 text-black dark:text-white hover:bg-black/5 dark:hover:bg-white/5">
               <RotateCcw className="h-3.5 w-3.5" />
             </Button>
           </div>
@@ -236,12 +234,12 @@ deploy_to_server:
       <CardContent>
         {viewYaml ? (
           /* YAML Viewer */
-          <div className="rounded-2xl border border-slate-800 dark:border-white/10 bg-[#030712] p-5 font-mono text-xs text-slate-300 overflow-x-auto shadow-inner">
-            <div className="flex items-center gap-2 pb-3 border-b border-white/10 mb-3 text-slate-400">
-              <FileCode className="h-4 w-4 text-cyan-400" />
+          <div className="rounded-2xl border border-black/10 dark:border-white/10 bg-[#0A0A0A] p-5 font-mono text-xs text-white/80 overflow-x-auto shadow-inner">
+            <div className="flex items-center gap-2 pb-3 border-b border-white/10 mb-3 text-white/60">
+              <FileCode className="h-4 w-4 text-[#10B981]" />
               <span>.gitlab-ci.yml — Configuration déclarative du pipeline</span>
             </div>
-            <pre className="text-slate-200 leading-relaxed">{yamlContent}</pre>
+            <pre className="text-white leading-relaxed">{yamlContent}</pre>
           </div>
         ) : (
           <div>
@@ -249,11 +247,11 @@ deploy_to_server:
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 mb-6">
               {stages.map((stage) => {
                 const isSelected = stage.id === selectedStageId;
-                let borderStyle = 'border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-[#070B14]/80 hover:border-slate-300 dark:hover:border-white/20 text-slate-700 dark:text-slate-300';
+                let borderStyle = 'border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 text-black dark:text-white';
                 if (stage.status === 'running') {
-                  borderStyle = 'border-indigo-500 bg-indigo-50 dark:bg-indigo-950/60 ring-2 ring-indigo-500/40 text-indigo-900 dark:text-white animate-pulse';
+                  borderStyle = 'border-[#10B981] bg-[#10B981]/15 ring-2 ring-[#10B981]/40 text-black dark:text-white animate-pulse';
                 } else if (stage.status === 'passed') {
-                  borderStyle = 'border-emerald-500/40 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-200';
+                  borderStyle = 'border-[#10B981]/40 bg-[#10B981]/10 text-black dark:text-white';
                 }
 
                 return (
@@ -261,22 +259,22 @@ deploy_to_server:
                     key={stage.id}
                     onClick={() => setSelectedStageId(stage.id)}
                     className={`text-left rounded-2xl border p-4 transition-all duration-200 ${borderStyle} ${
-                      isSelected ? 'ring-2 ring-cyan-500 dark:ring-cyan-400 shadow-md dark:shadow-lg dark:shadow-cyan-900/30' : 'shadow-sm'
+                      isSelected ? 'ring-2 ring-[#22C55E] shadow-md' : 'shadow-sm'
                     }`}
                   >
                     <div className="flex items-center justify-between text-[11px] mb-2 font-bold">
-                      <span className="text-slate-500 dark:text-slate-400">{stage.name}</span>
+                      <span className="text-black/50 dark:text-white/50">{stage.name}</span>
                       {stage.status === 'passed' && (
-                        <CheckCircle2 className="h-4 w-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
+                        <CheckCircle2 className="h-4 w-4 text-[#10B981] shrink-0" />
                       )}
                       {stage.status === 'running' && (
-                        <Clock className="h-4 w-4 text-indigo-600 dark:text-indigo-400 animate-spin shrink-0" />
+                        <Clock className="h-4 w-4 text-[#10B981] animate-spin shrink-0" />
                       )}
                     </div>
-                    <div className="text-xs font-bold text-slate-900 dark:text-white truncate">
+                    <div className="text-xs font-bold text-black dark:text-white truncate">
                       {stage.jobName}
                     </div>
-                    <div className="text-[10px] text-slate-500 dark:text-slate-400 mt-1">
+                    <div className="text-[10px] text-black/50 dark:text-white/50 mt-1">
                       {stage.status === 'passed' ? `Durée : ${stage.duration}` : 'En attente'}
                     </div>
                   </button>
@@ -285,20 +283,20 @@ deploy_to_server:
             </div>
 
             {/* Stage Detail & Terminal Logs */}
-            <div className="rounded-2xl border border-slate-800 dark:border-white/10 bg-[#030712] p-5 shadow-inner">
+            <div className="rounded-2xl border border-black/10 dark:border-white/10 bg-[#0A0A0A] p-5 shadow-inner">
               <div className="flex flex-wrap items-center justify-between pb-3 border-b border-white/10 mb-3 gap-2">
-                <div className="flex items-center gap-2 font-mono text-xs text-slate-300">
-                  <Server className="h-4 w-4 text-cyan-400" />
+                <div className="flex items-center gap-2 font-mono text-xs text-white/80">
+                  <Server className="h-4 w-4 text-[#22C55E]" />
                   <span>GitLab Runner #01 · Stage : <b className="text-white font-bold">{selectedStage.name}</b></span>
                 </div>
-                <div className="font-mono text-xs text-slate-400">
-                  Commande : <code className="text-cyan-300 font-bold">{selectedStage.command}</code>
+                <div className="font-mono text-xs text-white/60">
+                  Commande : <code className="text-[#10B981] font-bold">{selectedStage.command}</code>
                 </div>
               </div>
 
-              <div className="space-y-1 font-mono text-xs text-slate-300 max-h-48 overflow-y-auto">
+              <div className="space-y-1 font-mono text-xs text-white/80 max-h-48 overflow-y-auto">
                 {selectedStage.logs.map((line, idx) => (
-                  <div key={idx} className={line.startsWith('$') ? 'text-cyan-400 font-bold' : line.includes('succeeded') || line.includes('Passed') ? 'text-emerald-300 font-bold' : 'text-slate-300'}>
+                  <div key={idx} className={line.startsWith('$') ? 'text-[#10B981] font-bold' : line.includes('succeeded') || line.includes('Passed') ? 'text-[#10B981] font-bold' : 'text-white/70'}>
                     {line}
                   </div>
                 ))}

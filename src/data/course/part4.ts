@@ -7,7 +7,7 @@ export const coursePart4: CoursePart = {
   subtitle: 'Gestion de versions distribuée, travail en branches, résolution de conflits et qualité de code avec SonarQube',
   description: 'Ce module détaille le cycle de vie du code source en entreprise : architecture des 4 zones Git (Working Directory, Staging, Local Repo, Remote), commandes fondamentales, stratégies de branches, gestion sereine des conflits de fusion, distinction Git vs plateformes d’hébergement (GitLab/GitHub) et analyse de qualité statique automatisée avec SonarQube.',
   iconName: 'GitBranch',
-  colorTheme: 'amber',
+  colorTheme: 'secondary',
   sections: [
     {
       id: 'p4-s1',

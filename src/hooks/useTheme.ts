@@ -34,7 +34,7 @@ function syncDOM(theme: Theme) {
 
   const metaThemeColor = document.querySelector('meta[name="theme-color"]');
   if (metaThemeColor) {
-    metaThemeColor.setAttribute('content', theme === 'dark' ? '#070B14' : '#4f46e5');
+    metaThemeColor.setAttribute('content', theme === 'dark' ? '#0A0A0A' : '#10B981');
   }
 }
 

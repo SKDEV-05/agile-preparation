@@ -66,7 +66,6 @@ export function GitLabVisualizer() {
     setLogs(prev => [...prev, ...entries]);
   };
 
-  // Helper to generate realistic git commit hashes
   const generateHash = () => {
     return Math.random().toString(36).substring(2, 9);
   };
@@ -76,18 +75,15 @@ export function GitLabVisualizer() {
     const trimmed = rawCmd.trim();
     if (!trimmed) return;
 
-    // Save to history
     setCommandHistory(prev => [...prev, trimmed]);
     setHistoryIndex(-1);
 
-    // Display executed command
     addLog({ type: 'cmd', text: `stagiaire@ofppt:~/app (${activeBranch}) $ ${trimmed}` });
 
     const lower = trimmed.toLowerCase();
     const parts = trimmed.split(/\s+/);
     const gitSubCmd = parts[0] === 'git' ? (parts[1] || '').toLowerCase() : '';
 
-    // 1. HELP COMMAND
     if (lower === 'help' || lower === 'git --help' || lower === 'git help') {
       addLogs([
         { type: 'info', text: '════════════════════════════════════════════════════════════' },
@@ -109,13 +105,11 @@ export function GitLabVisualizer() {
       return;
     }
 
-    // 2. CLEAR
     if (lower === 'clear' || lower === 'cls') {
       setLogs([]);
       return;
     }
 
-    // 3. TOUCH / NEW FILE
     if (parts[0] === 'touch' || parts[0] === 'new') {
       const fileName = parts[1] || `src/module_${Math.floor(Math.random() * 90 + 10)}.ts`;
       setWorkingFiles(prev => [...new Set([...prev, fileName])]);
@@ -123,7 +117,6 @@ export function GitLabVisualizer() {
       return;
     }
 
-    // Must start with git
     if (parts[0] !== 'git') {
       addLog({
         type: 'error',
@@ -227,7 +220,6 @@ export function GitLabVisualizer() {
         return;
       }
 
-      // Extract message from -m "message"
       let commitMessage = 'feat: travail effectué sur le projet';
       const mMatch = trimmed.match(/-m\s+["']([^"']+)["']/);
       if (mMatch && mMatch[1]) {
@@ -290,7 +282,6 @@ export function GitLabVisualizer() {
     if (gitSubCmd === 'branch') {
       const branchArg = parts[2]?.trim();
       if (!branchArg) {
-        // List branches
         addLog({
           type: 'output',
           text: branches.map(b => (b === activeBranch ? `* ${b}  (branche courante)` : `  ${b}`)).join('\n')
@@ -327,7 +318,6 @@ export function GitLabVisualizer() {
 
         setBranches(prev => [...prev, targetBranch]);
         setActiveBranch(targetBranch);
-        // Add new sample files on feature branch
         setWorkingFiles(prev => [...prev, `src/features/${targetBranch.replace('/', '_')}.tsx`]);
 
         addLogs([
@@ -405,7 +395,7 @@ export function GitLabVisualizer() {
         const isRemote = remoteCommits.some(rc => rc.hash === c.hash) ? ' [origin]' : ' [unpushed]';
         logLines.push({
           type: idx === 0 ? 'success' : 'output',
-          text: `* \x1b[33m${c.hash}\x1b[0m - ${c.msg}${isHead}${isRemote}`
+          text: `* ${c.hash} - ${c.msg}${isHead}${isRemote}`
         });
       });
 
@@ -445,14 +435,12 @@ export function GitLabVisualizer() {
       return;
     }
 
-    // Fallback unrecognized git command
     addLog({
       type: 'error',
       text: `git: '${gitSubCmd}' n'est pas une commande reconnue par ce simulateur. Tapez "help" pour la liste.`
     });
   };
 
-  // Keyboard navigation for history (Up/Down) and Enter to submit
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       e.preventDefault();
@@ -478,7 +466,6 @@ export function GitLabVisualizer() {
     }
   };
 
-  // Reset all zones to initial state
   const handleReset = () => {
     setWorkingFiles(['src/components/Auth.tsx', 'src/services/api.ts']);
     setStagedFiles([]);
@@ -497,7 +484,6 @@ export function GitLabVisualizer() {
     ]);
   };
 
-  // Fast chip clicks
   const quickActions = [
     { label: '$ git status', cmd: 'git status' },
     { label: '$ git add .', cmd: 'git add .' },
@@ -510,38 +496,38 @@ export function GitLabVisualizer() {
   ];
 
   return (
-    <Card className="rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0D1526]/90 backdrop-blur-xl shadow-sm dark:shadow-2xl relative overflow-hidden">
-      <div className="absolute top-0 right-0 w-80 h-80 bg-cyan-600/10 rounded-full blur-3xl pointer-events-none" />
+    <Card className="rounded-3xl border border-black/10 dark:border-white/10 bg-white dark:bg-[#0A0A0A] backdrop-blur-xl shadow-xl relative overflow-hidden">
+      <div className="absolute top-0 right-0 w-80 h-80 bg-[#10B981]/10 rounded-full blur-3xl pointer-events-none" />
 
-      <CardHeader className="relative z-10 border-b border-slate-200 dark:border-white/10 pb-5">
+      <CardHeader className="relative z-10 border-b border-black/10 dark:border-white/10 pb-5">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
             <div className="flex items-center gap-2">
-              <Badge variant="warning" size="sm" className="bg-cyan-500/10 dark:bg-cyan-600/20 text-cyan-700 dark:text-cyan-300 border border-cyan-500/30">
+              <Badge variant="warning" size="sm" className="bg-[#10B981]/15 text-[#10B981] border border-[#10B981]/30">
                 Laboratoire 04 · Pratique Interactive
               </Badge>
-              <Badge variant="outline" size="sm" className="border-slate-200 dark:border-white/15 text-slate-700 dark:text-slate-300">
+              <Badge variant="outline" size="sm" className="border-black/10 dark:border-white/15 text-black dark:text-white">
                 Git CLI & 4 Zones
               </Badge>
             </div>
-            <CardTitle className="text-xl sm:text-2xl mt-1 text-slate-900 dark:text-white font-black flex items-center gap-2">
+            <CardTitle className="text-xl sm:text-2xl mt-1 text-black dark:text-white font-black flex items-center gap-2">
               <span>Terminal Git & Visualiseur des 4 Zones</span>
             </CardTitle>
-            <CardDescription className="text-slate-600 dark:text-slate-300 text-xs sm:text-sm">
+            <CardDescription className="text-black/60 dark:text-white/60 text-xs sm:text-sm">
               Saisis directement tes commandes Git dans la console interactive ci-dessous. Observe en temps réel les fichiers et commits naviguer entre les 4 zones fondamentales.
             </CardDescription>
           </div>
 
           <div className="flex items-center gap-2">
-            <span className="text-xs font-bold text-slate-700 dark:text-slate-300 flex items-center gap-1.5 bg-slate-100 dark:bg-[#070B14] border border-slate-200 dark:border-white/10 px-3 py-1.5 rounded-xl shadow-sm">
-              <GitBranch className="h-3.5 w-3.5 text-cyan-600 dark:text-cyan-400" />
-              Branche : <b className="text-cyan-700 dark:text-cyan-300">{activeBranch}</b>
+            <span className="text-xs font-bold text-black dark:text-white flex items-center gap-1.5 bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 px-3 py-1.5 rounded-xl shadow-sm">
+              <GitBranch className="h-3.5 w-3.5 text-[#10B981]" />
+              Branche : <b className="text-[#10B981]">{activeBranch}</b>
             </span>
             <Button
               variant="outline"
               size="sm"
               onClick={handleReset}
-              className="gap-1.5 border-slate-200 dark:border-white/15 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5"
+              className="gap-1.5 border-black/10 dark:border-white/15 text-black dark:text-white hover:bg-black/5 dark:hover:bg-white/5"
             >
               <RotateCcw className="h-3.5 w-3.5" />
               <span>Réinitialiser</span>
@@ -554,91 +540,91 @@ export function GitLabVisualizer() {
         {/* Visual 4-Zone Board */}
         <div>
           <div className="flex items-center justify-between mb-3">
-            <span className="text-xs font-mono font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+            <span className="text-xs font-mono font-bold uppercase tracking-wider text-black/50 dark:text-white/50">
               Flux Visuel des 4 Zones Git
             </span>
-            <span className="text-[11px] text-slate-400 dark:text-slate-500 font-mono">
+            <span className="text-[11px] text-black/40 dark:text-white/40 font-mono">
               Working Dir ➔ Staging ➔ Local Repo ➔ Remote GitLab
             </span>
           </div>
 
           <div className="grid sm:grid-cols-2 xl:grid-cols-4 gap-4">
             {/* Zone 1 : Working Directory */}
-            <div className="rounded-2xl border border-rose-500/30 bg-rose-50/40 dark:bg-[#070B14]/90 p-4 shadow-sm dark:shadow-lg transition-all">
-              <div className="flex items-center justify-between pb-2 border-b border-rose-500/20 mb-3">
+            <div className="rounded-2xl border border-[#22C55E]/40 bg-[#22C55E]/10 p-4 shadow-sm transition-all">
+              <div className="flex items-center justify-between pb-2 border-b border-[#22C55E]/20 mb-3">
                 <div className="flex items-center gap-1.5">
-                  <span className="h-2 w-2 rounded-full bg-rose-500 animate-pulse" />
-                  <span className="text-xs font-bold text-rose-700 dark:text-rose-300">1. Working Directory</span>
+                  <span className="h-2 w-2 rounded-full bg-[#22C55E] animate-pulse" />
+                  <span className="text-xs font-bold text-[#22C55E]">1. Working Directory</span>
                 </div>
-                <span className="rounded-md bg-rose-100 dark:bg-rose-500/20 border border-rose-300 dark:border-rose-500/30 px-2 py-0.5 text-[10px] font-bold text-rose-800 dark:text-rose-200 font-mono">
+                <span className="rounded-md bg-[#22C55E]/20 border border-[#22C55E]/40 px-2 py-0.5 text-[10px] font-bold text-[#22C55E] font-mono">
                   {workingFiles.length}
                 </span>
               </div>
               <div className="min-h-[120px] space-y-2">
                 {workingFiles.length === 0 ? (
-                  <div className="text-xs text-slate-400 dark:text-slate-500 italic py-8 text-center">
+                  <div className="text-xs text-black/40 dark:text-white/40 italic py-8 text-center">
                     ✓ Répertoire propre
                   </div>
                 ) : (
                   workingFiles.map((f, i) => (
                     <div
                       key={i}
-                      className="flex items-center gap-2 rounded-lg bg-white dark:bg-rose-950/40 border border-rose-200 dark:border-rose-500/30 p-2 text-xs font-mono text-rose-800 dark:text-rose-200 shadow-xs"
+                      className="flex items-center gap-2 rounded-lg bg-white dark:bg-[#0A0A0A] border border-[#22C55E]/30 p-2 text-xs font-mono text-black dark:text-white shadow-xs"
                     >
-                      <FileCode2 className="h-3.5 w-3.5 text-rose-500 dark:text-rose-400 shrink-0" />
+                      <FileCode2 className="h-3.5 w-3.5 text-[#22C55E] shrink-0" />
                       <span className="truncate">{f}</span>
                     </div>
                   ))
                 )}
               </div>
-              <div className="mt-3 pt-2 border-t border-rose-500/15 flex items-center justify-between text-[10px] text-rose-700 dark:text-rose-300/80 font-mono">
+              <div className="mt-3 pt-2 border-t border-[#22C55E]/15 flex items-center justify-between text-[10px] text-[#22C55E] font-mono">
                 <span>Modifications locales</span>
-                <span className="text-slate-500 dark:text-slate-400">git add</span>
+                <span className="text-black/50 dark:text-white/50">git add</span>
               </div>
             </div>
 
             {/* Zone 2 : Staging Area */}
-            <div className="rounded-2xl border border-amber-500/30 bg-amber-50/40 dark:bg-[#070B14]/90 p-4 shadow-sm dark:shadow-lg transition-all">
-              <div className="flex items-center justify-between pb-2 border-b border-amber-500/20 mb-3">
+            <div className="rounded-2xl border border-[#10B981]/40 bg-[#10B981]/10 p-4 shadow-sm transition-all">
+              <div className="flex items-center justify-between pb-2 border-b border-[#10B981]/20 mb-3">
                 <div className="flex items-center gap-1.5">
-                  <span className="h-2 w-2 rounded-full bg-amber-500" />
-                  <span className="text-xs font-bold text-amber-700 dark:text-amber-300">2. Staging Area (Index)</span>
+                  <span className="h-2 w-2 rounded-full bg-[#10B981]" />
+                  <span className="text-xs font-bold text-[#10B981]">2. Staging Area (Index)</span>
                 </div>
-                <span className="rounded-md bg-amber-100 dark:bg-amber-500/20 border border-amber-300 dark:border-amber-500/30 px-2 py-0.5 text-[10px] font-bold text-amber-800 dark:text-amber-200 font-mono">
+                <span className="rounded-md bg-[#10B981]/20 border border-[#10B981]/40 px-2 py-0.5 text-[10px] font-bold text-[#10B981] font-mono">
                   {stagedFiles.length}
                 </span>
               </div>
               <div className="min-h-[120px] space-y-2">
                 {stagedFiles.length === 0 ? (
-                  <div className="text-xs text-slate-400 dark:text-slate-500 italic py-8 text-center">
+                  <div className="text-xs text-black/40 dark:text-white/40 italic py-8 text-center">
                     Index vide (utilise git add)
                   </div>
                 ) : (
                   stagedFiles.map((f, i) => (
                     <div
                       key={i}
-                      className="flex items-center gap-2 rounded-lg bg-white dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-500/40 p-2 text-xs font-mono text-emerald-800 dark:text-emerald-300 shadow-xs"
+                      className="flex items-center gap-2 rounded-lg bg-white dark:bg-[#0A0A0A] border border-[#10B981]/30 p-2 text-xs font-mono text-black dark:text-white shadow-xs"
                     >
-                      <CheckCircle2 className="h-3.5 w-3.5 text-emerald-500 dark:text-emerald-400 shrink-0" />
+                      <CheckCircle2 className="h-3.5 w-3.5 text-[#10B981] shrink-0" />
                       <span className="truncate">{f}</span>
                     </div>
                   ))
                 )}
               </div>
-              <div className="mt-3 pt-2 border-t border-amber-500/15 flex items-center justify-between text-[10px] text-amber-700 dark:text-amber-300/80 font-mono">
+              <div className="mt-3 pt-2 border-t border-[#10B981]/15 flex items-center justify-between text-[10px] text-[#10B981] font-mono">
                 <span>Prêt pour validation</span>
-                <span className="text-slate-500 dark:text-slate-400">git commit</span>
+                <span className="text-black/50 dark:text-white/50">git commit</span>
               </div>
             </div>
 
             {/* Zone 3 : Local Repository */}
-            <div className="rounded-2xl border border-indigo-500/30 bg-indigo-50/40 dark:bg-[#070B14]/90 p-4 shadow-sm dark:shadow-lg transition-all">
-              <div className="flex items-center justify-between pb-2 border-b border-indigo-500/20 mb-3">
+            <div className="rounded-2xl border border-[#22C55E]/40 bg-[#22C55E]/10 p-4 shadow-sm transition-all">
+              <div className="flex items-center justify-between pb-2 border-b border-[#22C55E]/20 mb-3">
                 <div className="flex items-center gap-1.5">
-                  <span className="h-2 w-2 rounded-full bg-indigo-500" />
-                  <span className="text-xs font-bold text-indigo-700 dark:text-indigo-300">3. Local Repository</span>
+                  <span className="h-2 w-2 rounded-full bg-[#22C55E]" />
+                  <span className="text-xs font-bold text-[#22C55E]">3. Local Repository</span>
                 </div>
-                <span className="rounded-md bg-indigo-100 dark:bg-indigo-500/20 border border-indigo-300 dark:border-indigo-500/30 px-2 py-0.5 text-[10px] font-bold text-indigo-800 dark:text-indigo-200 font-mono">
+                <span className="rounded-md bg-[#22C55E]/20 border border-[#22C55E]/40 px-2 py-0.5 text-[10px] font-bold text-[#22C55E] font-mono">
                   {localCommits.length}
                 </span>
               </div>
@@ -650,40 +636,40 @@ export function GitLabVisualizer() {
                       key={i}
                       className={`flex items-start gap-2 rounded-lg border p-2 text-xs font-mono transition-all ${
                         isUnpushed
-                          ? 'bg-indigo-100/70 dark:bg-indigo-950/50 border-indigo-300 dark:border-indigo-400/50 text-indigo-950 dark:text-indigo-200'
-                          : 'bg-white dark:bg-[#030712] border-slate-200 dark:border-white/10 text-slate-800 dark:text-slate-300 shadow-xs'
+                          ? 'bg-white dark:bg-[#0A0A0A] border-[#22C55E] text-black dark:text-white'
+                          : 'bg-white dark:bg-[#0A0A0A] border-black/10 dark:border-white/10 text-black/80 dark:text-white/80 shadow-xs'
                       }`}
                     >
-                      <GitCommit className="h-3.5 w-3.5 text-indigo-600 dark:text-indigo-400 shrink-0 mt-0.5" />
+                      <GitCommit className="h-3.5 w-3.5 text-[#22C55E] shrink-0 mt-0.5" />
                       <div className="truncate">
                         <div className="flex items-center gap-1">
-                          <span className="font-bold text-cyan-700 dark:text-cyan-300">{c.hash}</span>
+                          <span className="font-bold text-[#22C55E]">{c.hash}</span>
                           {isUnpushed && (
-                            <span className="text-[9px] bg-amber-100 text-amber-800 dark:bg-amber-500/20 dark:text-amber-300 px-1 rounded font-sans font-medium">
+                            <span className="text-[9px] bg-[#22C55E]/20 text-[#22C55E] px-1 rounded font-sans font-medium">
                               en attente
                             </span>
                           )}
                         </div>
-                        <span className="truncate block text-[11px] text-slate-700 dark:text-slate-300">{c.msg}</span>
+                        <span className="truncate block text-[11px] text-black/70 dark:text-white/70">{c.msg}</span>
                       </div>
                     </div>
                   );
                 })}
               </div>
-              <div className="mt-3 pt-2 border-t border-indigo-500/15 flex items-center justify-between text-[10px] text-indigo-700 dark:text-indigo-300/80 font-mono">
+              <div className="mt-3 pt-2 border-t border-[#22C55E]/15 flex items-center justify-between text-[10px] text-[#22C55E] font-mono">
                 <span>Base .git locale</span>
-                <span className="text-slate-500 dark:text-slate-400">git push</span>
+                <span className="text-black/50 dark:text-white/50">git push</span>
               </div>
             </div>
 
             {/* Zone 4 : Remote Repository */}
-            <div className="rounded-2xl border border-cyan-500/30 bg-cyan-50/40 dark:bg-[#070B14]/90 p-4 shadow-sm dark:shadow-lg transition-all">
-              <div className="flex items-center justify-between pb-2 border-b border-cyan-500/20 mb-3">
+            <div className="rounded-2xl border border-[#10B981]/40 bg-[#10B981]/10 p-4 shadow-sm transition-all">
+              <div className="flex items-center justify-between pb-2 border-b border-[#10B981]/20 mb-3">
                 <div className="flex items-center gap-1.5">
-                  <span className="h-2 w-2 rounded-full bg-cyan-500" />
-                  <span className="text-xs font-bold text-cyan-700 dark:text-cyan-300">4. Remote (GitLab)</span>
+                  <span className="h-2 w-2 rounded-full bg-[#10B981]" />
+                  <span className="text-xs font-bold text-[#10B981]">4. Remote (GitLab)</span>
                 </div>
-                <span className="rounded-md bg-cyan-100 dark:bg-cyan-500/20 border border-cyan-300 dark:border-cyan-500/30 px-2 py-0.5 text-[10px] font-bold text-cyan-800 dark:text-cyan-200 font-mono">
+                <span className="rounded-md bg-[#10B981]/20 border border-[#10B981]/40 px-2 py-0.5 text-[10px] font-bold text-[#10B981] font-mono">
                   {remoteCommits.length}
                 </span>
               </div>
@@ -691,22 +677,22 @@ export function GitLabVisualizer() {
                 {remoteCommits.slice(0, 3).map((c, i) => (
                   <div
                     key={i}
-                    className="flex items-start gap-2 rounded-lg bg-white dark:bg-[#030712] border border-cyan-200 dark:border-cyan-500/30 p-2 text-xs font-mono text-cyan-900 dark:text-cyan-200 shadow-xs"
+                    className="flex items-start gap-2 rounded-lg bg-white dark:bg-[#0A0A0A] border border-[#10B981]/30 p-2 text-xs font-mono text-black dark:text-white shadow-xs"
                   >
-                    <CheckCircle2 className="h-3.5 w-3.5 text-cyan-600 dark:text-cyan-400 shrink-0 mt-0.5" />
+                    <CheckCircle2 className="h-3.5 w-3.5 text-[#10B981] shrink-0 mt-0.5" />
                     <div className="truncate">
                       <div className="flex items-center gap-1">
-                        <span className="font-bold text-cyan-700 dark:text-cyan-300">{c.hash}</span>
-                        <span className="text-[9px] text-emerald-600 dark:text-emerald-400 font-sans font-medium">✓ origin/{c.branch}</span>
+                        <span className="font-bold text-[#10B981]">{c.hash}</span>
+                        <span className="text-[9px] text-[#10B981] font-sans font-medium">✓ origin/{c.branch}</span>
                       </div>
-                      <span className="truncate block text-[11px] text-slate-700 dark:text-slate-300">{c.msg}</span>
+                      <span className="truncate block text-[11px] text-black/70 dark:text-white/70">{c.msg}</span>
                     </div>
                   </div>
                 ))}
               </div>
-              <div className="mt-3 pt-2 border-t border-cyan-500/15 flex items-center justify-between text-[10px] text-cyan-700 dark:text-cyan-300/80 font-mono">
+              <div className="mt-3 pt-2 border-t border-[#10B981]/15 flex items-center justify-between text-[10px] text-[#10B981] font-mono">
                 <span>Dépôt distant synchronisé</span>
-                <span className="text-slate-500 dark:text-slate-400">origin/main</span>
+                <span className="text-black/50 dark:text-white/50">origin/main</span>
               </div>
             </div>
           </div>
@@ -715,12 +701,12 @@ export function GitLabVisualizer() {
         {/* Quick Suggested Commands Chips */}
         <div>
           <div className="flex items-center justify-between mb-2">
-            <span className="text-xs font-mono font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+            <span className="text-xs font-mono font-bold uppercase tracking-wider text-black/50 dark:text-white/50">
               Suggestions de Commandes Rapides (Clique ou Tape au clavier) :
             </span>
             <button
               onClick={() => executeCommand('help')}
-              className="text-[11px] font-semibold text-cyan-600 dark:text-cyan-400 hover:text-cyan-700 dark:hover:text-cyan-300 flex items-center gap-1"
+              className="text-[11px] font-semibold text-[#10B981] hover:underline flex items-center gap-1"
             >
               <HelpCircle className="h-3 w-3" />
               <span>Aide CLI (help)</span>
@@ -735,7 +721,7 @@ export function GitLabVisualizer() {
                   setCommandInput(action.cmd);
                   executeCommand(action.cmd);
                 }}
-                className="rounded-xl border border-slate-200 dark:border-white/10 bg-slate-100 hover:bg-slate-200 dark:bg-white/5 dark:hover:bg-white/10 hover:border-cyan-500/40 px-3 py-1.5 text-xs font-mono text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-all shadow-xs active:scale-95"
+                className="rounded-xl border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 hover:border-[#10B981] px-3 py-1.5 text-xs font-mono text-black dark:text-white transition-all shadow-xs active:scale-95"
               >
                 {action.label}
               </button>
@@ -744,25 +730,25 @@ export function GitLabVisualizer() {
         </div>
 
         {/* Real Interactive Terminal Console */}
-        <div className="rounded-2xl border border-slate-800 dark:border-white/15 bg-[#030712] shadow-xl dark:shadow-2xl overflow-hidden">
+        <div className="rounded-2xl border border-black/10 dark:border-white/15 bg-[#0A0A0A] shadow-2xl overflow-hidden">
           {/* Terminal Window Header */}
-          <div className="flex items-center justify-between px-4 py-2.5 bg-[#070B14] border-b border-white/10 text-xs font-mono text-slate-400">
+          <div className="flex items-center justify-between px-4 py-2.5 bg-black/80 border-b border-white/10 text-xs font-mono text-white/60">
             <div className="flex items-center gap-2">
-              <span className="h-3 w-3 rounded-full bg-red-500/90 inline-block" />
-              <span className="h-3 w-3 rounded-full bg-amber-500/90 inline-block" />
-              <span className="h-3 w-3 rounded-full bg-emerald-500/90 inline-block" />
-              <span className="ml-2 font-bold text-slate-300 flex items-center gap-1.5">
-                <TerminalIcon className="h-3.5 w-3.5 text-cyan-400" />
+              <span className="h-3 w-3 rounded-full bg-[#22C55E] inline-block" />
+              <span className="h-3 w-3 rounded-full bg-white/60 inline-block" />
+              <span className="h-3 w-3 rounded-full bg-[#10B981] inline-block" />
+              <span className="ml-2 font-bold text-white flex items-center gap-1.5">
+                <TerminalIcon className="h-3.5 w-3.5 text-[#10B981]" />
                 bash — stagiaire@ofppt: ~/mon-projet-git ({activeBranch})
               </span>
             </div>
             <div className="flex items-center gap-3">
-              <span className="text-[10px] text-slate-500 hidden sm:inline">
+              <span className="text-[10px] text-white/40 hidden sm:inline">
                 ↑/↓ pour l'historique · Entrée pour exécuter
               </span>
               <button
                 onClick={() => setLogs([])}
-                className="text-slate-500 hover:text-slate-300 transition-colors"
+                className="text-white/60 hover:text-white transition-colors"
                 title="Effacer le terminal (clear)"
               >
                 <Trash2 className="h-3.5 w-3.5" />
@@ -772,40 +758,40 @@ export function GitLabVisualizer() {
 
           {/* Terminal Output Log Area */}
           <div
-            className="p-4 space-y-2 max-h-72 overflow-y-auto font-mono text-xs leading-relaxed select-text"
+            className="p-4 space-y-2 max-h-72 overflow-y-auto font-mono text-xs leading-relaxed select-text text-white"
             onClick={() => inputRef.current?.focus()}
           >
             {logs.map((log, i) => {
               if (log.type === 'cmd') {
                 return (
-                  <div key={i} className="text-cyan-400 font-bold flex items-start gap-1 pt-1">
+                  <div key={i} className="text-[#10B981] font-bold flex items-start gap-1 pt-1">
                     <span>{log.text}</span>
                   </div>
                 );
               }
               if (log.type === 'success') {
                 return (
-                  <div key={i} className="text-emerald-400 whitespace-pre-wrap pl-2 border-l-2 border-emerald-500/40">
+                  <div key={i} className="text-[#10B981] whitespace-pre-wrap pl-2 border-l-2 border-[#10B981]">
                     {log.text}
                   </div>
                 );
               }
               if (log.type === 'error') {
                 return (
-                  <div key={i} className="text-rose-400 whitespace-pre-wrap pl-2 border-l-2 border-rose-500/40">
+                  <div key={i} className="text-[#22C55E] whitespace-pre-wrap pl-2 border-l-2 border-[#22C55E]">
                     {log.text}
                   </div>
                 );
               }
               if (log.type === 'info') {
                 return (
-                  <div key={i} className="text-indigo-300 whitespace-pre-wrap">
+                  <div key={i} className="text-white/80 whitespace-pre-wrap">
                     {log.text}
                   </div>
                 );
               }
               return (
-                <div key={i} className="text-slate-300 whitespace-pre-wrap">
+                <div key={i} className="text-white/60 whitespace-pre-wrap">
                   {log.text}
                 </div>
               );
@@ -814,8 +800,8 @@ export function GitLabVisualizer() {
           </div>
 
           {/* Interactive Command Input Line */}
-          <div className="flex items-center gap-2 px-4 py-3 bg-[#070B14]/90 border-t border-white/10">
-            <span className="font-mono text-xs font-bold text-cyan-400 shrink-0 flex items-center gap-1">
+          <div className="flex items-center gap-2 px-4 py-3 bg-black border-t border-white/10">
+            <span className="font-mono text-xs font-bold text-[#10B981] shrink-0 flex items-center gap-1">
               <span>stagiaire@ofppt:~$</span>
             </span>
             <input
@@ -825,7 +811,7 @@ export function GitLabVisualizer() {
               onChange={(e) => setCommandInput(e.target.value)}
               onKeyDown={handleKeyDown}
               placeholder="Écris ta commande ici... (ex: git add ., git commit -m 'feat', git status)"
-              className="flex-1 bg-transparent border-none outline-none font-mono text-xs text-white placeholder:text-slate-600 caret-cyan-400"
+              className="flex-1 bg-transparent border-none outline-none font-mono text-xs text-white placeholder:text-white/30 caret-[#10B981]"
               autoFocus
             />
             <button
@@ -834,7 +820,7 @@ export function GitLabVisualizer() {
                 setCommandInput('');
               }}
               disabled={!commandInput.trim()}
-              className="rounded-lg bg-cyan-600/30 hover:bg-cyan-600/50 disabled:opacity-30 border border-cyan-500/40 text-cyan-300 p-1.5 transition-all shrink-0"
+              className="rounded-lg bg-[#10B981]/20 hover:bg-[#10B981]/40 disabled:opacity-30 border border-[#10B981]/40 text-[#10B981] p-1.5 transition-all shrink-0"
               title="Exécuter la commande (Entrée)"
             >
               <Send className="h-3.5 w-3.5" />
@@ -843,12 +829,12 @@ export function GitLabVisualizer() {
         </div>
 
         {/* Pedagogical OFPPT Tip Banner */}
-        <div className="rounded-2xl border border-indigo-500/20 dark:border-indigo-500/30 bg-indigo-50/80 dark:bg-indigo-950/20 p-4 flex items-start gap-3 text-xs text-slate-700 dark:text-slate-300">
-          <Sparkles className="h-4 w-4 text-cyan-600 dark:text-cyan-400 shrink-0 mt-0.5" />
+        <div className="rounded-2xl border border-[#10B981]/30 bg-[#10B981]/10 p-4 flex items-start gap-3 text-xs text-black dark:text-white">
+          <Sparkles className="h-4 w-4 text-[#10B981] shrink-0 mt-0.5" />
           <div>
-            <b className="text-slate-900 dark:text-white font-bold">Rappel officiel pour l'examen OFPPT :</b>
-            <p className="mt-0.5 text-slate-600 dark:text-slate-300 leading-relaxed">
-              La commande <code className="text-cyan-700 dark:text-cyan-300 bg-indigo-100 dark:bg-white/5 px-1 py-0.5 rounded font-mono">git add</code> fait passer les fichiers du <b>Working Directory</b> à la <b>Staging Area</b> (Index). La commande <code className="text-cyan-700 dark:text-cyan-300 bg-indigo-100 dark:bg-white/5 px-1 py-0.5 rounded font-mono">git commit</code> crée l'instantané dans le <b>Local Repository</b>. Enfin, <code className="text-cyan-700 dark:text-cyan-300 bg-indigo-100 dark:bg-white/5 px-1 py-0.5 rounded font-mono">git push</code> synchronise avec le serveur distant (GitLab / GitHub).
+            <b className="text-black dark:text-white font-bold">Rappel officiel pour l'examen OFPPT :</b>
+            <p className="mt-0.5 text-black/70 dark:text-white/70 leading-relaxed">
+              La commande <code className="text-[#10B981] bg-black/10 dark:bg-white/10 px-1 py-0.5 rounded font-mono">git add</code> fait passer les fichiers du <b>Working Directory</b> à la <b>Staging Area</b> (Index). La commande <code className="text-[#10B981] bg-black/10 dark:bg-white/10 px-1 py-0.5 rounded font-mono">git commit</code> crée l'instantané dans le <b>Local Repository</b>. Enfin, <code className="text-[#10B981] bg-black/10 dark:bg-white/10 px-1 py-0.5 rounded font-mono">git push</code> synchronise avec le serveur distant (GitLab / GitHub).
             </p>
           </div>
         </div>

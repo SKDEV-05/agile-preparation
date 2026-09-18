@@ -1,17 +1,20 @@
-import React, { useState } from 'react';
-import { 
-  Zap, 
-  Code2, 
-  Server, 
-  Database, 
-  CheckCircle2, 
-  Clock, 
-  Sparkles, 
-  ArrowRight, 
-  BookOpen, 
-  ShieldCheck,
+import React from 'react';
+import {
+  Zap,
+  Code2,
+  Server,
+  Database,
+  CheckCircle2,
+  Sparkles,
+  ArrowRight,
+  BookOpen,
   Compass,
-  Laptop
+  FlaskConical,
+  CreditCard,
+  Award,
+  Lock,
+  Clock,
+  Layers
 } from 'lucide-react';
 import { Button } from '../../components/ui/Button';
 import logoImg from '../../assets/logo.webp';
@@ -20,69 +23,33 @@ const Hero3DScene = React.lazy(() => import('../../components/3d/Hero3DScene').t
 
 interface CurriculumHubProps {
   onSelectAgile: () => void;
+  onOpenMethodology?: () => void;
 }
 
-export function CurriculumHub({ onSelectAgile }: CurriculumHubProps) {
-  const [isDesktop, setIsDesktop] = useState(() => typeof window !== 'undefined' && window.innerWidth >= 1024);
-
-  React.useEffect(() => {
-    const handleResize = () => {
-      setIsDesktop(window.innerWidth >= 1024);
-    };
-    window.addEventListener('resize', handleResize, { passive: true });
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-
-
-  const modules = [
+export function CurriculumHub({ onSelectAgile, onOpenMethodology }: CurriculumHubProps) {
+  // Exactly 4 Official Modules
+  const catalogueModules = [
     {
       id: 'agile',
       title: 'Approche Agile & Gestion de Projet',
       shortCode: 'M201',
-      status: 'available',
-      badgeText: 'Disponible maintenant',
-      badgeColor: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30',
-      difficulty: 'Intermédiaire',
-      difficultyColor: 'text-amber-400',
-      description: 'Le socle méthodologique complet : Fondamentaux prédictifs vs agiles, calculs de réseaux PERT & Gantt, framework Scrum, outils Jira, Git & GitLab, et pipelines DevOps CI/CD.',
+      status: 'available' as const,
+      isOpen: true,
+      description: 'Méthodologies prédictives vs agiles, calculs PERT & Gantt, Scrum, Jira, Git 4 zones et GitLab CI/CD.',
       icon: Zap,
-      gradient: 'from-indigo-600 via-purple-600 to-pink-500',
-      borderGlow: 'hover:border-indigo-500/50 hover:shadow-[0_0_35px_rgba(99,102,241,0.25)]',
-      topics: [
-        'Cycle en V, Cascade & Manifeste Agile',
-        'Calcul PERT, Dates au plus tôt/tard, Marges & Chemin Critique',
-        'Scrum : Rôles (PO/SM/Dev), Cérémonies & Definition of Done',
-        'User Stories INVEST, Story Points, Fibonacci & Board Jira',
-        'Git 4 Zones, Conflits de Merge & Qualité SonarQube',
-        'Culture CALMS, Pipelines .gitlab-ci.yml & Runners'
-      ],
-      stats: {
-        parts: '5 Parties',
-        lessons: '20 Chapitres',
-        questions: '200 QCM',
-        labs: '5 Labs Simus',
-        exam: '50 QCM Examen'
-      },
-      preview3D: (
-        <div className="rounded-xl bg-slate-900/90 border border-indigo-500/40 p-3 shadow-lg transform-style-preserve-3d animate-float-subtle">
-          <div className="flex items-center justify-between text-[10px] text-indigo-300 font-bold mb-2 pb-1 border-b border-white/10">
-            <span className="flex items-center gap-1"><Zap className="h-3 w-3 text-amber-400" /> Scrum Board</span>
-            <span className="text-emerald-400 text-[9px]">En cours</span>
+      gradient: 'from-[#10B981] to-[#22C55E]',
+      topics: ['Cycle en V vs Agile', 'Calculs PERT & Marges', 'Scrum & Jira', 'GitLab CI/CD'],
+      stats: '5 Parties · 20 Chapitres · 200 QCM',
+      preview: (
+        <div className="rounded-lg bg-black/[0.03] dark:bg-white/[0.04] border border-black/10 dark:border-white/10 p-2 font-mono text-[9px]">
+          <div className="flex items-center justify-between text-[#10B981] font-bold pb-1 mb-1 border-b border-black/10 dark:border-white/10">
+            <span className="flex items-center gap-1"><Zap className="h-3 w-3 text-[#10B981]" /> Scrum Board Live</span>
+            <span className="text-[8px] font-bold bg-[#10B981]/15 px-1.5 py-0.5 rounded text-[#10B981]">Actif</span>
           </div>
-          <div className="grid grid-cols-3 gap-1 text-[8px] font-mono">
-            <div className="bg-white dark:bg-slate-800/80 p-1.5 rounded border border-slate-200 dark:border-white/5 text-slate-600 dark:text-slate-400">
-              <div className="font-bold text-slate-800 dark:text-slate-300 mb-0.5">To Do</div>
-              <div className="bg-slate-100 dark:bg-slate-700/60 p-1 rounded text-[7px] text-slate-700 dark:text-slate-300">PERT #01</div>
-            </div>
-            <div className="bg-indigo-50 dark:bg-indigo-950/40 p-1.5 rounded border border-indigo-200 dark:border-indigo-500/30 text-indigo-900 dark:text-indigo-200">
-              <div className="font-bold text-indigo-600 dark:text-indigo-400 mb-0.5">In Dev</div>
-              <div className="bg-indigo-600 dark:bg-indigo-900/60 p-1 rounded text-[7px] text-white">Scrum #03</div>
-            </div>
-            <div className="bg-emerald-50 dark:bg-emerald-950/40 p-1.5 rounded border border-emerald-200 dark:border-emerald-500/30 text-emerald-900 dark:text-emerald-200">
-              <div className="font-bold text-emerald-600 dark:text-emerald-400 mb-0.5">Done</div>
-              <div className="bg-emerald-600 dark:bg-emerald-900/60 p-1 rounded text-[7px] text-white">GitLab CI ✓</div>
-            </div>
+          <div className="grid grid-cols-3 gap-1.5 text-center">
+            <div className="bg-white dark:bg-[#0A0A0A] p-0.5 rounded border border-black/10 dark:border-white/10 text-black/70 dark:text-white/70">PERT</div>
+            <div className="bg-[#22C55E]/10 text-[#22C55E] p-0.5 rounded border border-[#22C55E]/30 font-bold">Scrum</div>
+            <div className="bg-[#10B981]/10 text-[#10B981] p-0.5 rounded border border-[#10B981]/30 font-bold">CI/CD ✓</div>
           </div>
         </div>
       )
@@ -91,40 +58,21 @@ export function CurriculumHub({ onSelectAgile }: CurriculumHubProps) {
       id: 'react',
       title: 'React.js & Frontend Moderne',
       shortCode: 'M202',
-      status: 'upcoming',
-      badgeText: 'Bientôt disponible',
-      badgeColor: 'bg-cyan-500/10 text-cyan-400 border-cyan-500/30',
-      difficulty: 'Avancé',
-      difficultyColor: 'text-rose-400',
-      description: 'Développement d’interfaces réactives et performantes : composants fonctionnels, hooks avancés, gestion d’état globale et intégration d’APIs.',
+      status: 'upcoming' as const,
+      isOpen: false,
+      description: 'Composants fonctionnels, hooks avancés (useState, useEffect), Redux Toolkit, Router v6 et API REST.',
       icon: Code2,
-      gradient: 'from-cyan-500 via-blue-600 to-indigo-600',
-      borderGlow: 'hover:border-cyan-500/50 hover:shadow-[0_0_35px_rgba(6,182,212,0.25)]',
-      topics: [
-        'JSX, Virtual DOM & Cycle de vie des composants',
-        'Hooks fondamentaux (useState, useEffect, useMemo, useCallback)',
-        'Custom Hooks & Gestion d’état avec Context API et Redux Toolkit',
-        'Routage déclaratif avec React Router v6',
-        'Consommation d’APIs REST & TanStack Query (React Query)',
-        'Next.js 14+ (App Router, Server Components & SEO)'
-      ],
-      stats: {
-        parts: '6 Modules',
-        lessons: '24 Chapitres',
-        questions: '150 QCM',
-        labs: 'Playground',
-        exam: 'Prochainement'
-      },
-      preview3D: (
-        <div className="rounded-xl bg-white/95 dark:bg-slate-900/90 border border-cyan-300 dark:border-cyan-500/40 p-3 shadow-md dark:shadow-lg font-mono text-[9px] text-cyan-700 dark:text-cyan-300 transform-style-preserve-3d animate-float-subtle">
-          <div className="flex items-center gap-1.5 text-slate-500 dark:text-slate-400 mb-1.5 pb-1 border-b border-slate-200 dark:border-white/10">
-            <Code2 className="h-3 w-3 text-cyan-600 dark:text-cyan-400" />
-            <span className="text-slate-900 dark:text-white font-bold">&lt;ComponentTree /&gt;</span>
+      gradient: 'from-[#22C55E] to-[#10B981]',
+      topics: ['JSX & Virtual DOM', 'Hooks & State', 'Redux Toolkit', 'React Router v6'],
+      stats: '6 Modules · 24 Chapitres · 150 QCM',
+      preview: (
+        <div className="rounded-lg bg-black/[0.03] dark:bg-white/[0.04] border border-black/10 dark:border-white/10 p-2 font-mono text-[9px]">
+          <div className="flex items-center justify-between text-black/60 dark:text-white/60 pb-1 mb-1 border-b border-black/10 dark:border-white/10">
+            <span className="flex items-center gap-1 font-bold text-black dark:text-white"><Code2 className="h-3 w-3 text-[#22C55E]" /> &lt;VirtualDOM /&gt;</span>
+            <span className="text-[8px] text-[#10B981]">60 FPS ✓</span>
           </div>
-          <div className="space-y-1 text-slate-600 dark:text-slate-400 text-[8px]">
-            <div><span className="text-purple-600 dark:text-purple-400 font-semibold">const</span> [state] = <span className="text-cyan-600 dark:text-cyan-400">useState</span>();</div>
-            <div><span className="text-purple-600 dark:text-purple-400 font-semibold">return</span> &lt;<span className="text-indigo-600 dark:text-indigo-400 font-semibold">VirtualDOM</span> /&gt;</div>
-            <div className="text-emerald-600 dark:text-emerald-400 font-bold">Fast Refresh Active ✓</div>
+          <div className="bg-white dark:bg-[#0A0A0A] p-1 rounded border border-black/10 dark:border-white/10 text-[8px] space-y-0.5">
+            <div><span className="text-[#10B981] font-bold">const</span> [state] = <span className="text-[#22C55E]">useState</span>();</div>
           </div>
         </div>
       )
@@ -133,82 +81,44 @@ export function CurriculumHub({ onSelectAgile }: CurriculumHubProps) {
       id: 'laravel',
       title: 'Laravel & Architecture Backend APIs',
       shortCode: 'M203',
-      status: 'upcoming',
-      badgeText: 'Bientôt disponible',
-      badgeColor: 'bg-rose-500/10 text-rose-400 border-rose-500/30',
-      difficulty: 'Avancé',
-      difficultyColor: 'text-rose-400',
-      description: 'Conception de backends robustes et sécurisés en PHP moderne : architecture MVC, persistance Eloquent ORM, sécurité et conception d’APIs RESTful.',
+      status: 'upcoming' as const,
+      isOpen: false,
+      description: 'Architecture MVC en PHP 8, persistance Eloquent ORM, authentification Sanctum, migrations et tests unitaires.',
       icon: Server,
-      gradient: 'from-rose-500 via-red-600 to-amber-500',
-      borderGlow: 'hover:border-rose-500/50 hover:shadow-[0_0_35px_rgba(244,63,94,0.25)]',
-      topics: [
-        'Architecture MVC, Routing & Middlewares de sécurité',
-        'Eloquent ORM : Modèles, Relations 1-N, N-N et Eager Loading',
-        'Migrations, Seeders & Factories de données',
-        'Authentification moderne : Laravel Breeze & Sanctum Tokens',
-        'Conception d’APIs RESTful conformes aux standards JSON',
-        'Tests automatisés unitaires et fonctionnels avec Pest / PHPUnit'
-      ],
-      stats: {
-        parts: '5 Modules',
-        lessons: '20 Chapitres',
-        questions: '160 QCM',
-        labs: 'API Sandbox',
-        exam: 'Prochainement'
-      },
-      preview3D: (
-        <div className="rounded-xl bg-white/95 dark:bg-slate-900/90 border border-rose-300 dark:border-rose-500/40 p-3 shadow-md dark:shadow-lg font-mono text-[9px] text-rose-700 dark:text-rose-300 transform-style-preserve-3d animate-float-subtle">
-          <div className="flex items-center gap-1.5 text-slate-500 dark:text-slate-400 mb-1.5 pb-1 border-b border-slate-200 dark:border-white/10">
-            <Server className="h-3 w-3 text-rose-600 dark:text-rose-400" />
-            <span className="text-slate-900 dark:text-white font-bold">api/v1/routes.php</span>
+      gradient: 'from-[#10B981] via-[#22C55E] to-[#0A0A0A]',
+      topics: ['Architecture MVC', 'Eloquent ORM', 'Sanctum Auth', 'Tests Pest'],
+      stats: '5 Modules · 20 Chapitres · 160 QCM',
+      preview: (
+        <div className="rounded-lg bg-black/[0.03] dark:bg-white/[0.04] border border-black/10 dark:border-white/10 p-2 font-mono text-[9px]">
+          <div className="flex items-center justify-between text-black/60 dark:text-white/60 pb-1 mb-1 border-b border-black/10 dark:border-white/10">
+            <span className="flex items-center gap-1 font-bold text-black dark:text-white"><Server className="h-3 w-3 text-[#10B981]" /> api/v1/routes</span>
+            <span className="text-[8px] text-[#10B981]">200 OK ✓</span>
           </div>
-          <div className="space-y-1 text-slate-600 dark:text-slate-400 text-[8px]">
-            <div><span className="text-amber-600 dark:text-amber-400 font-semibold">Route::</span>get(<span className="text-emerald-600 dark:text-emerald-400">'/stagiaires'</span>);</div>
-            <div>Eloquent: <span className="text-rose-600 dark:text-rose-400 font-semibold">Stagiaire::with('notes')</span></div>
-            <div className="text-emerald-600 dark:text-emerald-400 font-bold">200 JSON Response ✓</div>
+          <div className="bg-white dark:bg-[#0A0A0A] p-1 rounded border border-black/10 dark:border-white/10 text-[8px] space-y-0.5">
+            <div><span className="text-[#22C55E] font-bold">Route::</span>get(<span className="text-[#10B981]">'/stagiaires'</span>);</div>
           </div>
         </div>
       )
     },
     {
       id: 'database',
-      title: 'Gestion des Données & SGBD (SQL & NoSQL)',
+      title: 'SGBD, SQL Avancé & NoSQL',
       shortCode: 'M204',
-      status: 'upcoming',
-      badgeText: 'Bientôt disponible',
-      badgeColor: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30',
-      difficulty: 'Intermédiaire',
-      difficultyColor: 'text-amber-400',
-      description: 'Modélisation, administration et requêtage avancé des bases de données relationnelles et documentaires pour applications web à forte charge.',
+      status: 'upcoming' as const,
+      isOpen: false,
+      description: 'Modélisation Merise (MCD/MLD), requêtes SQL complexes, index B-Tree, transactions ACID et MongoDB NoSQL.',
       icon: Database,
-      gradient: 'from-emerald-500 via-teal-600 to-cyan-600',
-      borderGlow: 'hover:border-emerald-500/50 hover:shadow-[0_0_35px_rgba(16,185,129,0.25)]',
-      topics: [
-        'Modélisation conceptuelle Merise (MCD, MLD, MPD)',
-        'SQL Avancé : Jointures complexes, sous-requêtes, vues et CTE',
-        'Procédures stockées, Déclencheurs (Triggers) et Transactions ACID',
-        'Optimisation des performances : Index B-Tree et Explain Plan',
-        'Bases de données NoSQL : Architecture et requêtes MongoDB',
-        'Sécurité, Sauvegardes et Réplication haute disponibilité'
-      ],
-      stats: {
-        parts: '4 Modules',
-        lessons: '16 Chapitres',
-        questions: '140 QCM',
-        labs: 'Query Lab',
-        exam: 'Prochainement'
-      },
-      preview3D: (
-        <div className="rounded-xl bg-white/95 dark:bg-slate-900/90 border border-emerald-300 dark:border-emerald-500/40 p-3 shadow-md dark:shadow-lg font-mono text-[9px] text-emerald-700 dark:text-emerald-300 transform-style-preserve-3d animate-float-subtle">
-          <div className="flex items-center gap-1.5 text-slate-500 dark:text-slate-400 mb-1.5 pb-1 border-b border-slate-200 dark:border-white/10">
-            <Database className="h-3 w-3 text-emerald-600 dark:text-emerald-400" />
-            <span className="text-slate-900 dark:text-white font-bold">db_ofppt_2a.sql</span>
+      gradient: 'from-[#22C55E] to-[#10B981]',
+      topics: ['Merise MCD & MLD', 'SQL Jointures & Index', 'Transactions ACID', 'MongoDB NoSQL'],
+      stats: '4 Modules · 16 Chapitres · 140 QCM',
+      preview: (
+        <div className="rounded-lg bg-black/[0.03] dark:bg-white/[0.04] border border-black/10 dark:border-white/10 p-2 font-mono text-[9px]">
+          <div className="flex items-center justify-between text-black/60 dark:text-white/60 pb-1 mb-1 border-b border-black/10 dark:border-white/10">
+            <span className="flex items-center gap-1 font-bold text-black dark:text-white"><Database className="h-3 w-3 text-[#10B981]" /> db_ofppt.sql</span>
+            <span className="text-[8px] text-[#10B981]">ACID ✓</span>
           </div>
-          <div className="space-y-1 text-slate-600 dark:text-slate-400 text-[8px]">
-            <div><span className="text-indigo-600 dark:text-indigo-400 font-semibold">SELECT</span> s.nom, p.score</div>
-            <div><span className="text-indigo-600 dark:text-indigo-400 font-semibold">FROM</span> stagiaires s <span className="text-indigo-600 dark:text-indigo-400 font-semibold">JOIN</span> pert;</div>
-            <div className="text-emerald-600 dark:text-emerald-400 font-bold">Index B-Tree Cached ✓</div>
+          <div className="bg-white dark:bg-[#0A0A0A] p-1 rounded border border-black/10 dark:border-white/10 text-[8px] space-y-0.5">
+            <div><span className="text-[#22C55E] font-bold">SELECT</span> * <span className="text-[#10B981]">FROM</span> stagiaires;</div>
           </div>
         </div>
       )
@@ -216,256 +126,378 @@ export function CurriculumHub({ onSelectAgile }: CurriculumHubProps) {
   ];
 
   const handleScrollToCourses = () => {
-    const el = document.getElementById('courses-grid');
+    const el = document.getElementById('courses-catalogue-section');
     if (el) {
-      el.scrollIntoView({ behavior: 'smooth' });
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   };
 
+  const learningPillars = [
+    {
+      title: 'Apprendre',
+      desc: 'Comprendre les concepts clés de chaque module grâce à des synthèses claires et pragmatiques.',
+      icon: BookOpen,
+      badge: '01 · Synthèses 2A'
+    },
+    {
+      title: 'Pratiquer',
+      desc: 'Manipuler directement sur des simulateurs interactifs : code, logique, SGBD et workflows Agiles.',
+      icon: FlaskConical,
+      badge: '02 · Labs Live'
+    },
+    {
+      title: 'Réviser',
+      desc: 'Mémoriser activement avec les Flashcards intelligentes et le carnet d’analyse des erreurs.',
+      icon: CreditCard,
+      badge: '03 · Rattrapage'
+    },
+    {
+      title: 'Performer',
+      desc: 'Valider les examens blancs officiels minutés pour décrocher la meilleure mention à l’EFM.',
+      icon: Award,
+      badge: '04 · Barème EFM'
+    }
+  ];
+
   return (
-    <div className="min-h-screen bg-transparent text-slate-900 dark:text-slate-100 py-6 sm:py-10 px-4 sm:px-6 lg:px-8 space-y-16 transition-colors">
-      {/* 1. MAJOR UX HERO SECTION */}
-      <section className="relative max-w-7xl mx-auto grid lg:grid-cols-12 gap-10 lg:gap-8 items-center pt-8 sm:pt-12 min-h-[520px] rounded-3xl overflow-hidden p-6 sm:p-10 border border-slate-200/90 dark:border-white/10 bg-white/95 dark:bg-[#0D1526]/60 backdrop-blur-xl shadow-xl dark:shadow-2xl lcp-hero-card">
-        {/* Left Side: Pitch & Official Branding */}
-        <div className="lg:col-span-7 space-y-6 text-left relative z-10 pointer-events-auto">
-          <div className="inline-flex items-center gap-2.5 rounded-full bg-slate-100 dark:bg-slate-900/80 border border-indigo-500/30 px-3.5 py-1.5 text-xs font-semibold text-indigo-700 dark:text-indigo-300 shadow-inner backdrop-blur-md">
-            <img 
-              src={logoImg} 
-              alt="Logo FullStack 2A" 
-              width={20}
-              height={20}
-              fetchPriority="high"
-              loading="eager"
-              decoding="async"
-              className="h-5 w-5 rounded-md object-cover ring-1 ring-indigo-400/50" 
-            />
-            <span>Cursus Développement Digital · 2ème Année</span>
-            <span className="h-1.5 w-1.5 rounded-full bg-indigo-500 dark:bg-indigo-400 animate-ping"></span>
-          </div>
+    <div className="min-h-screen bg-transparent text-[#0A0A0A] dark:text-white py-6 sm:py-10 px-4 sm:px-6 lg:px-8 space-y-12 sm:space-y-14 transition-colors select-none">
 
-          <div className="space-y-2">
-            <h1 className="text-4xl sm:text-6xl lg:text-6xl font-black tracking-tight text-slate-900 dark:text-white leading-[1.08]">
-              FULLSTACK <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 via-cyan-500 to-purple-500 dark:from-indigo-400 dark:via-cyan-400 dark:to-purple-400">2A</span>
-            </h1>
-            <p className="text-base sm:text-xl font-bold text-slate-700 dark:text-slate-300 tracking-tight">
-              Plateforme de préparation — 2ème année Full Stack OFPPT
-            </p>
-          </div>
+      {/* ═══════════════════════════════════════════════════════════════
+          1. HERO COMMAND DECK (GENERAL FOR OFPPT FULLSTACK 2A)
+          ═══════════════════════════════════════════════════════════════ */}
+      <section className="relative max-w-7xl mx-auto rounded-3xl overflow-hidden border border-black/10 dark:border-white/10 bg-gradient-to-b from-white/95 to-white/70 dark:from-[#0A0A0A]/95 dark:to-[#0A0A0A]/80 backdrop-blur-xl shadow-xl p-5 sm:p-8 lg:p-10">
+        {/* Luminescent background aura */}
+        <div className="absolute -right-20 -top-20 h-72 w-72 rounded-full bg-[#10B981]/15 blur-3xl pointer-events-none" />
+        <div className="absolute left-1/4 -bottom-20 h-64 w-64 rounded-full bg-[#22C55E]/10 blur-3xl pointer-events-none" />
 
-          <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400 leading-relaxed max-w-2xl font-normal">
-            L’environnement d’excellence conçu spécifiquement pour réussir tes examens de 2ème année : 
-            cours synthétisés, <span className="text-slate-900 dark:text-slate-200 font-semibold">5 simulateurs interactifs (PERT, Gantt, Jira, Git, CI/CD)</span>, 
-            explications 3D et plus de 200 QCM corrigés en conditions réelles.
-          </p>
-
-          {/* Value Badges */}
-          <div className="flex flex-wrap gap-2.5 pt-1 text-xs">
-            <span className="flex items-center gap-1.5 rounded-lg bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-white/10 px-3 py-1 text-slate-700 dark:text-slate-300">
-              <Sparkles className="h-3.5 w-3.5 text-amber-500 dark:text-amber-400" />
-              <span>Simulateurs Pratiques</span>
-            </span>
-            <span className="flex items-center gap-1.5 rounded-lg bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-white/10 px-3 py-1 text-slate-700 dark:text-slate-300">
-              <Laptop className="h-3.5 w-3.5 text-cyan-600 dark:text-cyan-400" />
-              <span>Visualisations 3D</span>
-            </span>
-            <span className="flex items-center gap-1.5 rounded-lg bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-white/10 px-3 py-1 text-slate-700 dark:text-slate-300">
-              <ShieldCheck className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400" />
-              <span>200 QCM Conformes EFM</span>
-            </span>
-          </div>
-
-          {/* Primary & Secondary Action Buttons */}
-          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 pt-2">
-            <Button
-              variant="primary"
-              size="lg"
-              onClick={onSelectAgile}
-              className="gap-2.5 font-bold shadow-lg shadow-indigo-600/30 hover:shadow-indigo-600/50 hover:scale-[1.02] active:scale-[0.98] transition-all duration-200"
-            >
-              <span>Commencer à apprendre</span>
-              <ArrowRight className="h-4 w-4" />
-            </Button>
-            <Button
-              variant="outline"
-              size="lg"
-              onClick={handleScrollToCourses}
-              className="gap-2 border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900/60 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200 hover:text-slate-900 dark:hover:text-white transition-all shadow-xs"
-            >
-              <Compass className="h-4 w-4 text-cyan-600 dark:text-cyan-400" />
-              <span>Explorer les cours</span>
-            </Button>
+        {/* TOP-RIGHT ACTIVE BADGE (HIGH Z-INDEX) */}
+        <div className="absolute top-4 sm:top-6 right-4 sm:right-6 z-20">
+          <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#10B981]/15 text-[#10B981] border-2 border-[#10B981] shadow-[0_0_20px_rgba(16,185,129,0.35)] text-xs font-bold font-mono">
+            <span className="h-2.5 w-2.5 rounded-full bg-[#10B981] animate-pulse" />
+            <span>Référentiel Officiel · 2A OFPPT</span>
           </div>
         </div>
 
-        {/* Right Side: Interactive 3D Educational Scene (Desktop only) */}
-        <div className="hidden lg:block lg:col-span-5 relative z-10 pointer-events-auto">
-          {isDesktop && (
-            <React.Suspense fallback={<div className="h-[420px] w-full" />}>
+        {/* Main 2-Column Hero Content */}
+        <div className="relative z-10 grid lg:grid-cols-12 gap-8 items-center pt-2">
+
+          {/* Left Column: Brand + Headline + General Curriculum Copy + Mini Squares + Actions */}
+          <div className="lg:col-span-7 space-y-5 text-left">
+
+            {/* Logo Pill */}
+            <div className="inline-flex items-center gap-2 rounded-full bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 px-3.5 py-1 text-xs shadow-2xs">
+              <img
+                src={logoImg}
+                alt="Logo FullStack 2A"
+                width={20}
+                height={20}
+                className="h-5 w-5 rounded-md object-cover ring-1 ring-[#10B981]/40"
+              />
+              <span className="font-handwriting text-2xl font-black text-[#0A0A0A] dark:text-white leading-none">
+                FullStack <span className="text-[#10B981]">2A</span>
+              </span>
+              <span className="text-black/25 dark:text-white/25">·</span>
+              <span className="font-semibold text-xs text-[#0A0A0A]/75 dark:text-white/75">Développement Digital OFPPT</span>
+            </div>
+
+            {/* Headline */}
+            <div className="space-y-2">
+              <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-[#0A0A0A] dark:text-white leading-[1.08]">
+                Apprendre avec méthode.{' '}
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#10B981] via-[#22C55E] to-[#10B981] block sm:inline">
+                  Pratiquer en direct.
+                </span>
+              </h1>
+              <p className="text-sm sm:text-base font-bold text-[#0A0A0A]/85 dark:text-white/85 tracking-tight">
+                La plateforme moderne pour réussir tes examens de 2ème année Full Stack.
+              </p>
+            </div>
+
+            {/* General OFPPT 2A Curriculum Copy (Not 100% Agile) */}
+            <p className="text-xs sm:text-sm text-[#0A0A0A]/70 dark:text-white/70 leading-relaxed max-w-xl font-normal">
+              Conçu pour éliminer le flou et réussir ses examens : cours synthétisés,
+              <span className="text-[#0A0A0A] dark:text-white font-semibold"> simulateurs interactifs (React, Laravel, SQL, Git & Agile)</span>,
+              et entraînements QCM corrigés conformes aux barèmes officiels de l'OFPPT.
+            </p>
+
+            {/* MINI SQUARE INFORMATION CARDS (GENERAL CURRICULUM OVERVIEW) */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 pt-1">
+              <div className="rounded-2xl border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.04] p-3 shadow-xs hover:border-[#10B981]/40 transition-colors">
+                <div className="flex items-center gap-2 text-[#10B981] mb-1">
+                  <Layers className="h-4 w-4 text-[#10B981]" />
+                  <span className="text-xs font-mono font-bold">4 Modules</span>
+                </div>
+                <div className="text-[11px] font-medium text-[#0A0A0A]/70 dark:text-white/70">Curriculum 2A</div>
+              </div>
+
+              <div className="rounded-2xl border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.04] p-3 shadow-xs hover:border-[#22C55E]/40 transition-colors">
+                <div className="flex items-center gap-2 text-[#22C55E] mb-1">
+                  <Award className="h-4 w-4 text-[#22C55E]" />
+                  <span className="text-xs font-mono font-bold">650+ QCM</span>
+                </div>
+                <div className="text-[11px] font-medium text-[#0A0A0A]/70 dark:text-white/70">Banque Corrigée</div>
+              </div>
+
+              <div className="rounded-2xl border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.04] p-3 shadow-xs hover:border-[#10B981]/40 transition-colors">
+                <div className="flex items-center gap-2 text-[#10B981] mb-1">
+                  <FlaskConical className="h-4 w-4 text-[#10B981]" />
+                  <span className="text-xs font-mono font-bold">Labs Live</span>
+                </div>
+                <div className="text-[11px] font-medium text-[#0A0A0A]/70 dark:text-white/70">Simulateurs Pratiques</div>
+              </div>
+
+              <div className="rounded-2xl border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.04] p-3 shadow-xs hover:border-[#22C55E]/40 transition-colors">
+                <div className="flex items-center gap-2 text-[#22C55E] mb-1">
+                  <Clock className="h-4 w-4 text-[#22C55E]" />
+                  <span className="text-xs font-mono font-bold">Barème EFM</span>
+                </div>
+                <div className="text-[11px] font-medium text-[#0A0A0A]/70 dark:text-white/70">Examens Blancs</div>
+              </div>
+            </div>
+
+            {/* Action Buttons: Clicking Commencer smoothly scrolls to the 4 modules catalogue */}
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-2">
+              <Button
+                variant="primary"
+                size="lg"
+                onClick={handleScrollToCourses}
+                className="gap-2.5 font-bold shadow-lg shadow-[#10B981]/25 bg-[#10B981] hover:bg-[#22C55E] text-white cursor-pointer"
+              >
+                <span>Commencer à apprendre</span>
+                <ArrowRight className="h-4 w-4" />
+              </Button>
+              {onOpenMethodology ? (
+                <Button
+                  variant="outline"
+                  size="lg"
+                  onClick={onOpenMethodology}
+                  className="gap-2 font-semibold border-black/15 dark:border-white/15 hover:border-[#10B981] cursor-pointer text-xs"
+                >
+                  <Sparkles className="h-4 w-4 text-[#10B981]" />
+                  <span>Découvrir la méthode</span>
+                </Button>
+              ) : (
+                <Button
+                  variant="outline"
+                  size="lg"
+                  onClick={handleScrollToCourses}
+                  className="gap-2 font-semibold border-black/15 dark:border-white/15 hover:border-[#10B981] cursor-pointer text-xs"
+                >
+                  <Compass className="h-4 w-4 text-[#10B981]" />
+                  <span>Explorer les modules</span>
+                </Button>
+              )}
+            </div>
+          </div>
+
+          {/* Right Column: 3D Interactive Multi-Module Command Deck */}
+          <div className="lg:col-span-5 relative z-10 pointer-events-auto mt-4 lg:mt-0">
+            <React.Suspense fallback={<div className="h-[340px] w-full rounded-3xl bg-black/5 dark:bg-white/5 animate-pulse" />}>
               <Hero3DScene />
             </React.Suspense>
-          )}
+          </div>
         </div>
       </section>
 
-      {/* 2. COURSE SELECTION MARKETPLACE (4 MODULES) */}
-      <section id="courses-grid" className="max-w-7xl mx-auto space-y-8 pt-8">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-slate-200 dark:border-white/10 pb-5">
+      {/* ═══════════════════════════════════════════════════════════════
+          2. THE 4-PHASE LEARNING SYSTEM (PILLARS)
+          ═══════════════════════════════════════════════════════════════ */}
+      <section className="max-w-7xl mx-auto space-y-6 defer-render">
+        <div className="text-center max-w-2xl mx-auto space-y-1.5">
+          <div className="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-[#10B981] uppercase tracking-wider">
+            <Sparkles className="h-3.5 w-3.5" />
+            <span>La Boucle Pédagogique Active</span>
+          </div>
+          <h2 className="text-2xl sm:text-3xl font-black text-[#0A0A0A] dark:text-white tracking-tight">
+            Comment fonctionne l'apprentissage
+          </h2>
+          <p className="text-xs sm:text-sm text-[#0A0A0A]/60 dark:text-white/60">
+            Une méthode pragmatique qui te guide pas à pas vers la maîtrise sans mémorisation passive.
+          </p>
+        </div>
+
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {learningPillars.map((p, i) => {
+            const Icon = p.icon;
+            return (
+              <div
+                key={i}
+                className="p-5 rounded-3xl border border-black/10 dark:border-white/10 bg-white dark:bg-[#0A0A0A] flex flex-col justify-between shadow-xs hover:border-[#10B981] transition-all group"
+              >
+                <div>
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="h-10 w-10 rounded-2xl bg-[#10B981]/10 text-[#10B981] border border-[#10B981]/25 flex items-center justify-center group-hover:scale-105 transition-transform">
+                      <Icon className="h-5 w-5" />
+                    </div>
+                    <span className="font-mono text-xs font-bold text-[#0A0A0A]/40 dark:text-white/40">
+                      0{i + 1}
+                    </span>
+                  </div>
+                  <h3 className="text-base font-bold text-[#0A0A0A] dark:text-white mb-1">
+                    {p.title}
+                  </h3>
+                  <p className="text-xs text-[#0A0A0A]/70 dark:text-white/70 leading-relaxed">
+                    {p.desc}
+                  </p>
+                </div>
+                <div className="mt-4 pt-3 border-t border-black/10 dark:border-white/10 text-[11px] font-mono font-semibold text-[#10B981]">
+                  {p.badge}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════════════════
+          3. 4 CARDS IN 2x2 GRID (2 IN ROW, DECREASED HEIGHT, SLEEK UI)
+          ═══════════════════════════════════════════════════════════════ */}
+      <section id="courses-catalogue-section" className="max-w-7xl mx-auto space-y-5 pt-2">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-black/10 dark:border-white/10 pb-4">
           <div>
-            <div className="inline-flex items-center gap-2 text-xs font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-wider mb-1">
-              <BookOpen className="h-3.5 w-3.5" />
-              <span>Programme Pédagogique 2A</span>
+            <div className="inline-flex items-center gap-2 text-xs font-bold text-[#10B981] uppercase tracking-wider mb-1 font-mono">
+              <BookOpen className="h-3.5 w-3.5 text-[#10B981]" />
+              <span>Curriculum Officiel · 2ème Année</span>
             </div>
-            <h2 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight">
-              Modules & Matières d'Examen
+            <h2 className="text-2xl sm:text-3xl font-black text-[#0A0A0A] dark:text-white tracking-tight">
+              Catalogue des Matières & Simulateurs
             </h2>
-            <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-1">
-              Sélectionne ton module d’étude pour accéder aux cours rédigés, simulateurs dédiés et QCM d'entraînement.
+            <p className="text-xs sm:text-sm text-[#0A0A0A]/70 dark:text-white/70 mt-1 max-w-2xl">
+              Chaque module correspond au référentiel officiel OFPPT. L'Approche Agile (M201) est débloquée et prête à être étudiée.
             </p>
           </div>
 
-          <div className="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
-            <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
-            <span className="font-semibold text-slate-700 dark:text-slate-300">1 Module Actif</span>
-            <span>· 3 Modules en rédaction</span>
+          <div className="flex items-center gap-2 text-xs font-mono">
+            <span className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#10B981]/15 text-[#10B981] border border-[#10B981]/30 font-bold">
+              <span className="h-2 w-2 rounded-full bg-[#10B981] animate-pulse" />
+              1 Ouvert
+            </span>
+            <span className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-red-500/10 text-red-500 border border-red-500/30 font-bold">
+              <span className="h-2 w-2 rounded-full bg-red-500" />
+              3 Fermés
+            </span>
           </div>
         </div>
 
-        {/* 4 Interactive Course Marketplace Cards */}
-        <div className="grid md:grid-cols-2 gap-6 sm:gap-8">
-          {modules.map((mod) => {
+        {/* 2 Cards in a Row Grid (Total 4 Cards, Decreased Height) */}
+        <div className="grid md:grid-cols-2 gap-4 sm:gap-5">
+          {catalogueModules.map((mod) => {
             const Icon = mod.icon;
             const isAvailable = mod.status === 'available';
 
             return (
               <div
                 key={mod.id}
-                className={`group relative rounded-3xl border transition-all duration-300 flex flex-col justify-between overflow-hidden glass-card ${
-                  isAvailable 
-                    ? `border-indigo-500/40 dark:border-indigo-500/30 ${mod.borderGlow} hover:-translate-y-1.5` 
-                    : 'border-slate-200 dark:border-white/5 opacity-85 hover:opacity-100 hover:border-slate-300 dark:hover:border-slate-700 hover:-translate-y-0.5'
+                className={`group relative rounded-2xl border transition-all duration-300 flex flex-col justify-between overflow-hidden bg-white dark:bg-[#0A0A0A] p-4 sm:p-5 shadow-xs ${
+                  isAvailable
+                    ? 'border-2 border-[#10B981] shadow-md shadow-[#10B981]/15 ring-1 ring-[#10B981]/30'
+                    : 'border-black/10 dark:border-white/10 opacity-90 hover:opacity-100'
                 }`}
               >
-                {/* Gradient accent top bar */}
-                <div className={`h-1.5 w-full bg-gradient-to-r ${mod.gradient}`}></div>
+                {/* Accent top gradient bar */}
+                <div className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r ${mod.gradient}`} />
 
-                <div className="p-6 sm:p-8 flex-1 flex flex-col justify-between space-y-6">
-                  <div>
-                    {/* Header with status and difficulty badge */}
-                    <div className="flex items-center justify-between gap-3 mb-4">
-                      <div className="flex items-center gap-3">
-                        <div className={`flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br ${mod.gradient} text-white shadow-lg shadow-indigo-500/20 group-hover:scale-105 transition-transform`}>
-                          <Icon className="h-6 w-6" />
-                        </div>
-                        <div>
-                          <span className="text-[11px] font-mono font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider block">
-                            Module {mod.shortCode}
-                          </span>
-                          <span className="text-xs font-bold text-slate-700 dark:text-slate-200">
-                            {mod.stats.parts} · {mod.stats.lessons}
-                          </span>
-                        </div>
-                      </div>
-
-                      <div className="flex items-center gap-2">
-                        <span className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-bold border ${mod.badgeColor}`}>
-                          {isAvailable ? (
-                            <>
-                              <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                              <span>{mod.badgeText}</span>
-                            </>
-                          ) : (
-                            <>
-                              <Clock className="h-3 w-3 text-slate-500 dark:text-slate-400" />
-                              <span>{mod.badgeText}</span>
-                            </>
-                          )}
-                        </span>
-                      </div>
+                {/* TOP-RIGHT RED / GREEN CIRCLE BADGE (HIGH Z-INDEX) */}
+                <div className="absolute top-3.5 right-3.5 z-20">
+                  {mod.isOpen ? (
+                    <div className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#10B981]/15 text-[#10B981] border border-[#10B981]/40 text-[10px] font-bold font-mono shadow-xs">
+                      <span className="h-2 w-2 rounded-full bg-[#10B981] animate-pulse" />
+                      <span>Ouvert</span>
                     </div>
+                  ) : (
+                    <div className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-red-500/10 text-red-500 dark:text-red-400 border border-red-500/30 text-[10px] font-bold font-mono shadow-xs">
+                      <span className="h-2 w-2 rounded-full bg-red-500" />
+                      <span>Fermé</span>
+                    </div>
+                  )}
+                </div>
 
-                    {/* Title & Description */}
-                    <h3 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white tracking-tight mb-2 group-hover:text-indigo-600 dark:group-hover:text-indigo-300 transition-colors">
+                <div className="space-y-2.5 pr-16">
+                  {/* Icon & Code */}
+                  <div className="flex items-center gap-2.5 pt-0.5">
+                    <div className={`flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br ${mod.gradient} text-white shadow-xs`}>
+                      <Icon className="h-4 w-4" />
+                    </div>
+                    <div>
+                      <span className="font-mono text-xs font-black text-[#10B981] tracking-wider block">
+                        {mod.shortCode}
+                      </span>
+                      <span className="text-[10px] text-[#0A0A0A]/50 dark:text-white/50 font-medium">
+                        {mod.stats}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Title & Description */}
+                  <div>
+                    <h3 className="text-sm sm:text-base font-bold text-[#0A0A0A] dark:text-white tracking-tight leading-snug">
                       {mod.title}
                     </h3>
-                    <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-5">
+                    <p className="text-[11px] sm:text-xs text-[#0A0A0A]/70 dark:text-white/70 leading-relaxed mt-0.5 line-clamp-1">
                       {mod.description}
                     </p>
+                  </div>
+                </div>
 
-                    {/* Interactive 3D Miniature Box on Hover */}
-                    <div className="mb-5 transition-all duration-300">
-                      {mod.preview3D}
-                    </div>
+                {/* Miniature Preview Box & Topics */}
+                <div className="space-y-2 mt-2.5">
+                  <div>{mod.preview}</div>
 
-                    {/* Key Topics List */}
-                    <div className="space-y-2 mb-4">
-                      <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 block">
-                        Programme examens couvert :
+                  <div className="flex flex-wrap gap-1">
+                    {mod.topics.map((t, idx) => (
+                      <span
+                        key={idx}
+                        className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-[9px] font-medium ${
+                          isAvailable
+                            ? 'bg-[#10B981]/10 text-[#0A0A0A] dark:text-white border border-[#10B981]/20'
+                            : 'bg-black/[0.03] dark:bg-white/[0.05] text-[#0A0A0A]/60 dark:text-white/60 border border-black/10 dark:border-white/10'
+                        }`}
+                      >
+                        <CheckCircle2 className={`h-2.5 w-2.5 shrink-0 ${isAvailable ? 'text-[#10B981]' : 'opacity-40'}`} />
+                        <span>{t}</span>
                       </span>
-                      <ul className="space-y-1.5">
-                        {mod.topics.map((top, i) => (
-                          <li key={i} className="flex items-start gap-2 text-xs text-slate-700 dark:text-slate-300">
-                            <CheckCircle2 className={`h-3.5 w-3.5 shrink-0 mt-0.5 ${isAvailable ? 'text-indigo-600 dark:text-indigo-400' : 'text-slate-400 dark:text-slate-500'}`} />
-                            <span className="leading-snug">{top}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
+                    ))}
                   </div>
+                </div>
 
-                  {/* Footer & Action Button */}
-                  <div className="pt-4 border-t border-slate-200 dark:border-white/10">
-                    <div className="flex items-center justify-between gap-3">
-                      <div className="text-[11px] font-medium text-slate-500 dark:text-slate-400">
-                        {isAvailable ? (
-                          <span className="text-emerald-600 dark:text-emerald-400 font-bold flex items-center gap-1.5">
-                            <Sparkles className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400" />
-                            <span>200 QCM Corrigés + 5 Simulateurs</span>
-                          </span>
-                        ) : (
-                          <span className="text-slate-500 italic">
-                            En cours de finalisation
-                          </span>
-                        )}
-                      </div>
-
-                      {isAvailable ? (
-                        <Button
-                          variant="primary"
-                          onClick={onSelectAgile}
-                          className="gap-2 font-bold shadow-md shadow-indigo-600/30 hover:shadow-indigo-600/50 transition-all text-xs"
-                        >
-                          <span>Accéder au module</span>
-                          <ArrowRight className="h-4 w-4" />
-                        </Button>
-                      ) : (
-                        <Button
-                          variant="outline"
-                          disabled
-                          className="opacity-50 cursor-not-allowed text-xs font-semibold border-slate-300 dark:border-slate-700 bg-slate-100/60 dark:bg-slate-900/40 text-slate-500 dark:text-slate-400"
-                        >
-                          <span>Bientôt disponible</span>
-                        </Button>
-                      )}
+                {/* Card Action Footer */}
+                <div className="pt-2.5 border-t border-black/10 dark:border-white/10 mt-2.5">
+                  {isAvailable ? (
+                    <Button
+                      variant="primary"
+                      onClick={onSelectAgile}
+                      className="w-full justify-between font-bold text-xs shadow-sm shadow-[#10B981]/20 bg-[#10B981] hover:bg-[#22C55E] text-white cursor-pointer py-1.5"
+                    >
+                      <span>Accéder au module M201</span>
+                      <ArrowRight className="h-3.5 w-3.5" />
+                    </Button>
+                  ) : (
+                    <div className="w-full flex items-center justify-between px-3 py-1 rounded-xl bg-black/[0.03] dark:bg-white/[0.04] border border-black/10 dark:border-white/10 text-[10px] font-medium text-[#0A0A0A]/50 dark:text-white/50">
+                      <span className="flex items-center gap-1.5">
+                        <Lock className="h-3 w-3 opacity-60" />
+                        <span>Module en cours de finalisation</span>
+                      </span>
+                      <span className="text-[10px] font-mono text-red-500 font-bold">Fermé</span>
                     </div>
-                  </div>
+                  )}
                 </div>
               </div>
             );
           })}
         </div>
 
-        {/* Bottom Banner: OFPPT Curriculum Architecture */}
-        <div className="rounded-3xl border border-slate-200 dark:border-white/10 bg-gradient-to-r from-indigo-50/80 via-white to-cyan-50/80 dark:from-indigo-950/40 dark:via-slate-900/60 dark:to-cyan-950/40 p-6 sm:p-8 shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="flex items-start gap-4">
-            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-indigo-500/10 dark:bg-indigo-600/30 border border-indigo-500/20 dark:border-indigo-500/40 text-indigo-600 dark:text-indigo-300 shadow-md">
-              <BookOpen className="h-6 w-6" />
+        {/* Alignment Banner */}
+        <div className="rounded-2xl border border-black/10 dark:border-white/10 bg-white dark:bg-[#0A0A0A] p-5 sm:p-6 shadow-xs flex flex-col md:flex-row items-center justify-between gap-5">
+          <div className="flex items-start gap-3.5">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#10B981]/15 border border-[#10B981]/30 text-[#10B981]">
+              <BookOpen className="h-5 w-5" />
             </div>
             <div>
-              <h3 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white tracking-tight">
+              <h3 className="text-sm sm:text-base font-bold text-[#0A0A0A] dark:text-white tracking-tight">
                 Alignement Pédagogique Officiel — Filière Développement Digital
               </h3>
-              <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-1 max-w-2xl leading-relaxed">
-                Les modules respectent rigoureusement les compétences requises par le programme marocain. 
+              <p className="text-xs text-[#0A0A0A]/70 dark:text-white/70 mt-0.5 max-w-2xl leading-relaxed">
+                Les modules respectent rigoureusement les compétences requises par le programme marocain.
                 L'Approche Agile (M201) est prête pour l'entraînement intensif avec tous les barèmes de calculs (PERT, Marges, Scrum).
               </p>
             </div>
@@ -474,7 +506,7 @@ export function CurriculumHub({ onSelectAgile }: CurriculumHubProps) {
           <Button
             variant="primary"
             onClick={onSelectAgile}
-            className="shrink-0 gap-2 font-bold text-xs"
+            className="shrink-0 gap-2 font-bold text-xs shadow-sm shadow-[#10B981]/20 bg-[#10B981] hover:bg-[#22C55E] text-white cursor-pointer"
           >
             <span>Démarrer avec Approche Agile</span>
             <ArrowRight className="h-4 w-4" />

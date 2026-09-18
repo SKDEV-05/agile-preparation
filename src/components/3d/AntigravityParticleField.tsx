@@ -55,16 +55,13 @@ export function AntigravityParticleField() {
 
     const shockwaves: Shockwave[] = [];
 
-    // Google Antigravity Vivid Tech Colors (High Contrast & Glowing)
+    // Strict 4-Color Palette for Particles: Primary Green, Secondary Green, White
     const colors = [
-      '#00E5FF', // Electric Cyan
-      '#38BDF8', // Sky Blue
-      '#6366F1', // Electric Indigo
-      '#818CF8', // Soft Purple
-      '#A855F7', // Vivid Violet
-      '#EC4899', // Hot Pink
-      '#34D399', // Emerald Neon
-      '#FBBF24', // Warm Amber
+      '#10B981', // Primary Green
+      '#22C55E', // Secondary Green
+      '#FFFFFF', // Pure White
+      '#10B981', // Primary Green (weighted)
+      '#22C55E', // Secondary Green (weighted)
     ];
 
     // High density particle field for full screen coverage
@@ -161,7 +158,7 @@ export function AntigravityParticleField() {
         ctx.save();
         ctx.beginPath();
         ctx.arc(sw.x, sw.y, sw.radius, 0, Math.PI * 2);
-        ctx.strokeStyle = `rgba(0, 229, 255, ${sw.alpha * 0.5})`;
+        ctx.strokeStyle = `rgba(16, 185, 129, ${sw.alpha * 0.5})`;
         ctx.lineWidth = 2;
         ctx.setLineDash([8, 8]);
         ctx.stroke();

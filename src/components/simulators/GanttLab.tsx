@@ -14,12 +14,12 @@ interface GanttTask {
 }
 
 const defaultGanttTasks: GanttTask[] = [
-  { id: '1', name: '1. Cadrage & Cahier des charges', startWeek: 1, durationWeeks: 2, color: 'bg-primary' },
-  { id: '2', name: '2. Conception & Maquettes UI', startWeek: 3, durationWeeks: 2, color: 'bg-teal-600' },
-  { id: '3', name: '3. Dév Backend & API REST', startWeek: 5, durationWeeks: 4, color: 'bg-indigo-500' },
-  { id: '4', name: '4. Dév Frontend & Composants', startWeek: 6, durationWeeks: 4, color: 'bg-violet-600' },
-  { id: '5', name: '5. Tests d’intégration & QA', startWeek: 9, durationWeeks: 2, color: 'bg-emerald-600' },
-  { id: '6', name: '6. Recette & Clôture', startWeek: 11, durationWeeks: 0, color: 'bg-amber-500', isMilestone: true },
+  { id: '1', name: '1. Cadrage & Cahier des charges', startWeek: 1, durationWeeks: 2, color: 'bg-[#10B981]' },
+  { id: '2', name: '2. Conception & Maquettes UI', startWeek: 3, durationWeeks: 2, color: 'bg-[#22C55E]' },
+  { id: '3', name: '3. Dév Backend & API REST', startWeek: 5, durationWeeks: 4, color: 'bg-[#10B981]' },
+  { id: '4', name: '4. Dév Frontend & Composants', startWeek: 6, durationWeeks: 4, color: 'bg-[#22C55E]' },
+  { id: '5', name: '5. Tests d’intégration & QA', startWeek: 9, durationWeeks: 2, color: 'bg-[#10B981]' },
+  { id: '6', name: '6. Recette & Clôture', startWeek: 11, durationWeeks: 0, color: 'bg-[#22C55E]', isMilestone: true },
 ];
 
 export function GanttLab() {
@@ -37,7 +37,7 @@ export function GanttLab() {
       // Re-anchor sequential start dates
       updated[1].startWeek = updated[0].startWeek + updated[0].durationWeeks;
       updated[2].startWeek = updated[1].startWeek + updated[1].durationWeeks;
-      updated[3].startWeek = updated[2].startWeek + 1; // Slight overlap
+      updated[3].startWeek = updated[2].startWeek + 1;
       const maxDevEnd = Math.max(
         updated[2].startWeek + updated[2].durationWeeks,
         updated[3].startWeek + updated[3].durationWeeks
@@ -57,25 +57,24 @@ export function GanttLab() {
   const weeks = Array.from({ length: Math.max(12, totalWeeks + 1) }, (_, i) => i + 1);
 
   return (
-    <Card className="relative rounded-3xl border border-slate-200 dark:border-0 ring-1 ring-indigo-500/20 bg-gradient-to-b from-white via-slate-50 to-slate-100/80 dark:from-[#0F172A]/95 dark:via-[#0D1526]/95 dark:to-[#070B14]/98 backdrop-blur-2xl shadow-sm dark:shadow-[0_25px_60px_-15px_rgba(0,0,0,0.85),0_0_40px_-10px_rgba(99,102,241,0.18)] overflow-hidden transition-all duration-300">
-      {/* Ambient background glows */}
-      <div className="absolute top-0 right-0 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-80 h-80 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none" />
+    <Card className="relative rounded-3xl border border-black/10 dark:border-white/10 bg-white dark:bg-[#0A0A0A] backdrop-blur-2xl shadow-xl overflow-hidden transition-all duration-300">
+      <div className="absolute top-0 right-0 w-96 h-96 bg-[#10B981]/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-80 h-80 bg-[#22C55E]/10 rounded-full blur-3xl pointer-events-none" />
 
-      <CardHeader className="relative z-10 border-b border-slate-200 dark:border-indigo-500/15 pb-5">
+      <CardHeader className="relative z-10 border-b border-black/10 dark:border-white/10 pb-5">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
             <div className="flex items-center gap-2">
               <Badge variant="primary" size="sm">Laboratoire 02</Badge>
-              <Badge variant="outline" size="sm" className="border-indigo-500/30 text-indigo-700 dark:text-indigo-300">Planning dynamique</Badge>
+              <Badge variant="outline" size="sm" className="border-[#10B981]/30 text-[#10B981]">Planning dynamique</Badge>
             </div>
-            <CardTitle className="text-xl sm:text-2xl mt-1 text-slate-900 dark:text-white">Gantt Lab · Calendrier & Dépendances</CardTitle>
-            <CardDescription className="text-slate-600 dark:text-slate-400">
+            <CardTitle className="text-xl sm:text-2xl mt-1 text-black dark:text-white">Gantt Lab · Calendrier & Dépendances</CardTitle>
+            <CardDescription className="text-black/60 dark:text-white/60">
               Ajuste la durée des phases à l’aide des curseurs. Constate en temps réel le décalage automatique des activités dépendantes et de la date du jalon de livraison.
             </CardDescription>
           </div>
           <div className="flex items-center gap-2">
-            <Button variant="outline" size="sm" onClick={handleReset} className="gap-1.5 border-slate-200 dark:border-indigo-500/20 hover:bg-slate-100 dark:hover:bg-white/5 text-slate-700 dark:text-slate-200">
+            <Button variant="outline" size="sm" onClick={handleReset} className="gap-1.5 border-black/10 dark:border-white/15 hover:bg-black/5 dark:hover:bg-white/5 text-black dark:text-white">
               <RotateCcw className="h-3.5 w-3.5" />
               <span>Valeurs par défaut</span>
             </Button>
@@ -85,22 +84,22 @@ export function GanttLab() {
 
       <CardContent className="relative z-10 pt-6">
         {/* Total Calendar Duration Alert */}
-        <div className="mb-6 flex flex-wrap items-center justify-between gap-3 rounded-2xl bg-indigo-50/80 dark:bg-indigo-950/40 border border-indigo-500/20 dark:border-indigo-500/30 p-4 shadow-sm">
+        <div className="mb-6 flex flex-wrap items-center justify-between gap-3 rounded-2xl bg-[#10B981]/10 border border-[#10B981]/30 p-4 shadow-sm">
           <div className="flex items-center gap-2.5">
-            <Calendar className="h-5 w-5 text-indigo-600 dark:text-indigo-400" />
-            <span className="text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-300">
-              Durée globale projet : <b className="text-slate-900 dark:text-white text-base">{totalWeeks} semaines</b>
+            <Calendar className="h-5 w-5 text-[#10B981]" />
+            <span className="text-xs sm:text-sm font-semibold text-black dark:text-white">
+              Durée globale projet : <b className="text-black dark:text-white text-base">{totalWeeks} semaines</b>
             </span>
           </div>
-          <Badge variant="outline" size="md" className="bg-indigo-100 dark:bg-indigo-600/20 text-indigo-700 dark:text-indigo-300 border-indigo-500/30 font-bold">
+          <Badge variant="outline" size="md" className="bg-[#10B981]/20 text-[#10B981] border-[#10B981]/40 font-bold font-mono">
             Jalon final à la semaine {totalWeeks}
           </Badge>
         </div>
 
         {/* Visual Gantt Chart Table */}
-        <div className="overflow-x-auto rounded-2xl border border-slate-200 dark:border-indigo-500/15 bg-white dark:bg-gradient-to-b dark:from-[#070B14]/90 dark:to-[#0A0F1E]/90 p-4 shadow-inner">
+        <div className="overflow-x-auto rounded-2xl border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 p-4 shadow-inner">
           {/* Week Headers */}
-          <div className="flex items-center border-b border-slate-200 dark:border-indigo-500/15 pb-2 text-[11px] font-bold text-slate-500 dark:text-slate-400 min-w-[700px]">
+          <div className="flex items-center border-b border-black/10 dark:border-white/10 pb-2 text-[11px] font-bold text-black/50 dark:text-white/50 min-w-[700px] font-mono">
             <div className="w-56 shrink-0 pl-2">Activité</div>
             <div className="flex-1 grid grid-cols-12 gap-1 text-center">
               {weeks.slice(0, 12).map(w => (
@@ -110,7 +109,7 @@ export function GanttLab() {
           </div>
 
           {/* Task Rows */}
-          <div className="divide-y divide-slate-200 dark:divide-indigo-500/10 min-w-[700px]">
+          <div className="divide-y divide-black/10 dark:divide-white/10 min-w-[700px]">
             {tasks.map(t => {
               const startOffsetPct = ((t.startWeek - 1) / 12) * 100;
               const widthPct = t.isMilestone ? 0 : (t.durationWeeks / 12) * 100;
@@ -118,25 +117,25 @@ export function GanttLab() {
               return (
                 <div key={t.id} className="flex items-center py-3">
                   <div className="w-56 shrink-0 pr-4">
-                    <div className="text-xs font-bold text-slate-900 dark:text-white truncate">{t.name}</div>
-                    <div className="text-[10px] text-slate-500 dark:text-slate-400">
+                    <div className="text-xs font-bold text-black dark:text-white truncate">{t.name}</div>
+                    <div className="text-[10px] text-black/50 dark:text-white/50 font-mono">
                       {t.isMilestone ? 'Jalon (0 sem)' : `${t.durationWeeks} sem · Début S${t.startWeek}`}
                     </div>
                   </div>
 
                   {/* Visual Bar Area */}
-                  <div className="flex-1 relative h-7 bg-slate-100 dark:bg-[#0D1526]/80 rounded-xl flex items-center px-1 border border-slate-200 dark:border-indigo-500/10">
+                  <div className="flex-1 relative h-7 bg-black/5 dark:bg-white/5 rounded-xl flex items-center px-1 border border-black/5 dark:border-white/5">
                     {/* Background week guide grid */}
                     <div className="absolute inset-0 grid grid-cols-12 pointer-events-none">
                       {weeks.slice(0, 12).map(w => (
-                        <div key={w} className="border-r border-slate-200 dark:border-indigo-500/5 h-full" />
+                        <div key={w} className="border-r border-black/5 dark:border-white/5 h-full" />
                       ))}
                     </div>
 
                     {/* Task Bar or Milestone Diamond */}
                     {!t.isMilestone ? (
                       <div
-                        className={`absolute h-5 rounded-lg text-white font-bold text-[10px] flex items-center px-2 shadow-md transition-all duration-300 ${t.color}`}
+                        className={`absolute h-5 rounded-lg text-white font-bold text-[10px] flex items-center px-2 shadow-sm transition-all duration-300 font-mono ${t.color}`}
                         style={{
                           left: `${startOffsetPct}%`,
                           width: `${Math.max(widthPct, 6)}%`,
@@ -146,7 +145,7 @@ export function GanttLab() {
                       </div>
                     ) : (
                       <div
-                        className="absolute w-4 h-4 bg-amber-400 rotate-45 rounded-sm shadow-md shadow-amber-500/40 transition-all duration-300 -translate-x-2"
+                        className="absolute w-4 h-4 bg-[#22C55E] rotate-45 rounded-sm shadow-sm transition-all duration-300 -translate-x-2 border border-white"
                         style={{ left: `${startOffsetPct}%` }}
                         title="Jalon de recette"
                       />
@@ -159,16 +158,16 @@ export function GanttLab() {
         </div>
 
         {/* Task Control Sliders */}
-        <div className="mt-6 rounded-2xl border border-slate-200 dark:border-indigo-500/15 bg-slate-50 dark:bg-gradient-to-b dark:from-[#070B14]/80 dark:to-[#0A0F1E]/80 p-5">
-          <div className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-4">
+        <div className="mt-6 rounded-2xl border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 p-5">
+          <div className="text-xs font-bold uppercase tracking-wider text-black/50 dark:text-white/50 mb-4 font-mono">
             Ajuster la durée des activités
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {tasks.filter(t => !t.isMilestone).map(t => (
-              <div key={t.id} className="rounded-xl border border-slate-200 dark:border-indigo-500/20 bg-white dark:bg-gradient-to-b dark:from-[#0D1526] dark:to-[#090E1A] p-3.5 shadow-sm">
-                <div className="flex justify-between text-xs font-bold text-slate-900 dark:text-white mb-1.5">
+              <div key={t.id} className="rounded-xl border border-black/10 dark:border-white/10 bg-white dark:bg-[#0A0A0A] p-3.5 shadow-sm">
+                <div className="flex justify-between text-xs font-bold text-black dark:text-white mb-1.5">
                   <span className="truncate">{t.name.split('.')[1]}</span>
-                  <span className="text-indigo-600 dark:text-indigo-400">{t.durationWeeks} sem</span>
+                  <span className="text-[#10B981] font-mono">{t.durationWeeks} sem</span>
                 </div>
                 <input
                   type="range"
@@ -176,7 +175,7 @@ export function GanttLab() {
                   max={6}
                   value={t.durationWeeks}
                   onChange={(e) => handleDurationChange(t.id, parseInt(e.target.value))}
-                  className="w-full h-1.5 bg-slate-200 dark:bg-slate-800 rounded-lg appearance-none cursor-pointer accent-indigo-500"
+                  className="w-full h-1.5 bg-black/10 dark:bg-white/10 rounded-lg appearance-none cursor-pointer accent-[#10B981]"
                 />
               </div>
             ))}

@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import saadImage from '../../assets/saadimage.webp';
 import { ExternalLink, Clock } from 'lucide-react';
+import saadImage from '../../assets/saadimage.webp';
+
+interface CreatorCardProps {
+  variant?: 'compact' | 'full';
+  className?: string;
+}
 
 function InstagramIcon({ className = "h-4 w-4" }: { className?: string }) {
   return (
@@ -20,27 +25,26 @@ function InstagramIcon({ className = "h-4 w-4" }: { className?: string }) {
   );
 }
 
-interface CreatorCardProps {
-  variant?: 'compact' | 'full';
-  className?: string;
-}
-
-export function CreatorCard({ variant = 'full', className = '' }: CreatorCardProps) {
-  const [timeStr, setTimeStr] = useState('');
+export function CreatorCard({ variant = 'compact', className = '' }: CreatorCardProps) {
+  const [timeStr, setTimeStr] = useState<string>('');
 
   useEffect(() => {
-    if (variant !== 'compact') return;
-
     const updateTime = () => {
-      const now = new Date();
-      setTimeStr(
-        now.toLocaleTimeString('fr-FR', {
+      try {
+        const now = new Date();
+        const formatted = new Intl.DateTimeFormat('fr-FR', {
+          timeZone: 'Africa/Casablanca',
           hour: '2-digit',
           minute: '2-digit',
           second: '2-digit',
-        })
-      );
+          hour12: false
+        }).format(now);
+        setTimeStr(`${formatted} (GMT+1)`);
+      } catch {
+        setTimeStr('Casablanca');
+      }
     };
+
     updateTime();
     const interval = setInterval(updateTime, 1000);
     return () => clearInterval(interval);
@@ -48,12 +52,12 @@ export function CreatorCard({ variant = 'full', className = '' }: CreatorCardPro
 
   if (variant === 'compact') {
     return (
-      <div className={`group relative rounded-xl p-[1px] bg-gradient-to-r from-slate-300 via-indigo-400/40 to-slate-300 dark:from-slate-700/60 dark:via-indigo-500/40 dark:to-slate-700/60 hover:from-indigo-500 hover:via-pink-500 hover:to-amber-500 transition-all duration-500 shadow-md ${className}`}>
-        <div className="relative rounded-xl bg-white/95 dark:bg-slate-900/90 backdrop-blur-md p-2.5 flex items-center justify-between gap-2.5 shadow-sm border border-slate-200 dark:border-white/5">
+      <div className={`group relative rounded-xl p-[1px] bg-gradient-to-r from-[#10B981]/30 via-[#22C55E]/40 to-[#10B981]/30 hover:from-[#10B981] hover:via-[#22C55E] hover:to-[#10B981] transition-all duration-500 shadow-md ${className}`}>
+        <div className="relative rounded-xl bg-white dark:bg-[#0A0A0A] backdrop-blur-md p-2.5 flex items-center justify-between gap-2.5 shadow-sm border border-black/10 dark:border-white/10">
           <div className="flex items-center gap-2.5 min-w-0">
-            {/* Picture with Instagram gradient ring on hover */}
+            {/* Picture with Primary/Secondary Green ring */}
             <div className="relative shrink-0">
-              <div className="h-9 w-9 rounded-lg p-[1.5px] bg-gradient-to-tr from-amber-500 via-pink-500 to-indigo-600 transition-transform duration-300 group-hover:scale-105 shadow-sm">
+              <div className="h-9 w-9 rounded-lg p-[1.5px] bg-gradient-to-tr from-[#10B981] to-[#22C55E] transition-transform duration-300 group-hover:scale-105 shadow-sm">
                 <img
                   src={saadImage}
                   alt="Saâd Korma"
@@ -64,19 +68,19 @@ export function CreatorCard({ variant = 'full', className = '' }: CreatorCardPro
                   className="h-full w-full object-cover rounded-[6px]"
                 />
               </div>
-              <span className="absolute -bottom-0.5 -right-0.5 flex h-3 w-3 items-center justify-center rounded-full bg-emerald-500 ring-2 ring-white dark:ring-slate-900">
+              <span className="absolute -bottom-0.5 -right-0.5 flex h-3 w-3 items-center justify-center rounded-full bg-[#10B981] ring-2 ring-white dark:ring-[#0A0A0A]">
                 <span className="h-1 w-1 rounded-full bg-white animate-pulse" />
               </span>
             </div>
 
             <div className="min-w-0">
               <div className="flex items-center gap-1">
-                <span className="text-[11px] font-bold text-slate-900 dark:text-white truncate">Saâd Korma</span>
-                <span className="text-[9px] text-indigo-600 dark:text-indigo-400 font-bold">✓</span>
+                <span className="text-[11px] font-bold text-black dark:text-white truncate">Saâd Korma</span>
+                <span className="text-[9px] text-[#10B981] font-bold">✓</span>
               </div>
-              <p className="text-[10px] text-slate-500 dark:text-slate-400 truncate font-mono">Web & Mobile Dev</p>
-              <div className="flex items-center gap-1 text-[9px] text-slate-500 dark:text-slate-400 font-mono mt-0.5">
-                <Clock className="h-2.5 w-2.5 text-slate-400" />
+              <p className="text-[10px] text-black/60 dark:text-white/60 truncate font-mono">Web & Mobile Dev</p>
+              <div className="flex items-center gap-1 text-[9px] text-black/50 dark:text-white/50 font-mono mt-0.5">
+                <Clock className="h-2.5 w-2.5 text-black/40 dark:text-white/40" />
                 <span>{timeStr || '--:--:--'}</span>
               </div>
             </div>
@@ -88,7 +92,7 @@ export function CreatorCard({ variant = 'full', className = '' }: CreatorCardPro
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Visiter le profil Instagram de Saâd Korma"
-            className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-gradient-to-tr from-pink-500 to-indigo-600 text-white shadow-md transition-transform duration-200 hover:scale-110 hover:shadow-indigo-500/30"
+            className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-gradient-to-tr from-[#10B981] to-[#22C55E] text-white shadow-md transition-transform duration-200 hover:scale-110 hover:shadow-[#10B981]/30"
             title="Instagram @saadkorma_dev"
           >
             <InstagramIcon className="h-3.5 w-3.5" />
@@ -100,18 +104,18 @@ export function CreatorCard({ variant = 'full', className = '' }: CreatorCardPro
 
   // Full Variant (for Footers & Highlights)
   return (
-    <div className={`group relative rounded-3xl p-[1.5px] bg-gradient-to-r from-slate-300 via-indigo-400/40 to-slate-300 dark:from-slate-700/60 dark:via-indigo-500/30 dark:to-slate-700/60 hover:from-indigo-500 hover:via-purple-500 hover:to-pink-500 transition-all duration-500 shadow-xl ${className}`}>
-      <div className="relative rounded-3xl bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl p-5 sm:p-7 overflow-hidden border border-slate-200 dark:border-white/10 shadow-sm">
+    <div className={`group relative rounded-3xl p-[1.5px] bg-gradient-to-r from-[#10B981]/30 via-[#22C55E]/40 to-[#10B981]/30 hover:from-[#10B981] hover:via-[#22C55E] hover:to-[#10B981] transition-all duration-500 shadow-xl ${className}`}>
+      <div className="relative rounded-3xl bg-white dark:bg-[#0A0A0A] backdrop-blur-xl p-5 sm:p-7 overflow-hidden border border-black/10 dark:border-white/10 shadow-sm">
         {/* Subtle background decorative shapes */}
-        <div className="absolute -right-10 -bottom-10 h-40 w-40 rounded-full bg-indigo-500/10 blur-2xl pointer-events-none" />
-        <div className="absolute right-20 -top-10 h-32 w-32 rounded-full bg-pink-500/10 blur-2xl pointer-events-none" />
+        <div className="absolute -right-10 -bottom-10 h-40 w-40 rounded-full bg-[#10B981]/10 blur-2xl pointer-events-none" />
+        <div className="absolute right-20 -top-10 h-32 w-32 rounded-full bg-[#22C55E]/10 blur-2xl pointer-events-none" />
 
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5 relative z-10">
           {/* Creator Profile Info */}
           <div className="flex items-start sm:items-center gap-4">
             {/* Real Picture with Animated Gradient Ring */}
             <div className="relative shrink-0">
-              <div className="h-16 w-16 sm:h-20 sm:w-20 rounded-2xl p-[3px] bg-gradient-to-tr from-amber-400 via-pink-500 to-indigo-600 shadow-lg transition-all duration-500 group-hover:scale-105 group-hover:rotate-1">
+              <div className="h-16 w-16 sm:h-20 sm:w-20 rounded-2xl p-[3px] bg-gradient-to-tr from-[#10B981] to-[#22C55E] shadow-lg transition-all duration-500 group-hover:scale-105 group-hover:rotate-1">
                 <img
                   src={saadImage}
                   alt="Saâd Korma"
@@ -122,7 +126,7 @@ export function CreatorCard({ variant = 'full', className = '' }: CreatorCardPro
                   className="h-full w-full object-cover rounded-[13px] filter contrast-[1.02]"
                 />
               </div>
-              <span className="absolute -bottom-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-emerald-500 ring-3 ring-white dark:ring-slate-900 shadow-xs" title="En direct / En ligne">
+              <span className="absolute -bottom-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-[#10B981] ring-3 ring-white dark:ring-[#0A0A0A] shadow-xs" title="En direct / En ligne">
                 <span className="h-2 w-2 rounded-full bg-white animate-ping opacity-75" />
                 <span className="absolute h-2 w-2 rounded-full bg-white" />
               </span>
@@ -130,38 +134,38 @@ export function CreatorCard({ variant = 'full', className = '' }: CreatorCardPro
 
             <div>
               <div className="flex flex-wrap items-center gap-2">
-                <span className="text-xs font-mono font-bold uppercase tracking-wider text-indigo-700 dark:text-indigo-300 bg-indigo-50 dark:bg-indigo-500/20 px-2.5 py-0.5 rounded-lg border border-indigo-200 dark:border-indigo-500/30">
+                <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#10B981] bg-[#10B981]/10 px-2.5 py-0.5 rounded-lg border border-[#10B981]/30">
                   Créateur & Développeur
                 </span>
-                <span className="flex items-center gap-1 text-[11px] font-mono text-slate-600 dark:text-slate-400 bg-slate-100 dark:bg-slate-800/80 px-2 py-0.5 rounded-lg border border-slate-200 dark:border-white/5">
-                  <Clock className="h-3 w-3 text-slate-400" />
+                <span className="flex items-center gap-1 text-[11px] font-mono text-black/70 dark:text-white/70 bg-black/5 dark:bg-white/5 px-2 py-0.5 rounded-lg border border-black/10 dark:border-white/10">
+                  <Clock className="h-3 w-3 text-[#10B981]" />
                   <span>{timeStr || 'Maroc'}</span>
                 </span>
               </div>
 
-              <h3 className="mt-1.5 text-lg sm:text-xl font-black text-slate-900 dark:text-white flex items-center gap-2">
+              <h3 className="mt-1.5 text-lg sm:text-xl font-black text-black dark:text-white flex items-center gap-2">
                 <span>Saâd Korma</span>
-                <span className="flex h-5 w-5 items-center justify-center rounded-full bg-blue-500 text-white text-[11px]" title="Créateur vérifié">
+                <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#10B981] text-white text-[11px]" title="Créateur vérifié">
                   ✓
                 </span>
               </h3>
 
-              <p className="text-xs text-slate-700 dark:text-slate-300 font-medium mt-1 leading-snug">
-                💻 Web & Mobile Developer · 🎮 Game Design & Animation <span className="text-indigo-600 dark:text-indigo-400 font-semibold font-mono">@ensad.ma</span>
+              <p className="text-xs text-black/80 dark:text-white/80 font-medium mt-1 leading-snug">
+                💻 Web & Mobile Developer · 🎮 Game Design & Animation <span className="text-[#10B981] font-semibold font-mono">@ensad.ma</span>
               </p>
-              <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1 max-w-xl">
+              <p className="text-[11px] text-black/60 dark:text-white/60 mt-1 max-w-xl">
                 Créé avec rigueur et passion pour accompagner les stagiaires dans leur réussite aux examens finaux de formation.
               </p>
             </div>
           </div>
 
           {/* Social CTAs */}
-          <div className="flex items-center gap-3 w-full sm:w-auto justify-end pt-2 sm:pt-0 border-t sm:border-t-0 border-slate-200 dark:border-white/10">
+          <div className="flex items-center gap-3 w-full sm:w-auto justify-end pt-2 sm:pt-0 border-t sm:border-t-0 border-black/10 dark:border-white/10">
             <a
               href="https://www.instagram.com/saadkorma_dev/"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-pink-500 via-purple-600 to-indigo-600 text-white text-xs font-bold shadow-md shadow-pink-500/20 hover:shadow-pink-500/40 hover:scale-105 transition-all"
+              className="flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-[#10B981] to-[#22C55E] text-white text-xs font-bold shadow-md shadow-[#10B981]/20 hover:shadow-[#10B981]/40 hover:scale-105 transition-all"
             >
               <InstagramIcon className="h-4 w-4" />
               <span>@saadkorma_dev</span>
