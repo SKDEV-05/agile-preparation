@@ -188,7 +188,7 @@ export function ProfileSettingsPage({ onBackToDashboard }: ProfileSettingsPagePr
                 Bascule entre le mode sombre (recommandé) et le mode clair
               </div>
             </div>
-            <ThemeToggle variant="switch" showLabel />
+            <ThemeToggle variant="switch" />
           </div>
 
           {/* Exam Target Date */}
