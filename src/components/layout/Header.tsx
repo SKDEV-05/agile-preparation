@@ -3,6 +3,7 @@ import { Menu, Award, AlertTriangle, Layers, Search, Zap, Code2 } from 'lucide-r
 import { ActiveView } from './Sidebar';
 import { useProgress } from '../../store/progressStore';
 import { useReactProgress } from '../../store/reactProgressStore';
+import { useActiveTrack } from '../../store/trackStore';
 import { Button } from '../ui/Button';
 import { ShareButton } from '../common/ShareButton';
 import { InstallButton } from '../common/InstallButton';
@@ -21,7 +22,10 @@ export function Header({
   onOpenMobileSidebar,
   onOpenSearch
 }: HeaderProps) {
-  const isReact = activeView.startsWith('react');
+  const [activeTrack] = useActiveTrack();
+  const isReact = (activeView === 'profile-settings' || activeView === 'methodology')
+    ? (activeTrack === 'react')
+    : activeView.startsWith('react');
   const { progress } = useProgress();
   const { progress: reactProgress } = useReactProgress();
   const errorCount = isReact ? reactProgress.wrongQuestionIds.length : progress.wrongQuestionIds.length;
@@ -102,17 +106,34 @@ export function Header({
         </button>
 
         {/* Title and subtitle */}
-        <div className="truncate">
-          <div role="heading" aria-level={2} className="text-sm font-black text-[#0A0A0A] dark:text-white sm:text-base leading-none truncate">
+        <div className="min-w-0 flex-1 truncate">
+          <div role="heading" aria-level={2} className="text-[13px] sm:text-base font-black text-[#0A0A0A] dark:text-white leading-tight truncate">
             {breadcrumb.title}
           </div>
-          <p className="hidden sm:block text-xs text-[#0A0A0A]/70 dark:text-white/70 mt-1 truncate">
+          <p className="hidden sm:block text-xs text-[#0A0A0A]/70 dark:text-white/70 mt-0.5 truncate">
             {breadcrumb.subtitle}
           </p>
         </div>
       </div>
 
-      
+      {/* Right Header Actions: Search (desktop only), Install App, Share, and Theme Toggle (icon-only on mobile) */}
+      <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+        {onOpenSearch && (
+          <button
+            onClick={onOpenSearch}
+            className="hidden sm:inline-flex items-center gap-1.5 rounded-xl border border-black/15 dark:border-white/15 bg-black/5 dark:bg-white/5 px-2.5 sm:px-3 py-1.5 text-xs font-bold text-[#0A0A0A] dark:text-white hover:border-[#10B981] hover:text-[#10B981] transition-all cursor-pointer shadow-2xs group"
+            title="Rechercher (Ctrl+K)"
+            aria-label="Recherche rapide"
+          >
+            <Search className="h-3.5 w-3.5 text-[#10B981] group-hover:scale-110 transition-transform" />
+            <span className="hidden sm:inline">Rechercher</span>
+            <kbd className="hidden md:inline px-1 py-0.2 text-[9px] font-mono rounded bg-black/10 dark:bg-white/10 text-[#0A0A0A]/70 dark:text-white/70">⌘K</kbd>
+          </button>
+        )}
+        <InstallButton variant="minimal" />
+        <ShareButton variant="minimal" />
+        <ThemeToggle />
+      </div>
     </header>
   );
 }

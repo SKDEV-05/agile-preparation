@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Search } from 'lucide-react';
 import { ActiveView } from './Sidebar';
 import { Footer } from './Footer';
 import { PartId } from '../../types';
 import { ShareButton } from '../common/ShareButton';
+import { InstallButton } from '../common/InstallButton';
 import { ThemeToggle } from '../common/ThemeToggle';
 import { MobileNavigation } from './MobileNavigation';
 import { PlatformLogo } from '../common/PlatformLogo';
@@ -72,6 +73,7 @@ export function Layout({
                 <kbd className="px-1 py-0.2 text-[9px] font-mono rounded bg-black/5 dark:bg-white/10">⌘K</kbd>
               </button>
             )}
+            <InstallButton variant="minimal" />
             <ThemeToggle />
             <ShareButton variant="minimal" />
             <span className="rounded-full bg-[#10B981] px-2 sm:px-3 py-0.5 sm:py-1 text-[11px] sm:text-xs font-bold text-white flex items-center gap-1.5 shrink-0">
@@ -87,6 +89,22 @@ export function Layout({
           {children}
           <Footer onNavigate={onNavigate} />
         </main>
+
+        {/* Floating Search Action Button (Mobile Chatbot Style FAB at Bottom-Right) */}
+        {onOpenSearch && (
+          <button
+            onClick={onOpenSearch}
+            className="lg:hidden fixed bottom-20 right-4 z-40 flex h-12 w-12 items-center justify-center rounded-full bg-linear-to-tr from-[#10B981] via-emerald-500 to-teal-400 text-white shadow-xl shadow-[#10B981]/30 border border-white/30 active:scale-90 hover:scale-105 transition-all duration-200 cursor-pointer group"
+            aria-label="Recherche rapide"
+            title="Recherche rapide (cours, QCM, notions)"
+          >
+            <span className="absolute -top-0.5 -right-0.5 flex h-3 w-3">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-3 w-3 bg-white"></span>
+            </span>
+            <Search className="h-5 w-5 text-white transition-transform group-hover:rotate-12" />
+          </button>
+        )}
 
         {/* Mobile Navigation bar */}
         <MobileNavigation
@@ -126,6 +144,22 @@ export function Layout({
           {children}
           <Footer onNavigate={onNavigate} />
         </main>
+
+        {/* Floating Search Action Button (Mobile Chatbot Style FAB at Bottom-Right) */}
+        {onOpenSearch && (
+          <button
+            onClick={onOpenSearch}
+            className="lg:hidden fixed bottom-20 right-4 z-40 flex h-12 w-12 items-center justify-center rounded-full bg-linear-to-tr from-[#10B981] via-emerald-500 to-teal-400 text-white shadow-xl shadow-[#10B981]/30 border border-white/30 active:scale-90 hover:scale-105 transition-all duration-200 cursor-pointer group"
+            aria-label="Recherche rapide"
+            title="Recherche rapide (cours, QCM, notions)"
+          >
+            <span className="absolute -top-0.5 -right-0.5 flex h-3 w-3">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-3 w-3 bg-white"></span>
+            </span>
+            <Search className="h-5 w-5 text-white transition-transform group-hover:rotate-12" />
+          </button>
+        )}
 
         {/* Mobile Navigation bar at screen bottom */}
         <MobileNavigation

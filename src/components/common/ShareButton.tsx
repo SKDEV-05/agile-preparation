@@ -53,10 +53,11 @@ export function ShareButton({ variant = 'minimal', className = '' }: ShareButton
     <div className="relative inline-block text-left">
       <button
         onClick={handleNativeShare}
-        className={`inline-flex items-center gap-1.5 rounded-xl border border-black/10 dark:border-white/10 bg-white dark:bg-[#0A0A0A] px-3 py-1.5 text-xs font-bold text-black dark:text-white hover:border-[#10B981]/50 hover:text-[#10B981] dark:hover:text-[#10B981] transition-all shadow-xs ${className}`}
+        className={`inline-flex items-center gap-1.5 rounded-xl border border-black/10 dark:border-white/10 bg-white dark:bg-[#0A0A0A] h-9 w-9 sm:h-auto sm:w-auto p-0 sm:px-3 sm:py-1.5 justify-center text-xs font-bold text-black dark:text-white hover:border-[#10B981]/50 hover:text-[#10B981] dark:hover:text-[#10B981] transition-all shadow-xs cursor-pointer ${className}`}
         title="Partager la plateforme avec vos collègues de classe"
+        aria-label="Partager la plateforme"
       >
-        <Share2 className="h-3.5 w-3.5 text-[#10B981]" />
+        <Share2 className="h-4 w-4 sm:h-3.5 sm:w-3.5 text-[#10B981]" />
         {variant === 'full' ? <span>Partager aux collègues</span> : <span className="hidden sm:inline">Partager</span>}
       </button>
 

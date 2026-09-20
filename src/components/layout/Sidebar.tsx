@@ -29,7 +29,7 @@ import { ThemeToggle } from '../common/ThemeToggle';
 import { InstallButton } from '../common/InstallButton';
 import { cn } from '../../lib/utils';
 import { PlatformLogo } from '../common/PlatformLogo';
-
+import { useActiveTrack } from '../../store/trackStore';
 export type ActiveView = 
   | 'curriculum-hub' 
   | 'dashboard' 
@@ -67,7 +67,20 @@ interface SidebarProps {
 }
 
 export function Sidebar({ activeView, onNavigate, isOpenMobile, onCloseMobile }: SidebarProps) {
-  const isReact = activeView.startsWith('react');
+  const [activeTrack, setActiveTrack] = useActiveTrack();
+
+  React.useEffect(() => {
+    if (activeView.startsWith('react')) {
+      setActiveTrack('react');
+    } else if (
+      activeView.startsWith('part') || 
+      ['dashboard', 'simulators', 'flashcards', 'errors', 'final-exam'].includes(activeView)
+    ) {
+      setActiveTrack('agile');
+    }
+  }, [activeView, setActiveTrack]);
+
+  const isReact = activeTrack === 'react';
   const { progress, overallPercentage } = useProgress();
   const { progress: reactProgress, overallPercentage: reactOverallPercentage } = useReactProgress();
   
@@ -139,8 +152,9 @@ export function Sidebar({ activeView, onNavigate, isOpenMobile, onCloseMobile }:
         {/* Top Logo & App Title */}
         <div className="flex items-center justify-between pb-3.5 border-b border-black/10 dark:border-white/10">
           <button
-            onClick={() => handleNav(isReact ? 'react-dashboard' : 'dashboard')}
+            onClick={() => handleNav('curriculum-hub')}
             className="flex items-center gap-3 text-left group focus:outline-none cursor-pointer"
+            title="Retour à l'accueil principal (Catalogue 2A)"
           >
             <PlatformLogo size={36} className="transition-transform group-hover:scale-105" />
             <div>
@@ -169,7 +183,11 @@ export function Sidebar({ activeView, onNavigate, isOpenMobile, onCloseMobile }:
         <div className="mt-3 space-y-1.5">
           <div className="p-1 rounded-2xl bg-black/[0.03] dark:bg-white/[0.04] border border-black/10 dark:border-white/10 flex items-center gap-1">
             <button
-              onClick={() => handleNav('dashboard')}
+              onClick={() => {
+                setActiveTrack('agile');
+                try { localStorage.setItem('fullstack2a_active_track', 'agile'); } catch (e) {}
+                handleNav('dashboard');
+              }}
               className={cn(
                 "flex-1 flex items-center justify-center gap-1.5 py-1.5 px-2 rounded-xl text-xs font-bold transition-all cursor-pointer",
                 !isReact
@@ -181,7 +199,11 @@ export function Sidebar({ activeView, onNavigate, isOpenMobile, onCloseMobile }:
               <span className="truncate">Agile</span>
             </button>
             <button
-              onClick={() => handleNav('react-dashboard')}
+              onClick={() => {
+                setActiveTrack('react');
+                try { localStorage.setItem('fullstack2a_active_track', 'react'); } catch (e) {}
+                handleNav('react-dashboard');
+              }}
               className={cn(
                 "flex-1 flex items-center justify-center gap-1.5 py-1.5 px-2 rounded-xl text-xs font-bold transition-all cursor-pointer",
                 isReact

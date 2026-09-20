@@ -9,6 +9,8 @@ import {
   ArrowRight
 } from 'lucide-react';
 import { useProgress } from '../../store/progressStore';
+import { useReactProgress } from '../../store/reactProgressStore';
+import { useActiveTrack } from '../../store/trackStore';
 import { Button } from '../../components/ui/Button';
 import { Progress } from '../../components/ui/Progress';
 import { ThemeToggle } from '../../components/common/ThemeToggle';
@@ -19,7 +21,15 @@ interface ProfileSettingsPageProps {
 }
 
 export function ProfileSettingsPage({ onBackToDashboard }: ProfileSettingsPageProps) {
+  const [activeTrack] = useActiveTrack();
+  const [selectedModule, setSelectedModule] = useState<'active' | 'agile' | 'react'>('active');
   const { progress, overallPercentage, resetAllProgress } = useProgress();
+  const { progress: reactProgress, overallPercentage: reactOverallPercentage, resetAllReactProgress } = useReactProgress();
+  
+  const currentTrack = selectedModule === 'active' ? activeTrack : selectedModule;
+  const isReactTrack = currentTrack === 'react';
+  const displayedOverallPercentage = isReactTrack ? reactOverallPercentage : overallPercentage;
+  const displayedProgress = isReactTrack ? reactProgress : progress;
   const [soundOn, setSoundOn] = useState(isSoundEnabled);
   const [examDate, setExamDate] = useState('2026-06-15');
   const [showResetConfirm, setShowResetConfirm] = useState(false);
@@ -41,7 +51,13 @@ export function ProfileSettingsPage({ onBackToDashboard }: ProfileSettingsPagePr
   const daysRemaining = calculateDaysRemaining();
 
   const handleExportData = () => {
-    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(progress, null, 2));
+    const exportPayload = {
+      track: currentTrack,
+      agileProgress: progress,
+      reactProgress: reactProgress,
+      exportedAt: new Date().toISOString()
+    };
+    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(exportPayload, null, 2));
     const downloadAnchor = document.createElement('a');
     downloadAnchor.setAttribute("href", dataStr);
     downloadAnchor.setAttribute("download", `fullstack2a_progression_${new Date().toISOString().split('T')[0]}.json`);
@@ -75,57 +91,83 @@ export function ProfileSettingsPage({ onBackToDashboard }: ProfileSettingsPagePr
             variant="outline"
             size="sm"
             onClick={onBackToDashboard}
-            className="gap-2 font-bold"
+            className="gap-2 font-bold cursor-pointer hover:border-[#10B981] hover:text-[#10B981]"
           >
-            <span>Retour au tableau de bord</span>
-            <ArrowRight className="h-4 w-4" />
+            <span>{isReactTrack ? 'Retour au tableau React' : 'Retour au tableau Agile'}</span>
+            <ArrowRight className="h-4 w-4 text-[#10B981]" />
           </Button>
         </div>
       </section>
 
-      {/* 1. Global Progress Overview */}
+      {/* 1. Global Progress Overview with Track Selector */}
       <section className="rounded-3xl border border-black/15 dark:border-white/15 bg-white dark:bg-[#0A0A0A] p-6 sm:p-8 shadow-sm space-y-6">
-        <div className="flex items-center justify-between border-b border-black/15 dark:border-white/15 pb-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-black/15 dark:border-white/15 pb-4">
           <div>
+            <div className="flex items-center gap-2 mb-1">
+              <span className="text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded-md bg-[#10B981]/15 text-[#10B981]">
+                {isReactTrack ? 'Formation React.js' : 'Formation Approche Agile'}
+              </span>
+            </div>
             <h2 className="text-lg sm:text-xl font-bold text-[#0A0A0A] dark:text-white">
               Synthèse de Maîtrise Pédagogique
             </h2>
             <p className="text-xs text-[#0A0A0A]/60 dark:text-white/60 mt-0.5">
-              Calculée en temps réel d'après tes lectures de cours et scores QCM
+              {isReactTrack
+                ? 'Progression sur les 8 modules React & Redux Toolkit'
+                : 'Progression sur les 5 parties Agile & Gestion de Projet'}
             </p>
           </div>
-          <div className="text-2xl sm:text-3xl font-black font-mono text-[#10B981]">
-            {overallPercentage}%
+
+          <div className="flex items-center gap-3">
+            {/* Toggle between Agile & React views */}
+            <div className="p-1 rounded-xl bg-black/[0.04] dark:bg-white/[0.04] border border-black/10 dark:border-white/10 flex items-center gap-1 text-xs font-bold">
+              <button
+                onClick={() => setSelectedModule('agile')}
+                className={`px-2.5 py-1 rounded-lg transition-all cursor-pointer ${!isReactTrack ? 'bg-[#10B981] text-white shadow-xs' : 'text-[#0A0A0A]/70 dark:text-white/70 hover:text-[#10B981]'}`}
+              >
+                Agile
+              </button>
+              <button
+                onClick={() => setSelectedModule('react')}
+                className={`px-2.5 py-1 rounded-lg transition-all cursor-pointer ${isReactTrack ? 'bg-[#10B981] text-white shadow-xs' : 'text-[#0A0A0A]/70 dark:text-white/70 hover:text-[#10B981]'}`}
+              >
+                React
+              </button>
+            </div>
+
+            <div className="text-2xl sm:text-3xl font-black font-mono text-[#10B981] min-w-[4rem] text-right">
+              {displayedOverallPercentage}%
+            </div>
           </div>
         </div>
 
         <div className="space-y-2">
           <div className="flex justify-between text-xs font-bold text-[#0A0A0A] dark:text-white">
-            <span>Progression globale vers l'Examen de Fin de Module</span>
-            <span>{overallPercentage} / 100%</span>
+            <span>Progression globale vers l'Examen de Fin de Module ({isReactTrack ? 'React' : 'Agile'})</span>
+            <span>{displayedOverallPercentage} / 100%</span>
           </div>
-          <Progress value={overallPercentage} className="h-2.5" />
+          <Progress value={displayedOverallPercentage} className="h-2.5" />
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
           <div className="p-3.5 rounded-2xl bg-black/[0.02] dark:bg-white/[0.02] border border-black/10 dark:border-white/10">
             <span className="text-[10px] font-mono font-bold uppercase text-[#0A0A0A]/50 dark:text-white/50">Questions erronées</span>
             <div className="text-xl font-black text-[#0A0A0A] dark:text-white mt-1 font-mono">
-              {progress.wrongQuestionIds.length}
+              {displayedProgress.wrongQuestionIds.length}
             </div>
           </div>
 
           <div className="p-3.5 rounded-2xl bg-black/[0.02] dark:bg-white/[0.02] border border-black/10 dark:border-white/10">
             <span className="text-[10px] font-mono font-bold uppercase text-[#0A0A0A]/50 dark:text-white/50">Flashcards maîtrisées</span>
             <div className="text-xl font-black text-[#10B981] mt-1 font-mono">
-              {progress.masteredFlashcards.length}
+              {displayedProgress.masteredFlashcards.length}
             </div>
           </div>
 
           <div className="p-3.5 rounded-2xl bg-black/[0.02] dark:bg-white/[0.02] border border-black/10 dark:border-white/10">
             <span className="text-[10px] font-mono font-bold uppercase text-[#0A0A0A]/50 dark:text-white/50">Tentatives d'Examen</span>
             <div className="text-xl font-black text-[#0A0A0A] dark:text-white mt-1 font-mono">
-              {progress.examAttempts.length}
+              {displayedProgress.examAttempts.length}
             </div>
           </div>
 
@@ -254,12 +296,16 @@ export function ProfileSettingsPage({ onBackToDashboard }: ProfileSettingsPagePr
               <span className="text-xs text-red-500 font-bold">Confirmer l'effacement ?</span>
               <button
                 onClick={() => {
-                  resetAllProgress();
+                  if (isReactTrack) {
+                    resetAllReactProgress();
+                  } else {
+                    resetAllProgress();
+                  }
                   setShowResetConfirm(false);
                 }}
                 className="px-2.5 py-1 rounded-lg bg-red-600 text-white text-xs font-bold cursor-pointer"
               >
-                Oui, réinitialiser
+                Oui, réinitialiser ({isReactTrack ? 'React' : 'Agile'})
               </button>
               <button
                 onClick={() => setShowResetConfirm(false)}

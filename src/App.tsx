@@ -9,6 +9,7 @@ import { useScrollReveal } from './hooks/useScrollReveal';
 import { trackPageView, analytics } from './lib/analytics';
 import { InteractiveGridBackground } from './components/common/InteractiveGridBackground';
 import { CommandPalette } from './components/common/CommandPalette';
+import { useActiveTrack } from './store/trackStore';
 
 // Lazy-load secondary views & heavy dependencies for optimal LCP/FCP
 const Dashboard = lazy(() => import('./pages/Dashboard').then(m => ({ default: m.Dashboard })));
@@ -81,10 +82,23 @@ function getUrlForView(view: ActiveView, partId?: PartId): string {
 export function App() {
   useScrollReveal();
   const [activeView, setActiveView] = useState<ActiveView>(getInitialView);
+  const [activeTrack, setActiveTrack] = useActiveTrack();
   const [quizPartId, setQuizPartId] = useState<PartId | null>(null);
   const [reactQuizModuleId, setReactQuizModuleId] = useState<ReactModuleId | null>(null);
   const [playgroundCustomCode, setPlaygroundCustomCode] = useState<string | null>(null);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+
+  // Sync active track automatically when entering track-specific views
+  useEffect(() => {
+    if (activeView.startsWith('react')) {
+      setActiveTrack('react');
+    } else if (
+      activeView.startsWith('part') || 
+      ['dashboard', 'simulators', 'flashcards', 'errors', 'final-exam'].includes(activeView)
+    ) {
+      setActiveTrack('agile');
+    }
+  }, [activeView, setActiveTrack]);
 
   // Global Ctrl+K / Cmd+K listener for Command Palette search
   useEffect(() => {
@@ -316,7 +330,11 @@ export function App() {
 
     // 4. Student Profile & Settings
     if (activeView === 'profile-settings') {
-      return <ProfileSettingsPage onBackToDashboard={() => handleNavigate('dashboard')} />;
+      return (
+        <ProfileSettingsPage 
+          onBackToDashboard={() => handleNavigate(activeTrack === 'react' ? 'react-dashboard' : 'dashboard')} 
+        />
+      );
     }
 
     // 5. Final Exam Mode (50 QCM)

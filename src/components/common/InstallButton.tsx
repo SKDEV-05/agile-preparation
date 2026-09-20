@@ -41,10 +41,11 @@ export function InstallButton({ variant = 'minimal', className = '' }: InstallBu
     <>
       <button
         onClick={() => setIsOpen(true)}
-        className={`inline-flex items-center gap-1.5 rounded-xl border border-[#10B981]/30 bg-[#10B981]/10 px-3 py-1.5 text-xs font-bold text-black dark:text-white hover:bg-[#10B981]/20 transition-all shadow-xs group ${className}`}
+        className={`inline-flex items-center gap-1.5 rounded-xl border border-[#10B981]/30 bg-[#10B981]/10 h-9 w-9 sm:h-auto sm:w-auto p-0 sm:px-3 sm:py-1.5 justify-center text-xs font-bold text-black dark:text-white hover:bg-[#10B981]/20 transition-all shadow-xs group cursor-pointer ${className}`}
         title="Installer l'application sur votre téléphone (PWA / APK)"
+        aria-label="Installer l'application"
       >
-        <Smartphone className="h-3.5 w-3.5 text-[#10B981] group-hover:scale-110 transition-transform" />
+        <Smartphone className="h-4 w-4 sm:h-3.5 sm:w-3.5 text-[#10B981] group-hover:scale-110 transition-transform" />
         {variant === 'full' ? (
           <span>Installer l'application</span>
         ) : (

@@ -2,6 +2,7 @@ import React from 'react';
 import { LayoutDashboard, BookOpen, FlaskConical, Award } from 'lucide-react';
 import { ActiveView } from './Sidebar';
 import { PartId } from '../../types';
+import { useActiveTrack } from '../../store/trackStore';
 
 interface MobileNavigationProps {
   activeView: ActiveView;
@@ -13,7 +14,10 @@ export function MobileNavigation({
   activeView,
   onNavigate
 }: MobileNavigationProps) {
-  const isReact = activeView.startsWith('react');
+  const [activeTrack] = useActiveTrack();
+  const isReact = (activeView === 'profile-settings' || activeView === 'methodology')
+    ? (activeTrack === 'react')
+    : activeView.startsWith('react');
   const isCourseActive = activeView.startsWith('part') || activeView.startsWith('react-module');
 
   const items = isReact
