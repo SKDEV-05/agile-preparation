@@ -74,11 +74,11 @@ export const coursePart4: CoursePart = {
       miniQuestion: {
         question: 'À quoi sert précisément la commande "git add" dans le cycle de travail Git ?',
         options: [
-        'Supprimer définitivement les fichiers modifiés par erreur dans le projet',
-        'Envoyer instantanément les modifications vers le serveur distant GitLab',
-        'Créer un compte utilisateur sur la plateforme cloud de l’entreprise',
-        'Placer des modifications spécifiques dans la zone d’index (Staging Area) avant le commit',
-      ],
+          'Supprimer définitivement les fichiers modifiés par erreur dans l’espace de travail local',
+          'Envoyer directement les nouveaux fichiers vers la branche principale du serveur distant',
+          'Créer une nouvelle branche de développement isolée pour accueillir les travaux en cours',
+          'Placer des modifications spécifiques dans la zone d’index (Staging Area) avant le commit',
+        ],
         correctIndex: 3,
         explanation: 'La commande `git add` prépare les changements en les indexant dans la Staging Area avant de les enregistrer dans l’historique avec `git commit`.'
       }
@@ -286,11 +286,11 @@ export const coursePart4: CoursePart = {
       miniQuestion: {
         question: 'Dans SonarQube, que désigne le concept de "Quality Gate" ?',
         options: [
-        'La liste des mots de passe des administrateurs système du projet',
-        'Un ensemble de critères de qualité indispensables qu’un projet doit valider pour être jugé livrable',
-        'La porte d’entrée sécurisée par badge du centre de données hébergeant les serveurs',
-        'Une méthode de calcul de chemin critique utilisée lors de la planification PERT',
-      ],
+          'La liste des habilitations de sécurité réservée aux administrateurs du serveur de production',
+          'Un ensemble de critères de qualité indispensables qu’un projet doit valider pour être jugé livrable',
+          'Le protocole de pare-feu réseau contrôlant l’accès physique et distant aux serveurs d’hébergement',
+          'Une méthode algorithmique d’optimisation du chemin critique issue du diagramme de réseau PERT',
+        ],
         correctIndex: 1,
         explanation: 'La Quality Gate est un ensemble d’indicateurs seuils (ex: couverture minimale, zéro vulnérabilité critique) garantissant que le code respecte les standards avant livraison.'
       }

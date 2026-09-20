@@ -429,9 +429,9 @@ export const questionsPart4: Question[] = [
     question: "Pourquoi est-il stratégique d’intégrer les contrôles de qualité SonarQube au plus tôt dans la chaîne d’intégration continue ?",
     options: [
       "Pour détecter et corriger les défauts immédiatement, réduisant ainsi drastiquement le coût de correction",
-      "Pour supprimer définitivement l’étape de recette menée avec les utilisateurs finaux",
-      "Pour obliger les ingénieurs à travailler uniquement pendant les heures de nuit",
-      "Pour interdire aux clients d’avoir accès au code source développé par l’équipe",
+      "Pour éliminer l’obligation d’exécuter la phase de recette fonctionnelle menée avec les utilisateurs finaux",
+      "Pour imposer le lancement des analyses exclusivement pendant les plages horaires nocturnes hors production",
+      "Pour empêcher contractuellement le client final d’accéder à l’historique des versions du code source développé",
     ],
     correctIndex: 0,
     explanation: "Plus un défaut est détecté tôt (idéalement dès la Merge Request), plus il est facile, rapide et économique à corriger."

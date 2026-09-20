@@ -1,74 +1,98 @@
 import React from 'react';
-import { LayoutDashboard, BookOpen, FlaskConical, Award, Menu } from 'lucide-react';
+import { LayoutDashboard, BookOpen, FlaskConical, Award } from 'lucide-react';
 import { ActiveView } from './Sidebar';
 import { PartId } from '../../types';
 
 interface MobileNavigationProps {
   activeView: ActiveView;
   onNavigate: (view: ActiveView, partId?: PartId) => void;
-  onOpenDrawer: () => void;
+  onOpenDrawer?: () => void;
 }
 
 export function MobileNavigation({
   activeView,
-  onNavigate,
-  onOpenDrawer
+  onNavigate
 }: MobileNavigationProps) {
-  const isCourseActive = activeView.startsWith('part');
+  const isReact = activeView.startsWith('react');
+  const isCourseActive = activeView.startsWith('part') || activeView.startsWith('react-module');
 
-  const items = [
-    {
-      id: 'dashboard',
-      label: 'Accueil',
-      icon: LayoutDashboard,
-      isActive: activeView === 'curriculum-hub' || activeView === 'dashboard',
-      action: () => {
-        if (activeView === 'curriculum-hub') {
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        } else {
-          onNavigate('curriculum-hub');
+  const items = isReact
+    ? [
+        {
+          id: 'dashboard',
+          label: 'React',
+          icon: LayoutDashboard,
+          isActive: activeView === 'react-dashboard',
+          action: () => onNavigate('react-dashboard')
+        },
+        {
+          id: 'courses',
+          label: 'Modules',
+          icon: BookOpen,
+          isActive: isCourseActive,
+          action: () => onNavigate('react-module1')
+        },
+        {
+          id: 'simulators',
+          label: 'Labs Live',
+          icon: FlaskConical,
+          isActive: activeView === 'react-laboratory' || activeView === 'react-playground',
+          action: () => onNavigate('react-laboratory')
+        },
+        {
+          id: 'final-exam',
+          label: 'Examen',
+          icon: Award,
+          isActive: activeView === 'react-final-exam',
+          action: () => onNavigate('react-final-exam')
         }
-      }
-    },
-    {
-      id: 'courses',
-      label: 'Cours',
-      icon: BookOpen,
-      isActive: isCourseActive,
-      action: () => {
-        const el = document.getElementById('courses-catalogue-section');
-        if (el) {
-          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        } else {
-          onNavigate('curriculum-hub');
-          setTimeout(() => {
-            document.getElementById('courses-catalogue-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          }, 150);
+      ]
+    : [
+        {
+          id: 'dashboard',
+          label: 'Accueil',
+          icon: LayoutDashboard,
+          isActive: activeView === 'curriculum-hub' || activeView === 'dashboard',
+          action: () => {
+            if (activeView === 'curriculum-hub') {
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else {
+              onNavigate('curriculum-hub');
+            }
+          }
+        },
+        {
+          id: 'courses',
+          label: 'Cours',
+          icon: BookOpen,
+          isActive: isCourseActive,
+          action: () => {
+            const el = document.getElementById('courses-catalogue-section');
+            if (el) {
+              el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            } else {
+              onNavigate('curriculum-hub');
+              setTimeout(() => {
+                document.getElementById('courses-catalogue-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }, 150);
+            }
+          }
+        },
+        {
+          id: 'simulators',
+          label: 'Pratique',
+          icon: FlaskConical,
+          isActive: activeView === 'simulators',
+          action: () => onNavigate('simulators')
+        },
+        {
+          id: 'final-exam',
+          label: 'Examen',
+          icon: Award,
+          isActive: activeView === 'final-exam',
+          action: () => onNavigate('final-exam')
         }
-      }
-    },
-    {
-      id: 'simulators',
-      label: 'Pratique',
-      icon: FlaskConical,
-      isActive: activeView === 'simulators',
-      action: () => onNavigate('simulators')
-    },
-    {
-      id: 'final-exam',
-      label: 'Examen',
-      icon: Award,
-      isActive: activeView === 'final-exam',
-      action: () => onNavigate('final-exam')
-    },
-    {
-      id: 'menu',
-      label: 'Menu',
-      icon: Menu,
-      isActive: false,
-      action: onOpenDrawer
-    }
-  ];
+      ];
 
   return (
     <nav 

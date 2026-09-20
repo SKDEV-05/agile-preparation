@@ -42,15 +42,6 @@ export function Dashboard({ onNavigate }: DashboardProps) {
   const nextPart = COURSE_PARTS.find(p => !progress.parts[p.id]?.quizCompleted) || COURSE_PARTS[0];
   const totalWrong = progress.wrongQuestionIds?.length || 0;
   
-  // Readiness label
-  const getReadinessStatus = (pct: number) => {
-    if (pct >= 85) return { label: 'Excellence EFM garantie', color: 'text-[#10B981]', desc: 'Score cible atteint pour la mention très bien.' };
-    if (pct >= 60) return { label: 'Prêt pour l’examen', color: 'text-[#22C55E]', desc: 'Bases solides, consolide avec l’examen blanc.' };
-    if (pct >= 30) return { label: 'En progression active', color: 'text-[#22C55E]', desc: 'Continue les modules et pratique sur les simulateurs.' };
-    return { label: 'Démarrage du parcours', color: 'text-[#10B981]', desc: 'Commence par la Partie 1 pour bâtir tes fondations.' };
-  };
-
-  const readiness = getReadinessStatus(overallPercentage);
 
   return (
     <div className="space-y-8 sm:space-y-12 pb-16 text-[#0A0A0A] dark:text-[#FFFFFF]">
@@ -60,7 +51,43 @@ export function Dashboard({ onNavigate }: DashboardProps) {
         <div className="absolute -right-20 -top-20 h-72 w-72 rounded-full bg-[#10B981]/15 blur-3xl pointer-events-none" />
         <div className="absolute right-20 -bottom-20 h-72 w-72 rounded-full bg-[#22C55E]/10 blur-3xl pointer-events-none" />
 
-        <div className="relative z-10 grid lg:grid-cols-12 gap-8 items-center">
+        {/* Big Brand Logo in Top Right (Desktop/Web only, hidden on mobile for clean UI) */}
+        <div className="hidden lg:block absolute right-8 top-8 xl:right-12 xl:top-8 z-0 pointer-events-none select-none opacity-80 dark:opacity-90">
+          <div className="relative animate-watermark-float">
+            <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-[#10B981]/25 to-[#22C55E]/30 blur-2xl scale-125" />
+            <svg
+              width="210"
+              height="210"
+              viewBox="0 0 100 100"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              className="text-[#10B981] drop-shadow-[0_8px_32px_rgba(16,185,129,0.35)]"
+              aria-hidden="true"
+            >
+              <defs>
+                <linearGradient id="agileHeroWatermarkGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="#22C55E" />
+                  <stop offset="100%" stopColor="#10B981" />
+                </linearGradient>
+              </defs>
+              <path
+                d="M 50 16 A 34 34 0 1 1 20 68"
+                stroke="url(#agileHeroWatermarkGrad)"
+                strokeWidth="7"
+                strokeLinecap="round"
+              />
+              <polygon
+                points="50,6 64,19 47,26"
+                fill="url(#agileHeroWatermarkGrad)"
+              />
+              <circle cx="50" cy="50" r="12" fill="url(#agileHeroWatermarkGrad)" fillOpacity="0.2" />
+              <circle cx="50" cy="50" r="6" fill="url(#agileHeroWatermarkGrad)" />
+              <circle cx="50" cy="50" r="2.5" fill="#FFFFFF" />
+            </svg>
+          </div>
+        </div>
+
+        <div className="relative z-10 grid lg:grid-cols-12 gap-8 items-stretch">
           <div className="lg:col-span-8 space-y-4">
             <div className="inline-flex items-center gap-2 rounded-full bg-[#10B981]/10 border border-[#10B981]/30 px-3.5 py-1.5 text-xs font-mono font-bold text-[#10B981]">
               <Sparkles className="h-3.5 w-3.5 text-[#10B981]" />
@@ -134,39 +161,40 @@ export function Dashboard({ onNavigate }: DashboardProps) {
             </div>
           </div>
 
-          {/* Right Readiness Card */}
-          <div className="lg:col-span-4 rounded-2xl border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.02] p-5 sm:p-6 flex flex-col justify-between space-y-4">
-            <div>
+          {/* Right Column: Progression Card in Bottom Right (Sleek matching React) */}
+          <div className="lg:col-span-4 flex flex-col justify-end h-full pt-6 lg:pt-20 space-y-4 relative z-10">
+            {/* Global Mastery Card (Bottom Right) */}
+            <div className="rounded-2xl border border-[#10B981]/30 bg-white/90 dark:bg-[#0A0A0A]/90 backdrop-blur-xl p-5 space-y-3 shadow-xl">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-mono uppercase tracking-wider text-[#0A0A0A]/60 dark:text-white/60 font-bold">
-                  Niveau de Préparation
+                <span className="flex items-center gap-1.5 text-xs font-mono font-bold text-[#10B981]">
+                  <Sparkles className="h-3.5 w-3.5" />
+                  <span>Maîtrise Globale Agile</span>
                 </span>
-                <span className="text-[10px] font-mono px-2.5 py-0.5 rounded-full bg-[#10B981]/15 text-[#10B981] font-bold border border-[#10B981]/30">
-                  Temps Réel
-                </span>
-              </div>
-              <div className="mt-3 flex items-baseline gap-2">
-                <span className="text-4xl sm:text-5xl font-black font-mono text-[#10B981] tracking-tight">
+                <span className="text-xl font-black font-mono text-[#10B981]">
                   {overallPercentage}%
                 </span>
-                <span className="text-xs font-bold text-[#0A0A0A]/50 dark:text-white/50">/ 100%</span>
               </div>
-              <Progress value={overallPercentage} className="h-2 mt-3" />
-              
-              <div className="mt-4 pt-3 border-t border-black/10 dark:border-white/10">
-                <div className={`text-xs font-bold ${readiness.color}`}>
-                  {readiness.label}
-                </div>
-                <p className="text-[11px] text-[#0A0A0A]/60 dark:text-white/60 mt-0.5 leading-relaxed">
-                  {readiness.desc}
-                </p>
+
+              {/* Progress bar */}
+              <div className="h-2 w-full bg-black/10 dark:bg-white/10 rounded-full overflow-hidden">
+                <div
+                  className="h-full bg-gradient-to-r from-[#10B981] to-[#22C55E] transition-all duration-500 rounded-full"
+                  style={{ width: `${overallPercentage}%` }}
+                />
+              </div>
+
+              <div className="text-[11px] text-[#0A0A0A]/60 dark:text-white/60 font-mono flex justify-between pt-1">
+                <span>Parties assimilées</span>
+                <span>
+                  {COURSE_PARTS.filter(p => progress.parts[p.id]?.quizCompleted).length} / {COURSE_PARTS.length}
+                </span>
               </div>
             </div>
 
             {totalWrong > 0 && (
               <div 
                 onClick={() => onNavigate('errors')} 
-                className="rounded-xl border border-[#22C55E]/30 bg-[#22C55E]/10 p-3 flex items-center justify-between cursor-pointer hover:bg-[#22C55E]/15 transition-all text-xs"
+                className="rounded-2xl border border-[#22C55E]/30 bg-[#22C55E]/10 backdrop-blur-md p-3.5 flex items-center justify-between cursor-pointer hover:bg-[#22C55E]/15 transition-all text-xs"
               >
                 <div className="flex items-center gap-2 text-[#0A0A0A] dark:text-white font-bold">
                   <AlertTriangle className="h-4 w-4 text-[#22C55E] shrink-0" />

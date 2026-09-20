@@ -87,32 +87,34 @@ export function FlashcardsPage() {
           Clique sur la carte pour la retourner et vérifier tes connaissances. Utilise les touches <kbd className="font-mono text-[10px] bg-black/10 dark:bg-white/10 px-1.5 py-0.5 rounded">Espace</kbd> pour retourner, <kbd className="font-mono text-[10px] bg-black/10 dark:bg-white/10 px-1.5 py-0.5 rounded">←</kbd> <kbd className="font-mono text-[10px] bg-black/10 dark:bg-white/10 px-1.5 py-0.5 rounded">→</kbd> pour naviguer, et <kbd className="font-mono text-[10px] bg-black/10 dark:bg-white/10 px-1.5 py-0.5 rounded">M</kbd> pour marquer comme acquise.
         </p>
 
-        {/* Filter bar */}
-        <div className="relative z-10 mt-6 flex overflow-x-auto no-scrollbar sm:flex-wrap items-center gap-2 border-t border-black/10 dark:border-white/10 pt-4 pb-1 sm:pb-0">
-          <span className="text-xs font-mono font-bold text-[#0A0A0A]/60 dark:text-white/60 mr-2 shrink-0">Filtrer par module :</span>
-          <button
-            onClick={() => { setSelectedPartFilter('all'); setActiveCardIndex(0); }}
-            className={`shrink-0 rounded-xl px-3 py-1.5 text-xs font-mono font-bold transition-all cursor-pointer ${
-              selectedPartFilter === 'all' 
-                ? 'bg-[#10B981] text-white shadow-2xs' 
-                : 'bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-[#0A0A0A] dark:text-white hover:border-[#10B981]'
-            }`}
-          >
-            Toutes ({FLASHCARDS.length})
-          </button>
-          {['part1', 'part2', 'part3', 'part4', 'part5'].map((pid, idx) => (
+        {/* Filter bar - Edge-to-edge full bleed on mobile */}
+        <div className="relative z-10 mt-6 -mx-4 px-4 sm:mx-0 sm:px-0 border-t border-black/10 dark:border-white/10 pt-4">
+          <div className="flex overflow-x-auto no-scrollbar sm:flex-wrap items-center gap-2 pb-1 sm:pb-0 scroll-smooth pr-6 sm:pr-0">
+            <span className="text-xs font-mono font-bold text-[#0A0A0A]/60 dark:text-white/60 mr-2 shrink-0">Filtrer par module :</span>
             <button
-              key={pid}
-              onClick={() => { setSelectedPartFilter(pid); setActiveCardIndex(0); }}
+              onClick={() => { setSelectedPartFilter('all'); setActiveCardIndex(0); }}
               className={`shrink-0 rounded-xl px-3 py-1.5 text-xs font-mono font-bold transition-all cursor-pointer ${
-                selectedPartFilter === pid 
+                selectedPartFilter === 'all' 
                   ? 'bg-[#10B981] text-white shadow-2xs' 
                   : 'bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-[#0A0A0A] dark:text-white hover:border-[#10B981]'
               }`}
             >
-              Partie {idx + 1}
+              Toutes ({FLASHCARDS.length})
             </button>
-          ))}
+            {['part1', 'part2', 'part3', 'part4', 'part5'].map((pid, idx) => (
+              <button
+                key={pid}
+                onClick={() => { setSelectedPartFilter(pid); setActiveCardIndex(0); }}
+                className={`shrink-0 rounded-xl px-3 py-1.5 text-xs font-mono font-bold transition-all cursor-pointer ${
+                  selectedPartFilter === pid 
+                    ? 'bg-[#10B981] text-white shadow-2xs' 
+                    : 'bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-[#0A0A0A] dark:text-white hover:border-[#10B981]'
+                }`}
+              >
+                Partie {idx + 1}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 

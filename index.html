@@ -2,31 +2,53 @@
 <html lang="fr" class="h-full scroll-smooth">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="alternate icon" type="image/png" href="/favicon.png" />
+    <!-- Google Favicon Standards: 48x48 PNG and ICO for Googlebot-Favicon -->
+    <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png?v=20260920" />
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon.png?v=20260920" />
+    <link rel="shortcut icon" href="/favicon.ico?v=20260920" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=20260920" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=20260920" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
     
-    <link rel="canonical" href="https://fullstack-2a.vercel.app/" />
+    <link rel="canonical" id="canonical-url" href="https://fullstack-2a.vercel.app/" />
+    <script>
+      (function() {
+        try {
+          var c = document.getElementById('canonical-url');
+          if (c && window.location.pathname && window.location.pathname !== '/') {
+            c.href = 'https://fullstack-2a.vercel.app' + window.location.pathname.replace(/\/+$/, '');
+          }
+        } catch(e) {}
+      })();
+    </script>
     <meta name="google-site-verification" content="GkvWvEdkJrUa5337pXU8WUQxBni0rRLZL6mWUMX7eTk" />
     
     <!-- PWA & Mobile Web App Meta -->
-    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="manifest" href="/manifest.webmanifest?v=20260920" />
+    <meta name="theme-color" content="#0A0A0A" />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-title" content="FullStack 2A" />
-    <link rel="apple-touch-icon" href="/favicon.png" />
 
-    <!-- Structured Data (JSON-LD) for Google Rich Snippets -->
+    <!-- Babel Standalone for Instant Live React/JSX Syntax Checking across all Mini VS Code editors -->
+    <script src="https://unpkg.com/@babel/standalone@7.26.4/babel.min.js" crossorigin="anonymous"></script>
+
+    <!-- Structured Data (JSON-LD) for Google Rich Snippets & Official Site Name -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@graph": [
         {
-          "@type": "EducationalWebSite",
+          "@type": "WebSite",
           "@id": "https://fullstack-2a.vercel.app/#website",
           "url": "https://fullstack-2a.vercel.app/",
-          "name": "FullStack Master · 2ème Année Développement Digital",
+          "name": "FullStack 2A",
+          "alternateName": [
+            "FullStack Master",
+            "FullStack2A",
+            "FullStack 2A OFPPT"
+          ],
           "description": "Plateforme d'excellence pour préparer et réussir les examens OFPPT Développement Digital : QCM corrigés, simulateurs PERT/Gantt et cours complets.",
           "inLanguage": "fr-FR",
           "publisher": {
@@ -46,8 +68,8 @@
         {
           "@type": "Course",
           "@id": "https://fullstack-2a.vercel.app/#course-agile",
-          "name": "Approche Agile & Gestion de Projet (M201)",
-          "description": "Préparation complète au module M201 : Fondamentaux cycle de vie, planification PERT/Gantt, framework Scrum, Jira, Git GitLab et DevOps CI/CD.",
+          "name": "Approche Agile & Gestion de Projet",
+          "description": "Préparation complète : Fondamentaux cycle de vie, planification PERT/Gantt, framework Scrum, Jira, Git GitLab et DevOps CI/CD.",
           "provider": {
             "@id": "https://fullstack-2a.vercel.app/#website"
           },
@@ -61,7 +83,7 @@
         {
           "@type": "Quiz",
           "@id": "https://fullstack-2a.vercel.app/#quiz-final-exam",
-          "name": "Examen Blanc Officiel M201 Agile",
+          "name": "Examen Blanc Officiel Approche Agile",
           "educationalLevel": "Examen Fin de Module OFPPT",
           "timeRequired": "PT45M",
           "numberOfQuestions": 50,
@@ -93,31 +115,31 @@
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://fullstack-2a.vercel.app/" />
-    <meta property="og:title" content="FullStack Master · Réussir sa 2ème Année OFPPT" />
-    <meta property="og:description" content="200 QCM officiels, cours interactifs et simulateurs pour réussir le cursus Développement Digital." />
-    <meta property="og:image" content="https://fullstack-2a.vercel.app/og-image.png" />
-    <meta property="og:image:secure_url" content="https://fullstack-2a.vercel.app/og-image.png" />
+    <meta property="og:title" content="FullStack 2A · 2ème Année Développement Digital OFPPT" />
+    <meta property="og:description" content="Plateforme d'excellence : Approche Agile, React.js Moderne, 320+ questions corrigées, simulateurs PERT/Gantt et laboratoires de code en direct." />
+    <meta property="og:image" content="https://fullstack-2a.vercel.app/og-image.png?v=20260920" />
+    <meta property="og:image:secure_url" content="https://fullstack-2a.vercel.app/og-image.png?v=20260920" />
     <meta property="og:image:type" content="image/png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="FullStack Master - 2ème Année Développement Digital OFPPT" />
+    <meta property="og:image:alt" content="FullStack 2A - 2ème Année Développement Digital OFPPT" />
     <meta property="og:locale" content="fr_FR" />
-    <meta property="og:site_name" content="FullStack Master" />
+    <meta property="og:site_name" content="FullStack 2A" />
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="FullStack Master · 2ème Année OFPPT" />
-    <meta name="twitter:description" content="Préparez vos examens avec 200 QCM corrigés et simulateurs interactifs pour développeurs web." />
-    <meta name="twitter:image" content="https://fullstack-2a.vercel.app/og-image.png" />
-    <meta name="twitter:image:alt" content="FullStack Master - 2ème Année Développement Digital OFPPT" />
+    <meta name="twitter:title" content="FullStack 2A · 2ème Année OFPPT" />
+    <meta name="twitter:description" content="Entraînement officiel : Approche Agile, React.js, 320+ QCM corrigés et simulateurs interactifs." />
+    <meta name="twitter:image" content="https://fullstack-2a.vercel.app/og-image.png?v=20260920" />
+    <meta name="twitter:image:alt" content="FullStack 2A - 2ème Année Développement Digital OFPPT" />
     <meta name="twitter:creator" content="@saadkorma_dev" />
 
     <!-- Google Fonts Non-Blocking with Preconnect -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800;900&family=Inter:wght@400;500;600&display=swap" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'">
     <noscript>
-      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800;900&family=Inter:wght@400;500;600&display=swap">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600;700&display=swap">
     </noscript>
 
     <!-- Instant Anti-FOUC (Flash of Unstyled Color) Script -->
@@ -316,7 +338,7 @@
             </div>
             <div>
               <span class="font-black text-[var(--crit-text)] text-sm sm:text-base tracking-tight">
-                FULLSTACK <span style="background: linear-gradient(135deg, #10B981, #14B8A6); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">2A</span>
+                FULLSTACK <span style="background: linear-gradient(135deg, #10B981, #22C55E); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">2A</span>
               </span>
               <span class="hidden sm:inline-block ml-2 text-xs font-mono font-bold opacity-70">· 2ème Année OFPPT</span>
             </div>
@@ -343,7 +365,7 @@
                 </div>
                 <div class="space-y-2">
                   <h1 class="text-4xl sm:text-6xl lg:text-6xl font-black tracking-tight text-[var(--crit-text)] leading-[1.08]">
-                    FULLSTACK <span style="background: linear-gradient(135deg, #10B981, #14B8A6); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">2A</span>
+                    FULLSTACK <span style="background: linear-gradient(135deg, #10B981, #22C55E); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">2A</span>
                   </h1>
                   <p class="text-base sm:text-xl font-bold text-[var(--crit-text)] opacity-85 tracking-tight">
                     Plateforme de préparation — 2ème année Full Stack OFPPT
@@ -356,10 +378,41 @@
                 </p>
               </div>
             </section>
-          </div>
         </main>
       </div>
     </div>
+    <!-- Fallback Search Engine Crawler Links (Googlebot HTML extraction) -->
+    <noscript>
+      <nav aria-label="Index des cours pour moteurs de recherche" style="padding: 20px; font-family: sans-serif;">
+        <h2>Index de révision FullStack 2A (Développement Digital OFPPT)</h2>
+        <ul>
+          <li><a href="/agile">Approche Agile &amp; Gestion de Projet (Tableau de bord)</a></li>
+          <li><a href="/course/part1">Partie 1 : Fondamentaux &amp; Cycle de Vie Logiciel</a></li>
+          <li><a href="/course/part2">Partie 2 : Planifier un projet · Réseau PERT &amp; Gantt</a></li>
+          <li><a href="/course/part3">Partie 3 : Méthode Agile, Framework Scrum &amp; Jira</a></li>
+          <li><a href="/course/part4">Partie 4 : Architecture Git 4 Zones, GitLab &amp; SonarQube</a></li>
+          <li><a href="/course/part5">Partie 5 : Culture DevOps &amp; Pipelines CI/CD</a></li>
+          <li><a href="/simulators">5 Simulateurs Pratiques (Calcul PERT, Gantt, Git, Pipeline CI/CD)</a></li>
+          <li><a href="/flashcards">Flashcards 3D de Mémorisation Rapide</a></li>
+          <li><a href="/final-exam">Examen Blanc EFM (50 Questions Corrigées)</a></li>
+          <li><a href="/methodology">Guide Méthodologique de Révision</a></li>
+          <li><a href="/react">Formation React.js &amp; Redux Toolkit (Programme Officiel 8 Modules)</a></li>
+          <li><a href="/react/module1">Module 1 : Architecture Web &amp; SPA</a></li>
+          <li><a href="/react/module2">Module 2 : JavaScript Moderne ES6+</a></li>
+          <li><a href="/react/module3">Module 3 : React &amp; Virtual DOM</a></li>
+          <li><a href="/react/module4">Module 4 : Composants, Props &amp; State</a></li>
+          <li><a href="/react/module5">Module 5 : Styles &amp; Cycle de Vie</a></li>
+          <li><a href="/react/module6">Module 6 : Routage &amp; Tests RTL/Jest</a></li>
+          <li><a href="/react/module7">Module 7 : Redux Fondamentaux</a></li>
+          <li><a href="/react/module8">Module 8 : Redux Toolkit &amp; Thunk</a></li>
+          <li><a href="/react-playground">Code Playground React en Direct</a></li>
+          <li><a href="/react-laboratory">Laboratoire Pratique React (7 Ateliers)</a></li>
+          <li><a href="/react-flashcards">Flashcards 3D React &amp; Redux</a></li>
+          <li><a href="/react-final-exam">Examen Blanc React EFM (40 QCM)</a></li>
+        </ul>
+      </nav>
+    </noscript>
+
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

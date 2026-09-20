@@ -6,6 +6,7 @@ import { PartId } from '../../types';
 import { ShareButton } from '../common/ShareButton';
 import { ThemeToggle } from '../common/ThemeToggle';
 import { MobileNavigation } from './MobileNavigation';
+import { PlatformLogo } from '../common/PlatformLogo';
 
 const Sidebar = React.lazy(() => import('./Sidebar').then(m => ({ default: m.Sidebar })));
 const Header = React.lazy(() => import('./Header').then(m => ({ default: m.Header })));
@@ -38,9 +39,7 @@ export function Layout({
               className="flex items-center gap-2.5 sm:gap-3 hover:opacity-85 transition-opacity cursor-pointer text-left"
               title="Retour aux modules 2A"
             >
-              <div className="h-8.5 w-8.5 sm:h-9 sm:w-9 rounded-xl overflow-hidden border border-black/15 dark:border-white/15 shadow-2xs shrink-0">
-                <img src="/logo.webp" alt="FullStack Master Logo" width={36} height={36} fetchPriority="high" loading="eager" decoding="async" className="h-full w-full object-cover" />
-              </div>
+              <PlatformLogo size={32} />
               <div className="flex items-baseline gap-2">
                 <span className="font-handwriting text-2xl sm:text-3xl font-black text-[#0A0A0A] dark:text-white tracking-wide leading-none">
                   FullStack <span className="text-[#10B981]">2A</span>
@@ -77,8 +76,8 @@ export function Layout({
             <ShareButton variant="minimal" />
             <span className="rounded-full bg-[#10B981] px-2 sm:px-3 py-0.5 sm:py-1 text-[11px] sm:text-xs font-bold text-white flex items-center gap-1.5 shrink-0">
               <span className="h-1.5 w-1.5 rounded-full bg-white animate-pulse"></span>
-              <span className="hidden sm:inline">1 Module Actif</span>
-              <span className="sm:hidden">Agile</span>
+              <span className="hidden sm:inline">2 Formations Ouvertes</span>
+              <span className="sm:hidden">2 Ouvertes</span>
             </span>
           </div>
         </header>

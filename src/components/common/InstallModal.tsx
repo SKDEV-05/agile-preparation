@@ -13,7 +13,10 @@ import {
   Zap,
   WifiOff,
   Sparkles,
-  Info
+  Info,
+  AlertCircle,
+  Copy,
+  Check
 } from 'lucide-react';
 
 interface InstallModalProps {
@@ -22,9 +25,16 @@ interface InstallModalProps {
 }
 
 export function InstallModal({ open, onOpenChange }: InstallModalProps) {
-  const { hasNativePrompt, isIOS, isInstalled, promptInstall } = usePWAInstall();
+  const { hasNativePrompt, isIOS, isAndroid, isInAppBrowser, isInstalled, promptInstall } = usePWAInstall();
   const [activeTab, setActiveTab] = useState<'phone' | 'apk'>('phone');
   const [isInstalling, setIsInstalling] = useState(false);
+  const [copiedLink, setCopiedLink] = useState(false);
+
+  const handleCopyLink = () => {
+    navigator.clipboard.writeText('https://fullstack-2a.vercel.app');
+    setCopiedLink(true);
+    setTimeout(() => setCopiedLink(false), 2000);
+  };
 
   const handleInstallClick = async () => {
     setIsInstalling(true);
@@ -93,6 +103,27 @@ export function InstallModal({ open, onOpenChange }: InstallModalProps) {
         {/* Content: Phone Tab */}
         {activeTab === 'phone' && (
           <div className="space-y-3.5">
+            {/* In-App Browser Warning (Instagram, WhatsApp, TikTok, etc.) */}
+            {isInAppBrowser && (
+              <div className="p-3.5 rounded-2xl border border-[#22C55E]/40 bg-[#22C55E]/10 text-xs text-black dark:text-white space-y-2">
+                <div className="font-bold text-[#22C55E] flex items-center gap-1.5">
+                  <AlertCircle className="h-4 w-4 shrink-0" />
+                  <span>Navigateur intégré détecté (Instagram / WhatsApp)</span>
+                </div>
+                <p className="text-black/75 dark:text-white/75 leading-relaxed text-[11px]">
+                  Les navigateurs intégrés bloquent l'ajout à l'écran d'accueil. Ouvrez le site dans votre navigateur par défaut (<strong>Safari</strong> sur iPhone ou <strong>Chrome</strong> sur Android).
+                </p>
+                <button
+                  type="button"
+                  onClick={handleCopyLink}
+                  className="w-full flex items-center justify-center gap-2 py-1.5 px-3 rounded-xl bg-white dark:bg-[#141414] border border-black/10 dark:border-white/10 text-xs font-mono font-bold text-[#10B981] hover:bg-black/5 dark:hover:bg-white/5 transition-colors cursor-pointer"
+                >
+                  {copiedLink ? <Check className="h-3.5 w-3.5 text-[#10B981]" /> : <Copy className="h-3.5 w-3.5" />}
+                  <span>{copiedLink ? '✓ Lien copié ! Collez-le dans Safari/Chrome' : 'Copier le lien du site'}</span>
+                </button>
+              </div>
+            )}
+
             {isInstalled ? (
               <div className="rounded-2xl border border-[#10B981]/30 bg-[#10B981]/10 p-4 text-black dark:text-white text-center">
                 <CheckCircle2 className="h-8 w-8 mx-auto mb-2 text-[#10B981]" />
@@ -125,73 +156,111 @@ export function InstallModal({ open, onOpenChange }: InstallModalProps) {
             ) : isIOS ? (
               /* iOS Instructions */
               <div className="space-y-2.5">
-                <div className="rounded-2xl border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 p-3 text-xs">
+                <div className="rounded-2xl border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 p-3.5 text-xs">
                   <div className="font-bold text-black dark:text-white mb-2 flex items-center gap-1.5">
                     <Info className="h-4 w-4 text-[#10B981]" />
-                    Sur iPhone / iPad (Safari) :
+                    <span>Sur iPhone &amp; iPad (Safari officiel requis) :</span>
                   </div>
-                  <ol className="space-y-2 text-black/70 dark:text-white/70">
-                    <li className="flex items-start gap-2">
-                      <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#10B981]/10 text-[#10B981] font-bold text-[11px]">
+                  <ol className="space-y-2.5 text-black/80 dark:text-white/80">
+                    <li className="flex items-start gap-2.5">
+                      <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#10B981] text-white font-bold text-[11px] shadow-2xs">
                         1
                       </span>
                       <span>
-                        Appuyez sur le bouton <strong>Partager</strong> <Share className="inline h-3.5 w-3.5 mx-1 text-[#10B981]" /> en bas de l'écran Safari.
+                        Appuyez sur le bouton <strong>Partager</strong> <Share className="inline h-3.5 w-3.5 mx-1 text-[#10B981]" /> en bas de l'écran dans Safari.
                       </span>
                     </li>
-                    <li className="flex items-start gap-2">
-                      <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#10B981]/10 text-[#10B981] font-bold text-[11px]">
+                    <li className="flex items-start gap-2.5">
+                      <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#10B981] text-white font-bold text-[11px] shadow-2xs">
                         2
                       </span>
                       <span>
-                        Faites défiler la liste et appuyez sur <strong className="text-black dark:text-white">« Sur l'écran d'accueil »</strong> <PlusSquare className="inline h-3.5 w-3.5 mx-1 text-[#10B981]" />.
+                        <strong>Faites défiler la liste vers le bas</strong> (sous les contacts/apps) et touchez <strong className="text-black dark:text-white">« Sur l'écran d'accueil »</strong> <PlusSquare className="inline h-3.5 w-3.5 mx-1 text-[#10B981]" />.
                       </span>
                     </li>
-                    <li className="flex items-start gap-2">
-                      <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#10B981]/10 text-[#10B981] font-bold text-[11px]">
+                    <li className="flex items-start gap-2.5">
+                      <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#10B981] text-white font-bold text-[11px] shadow-2xs">
                         3
                       </span>
                       <span>
-                        Touchez <strong>« Ajouter »</strong> en haut à droite. L'icône apparaîtra comme une véritable application native !
+                        Touchez <strong>« Ajouter »</strong> en haut à droite. L'icône apparaît sur votre écran d'accueil !
                       </span>
                     </li>
                   </ol>
+
+                  {/* Troubleshooting Alert if user doesn't see the option */}
+                  <div className="mt-3 pt-3 border-t border-black/10 dark:border-white/10 space-y-1.5 text-[11px] text-black/70 dark:text-white/70">
+                    <div className="font-bold text-[#10B981] flex items-center gap-1">
+                      <span>💡 Vous ne voyez pas « Sur l'écran d'accueil » ?</span>
+                    </div>
+                    <p className="leading-relaxed">
+                      • <strong>Depuis WhatsApp / Telegram ?</strong> Le navigateur intégré bloque l'option. Touchez l'icône Boussole 🧭 en bas ou copiez le lien pour l'ouvrir dans <strong>Safari</strong>.<br/>
+                      • <strong>Dans Safari :</strong> Faites défiler tout en bas du menu Partager et touchez <em>« Modifier les actions... »</em> pour activer l'option.
+                    </p>
+                    <button
+                      type="button"
+                      onClick={handleCopyLink}
+                      className="w-full mt-2 flex items-center justify-center gap-2 py-1.5 px-3 rounded-xl bg-white dark:bg-[#141414] border border-black/10 dark:border-white/10 text-xs font-mono font-bold text-[#10B981] hover:bg-black/5 dark:hover:bg-white/5 transition-colors cursor-pointer"
+                    >
+                      {copiedLink ? <Check className="h-3.5 w-3.5 text-[#10B981]" /> : <Copy className="h-3.5 w-3.5" />}
+                      <span>{copiedLink ? '✓ Lien copié ! Ouvrez Safari et collez-le' : 'Copier le lien pour Safari'}</span>
+                    </button>
+                  </div>
                 </div>
               </div>
             ) : (
               /* Android Chrome Instructions */
               <div className="space-y-2.5">
-                <div className="rounded-2xl border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 p-3 text-xs">
+                <div className="rounded-2xl border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 p-3.5 text-xs">
                   <div className="font-bold text-black dark:text-white mb-2 flex items-center gap-1.5">
                     <Info className="h-4 w-4 text-[#10B981]" />
-                    Sur Android (Chrome / Samsung Internet) :
+                    <span>Sur Android (Google Chrome / Samsung Internet) :</span>
                   </div>
-                  <ol className="space-y-2 text-black/70 dark:text-white/70">
-                    <li className="flex items-start gap-2">
-                      <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#10B981]/10 text-[#10B981] font-bold text-[11px]">
+                  <ol className="space-y-2.5 text-black/80 dark:text-white/80">
+                    <li className="flex items-start gap-2.5">
+                      <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#10B981] text-white font-bold text-[11px] shadow-2xs">
                         1
                       </span>
                       <span>
-                        Ouvrez le menu du navigateur en appuyant sur les <strong>trois points (⋮)</strong> en haut à droite.
+                        Appuyez sur le menu des <strong>trois points (⋮)</strong> en haut à droite de Chrome.
                       </span>
                     </li>
-                    <li className="flex items-start gap-2">
-                      <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#10B981]/10 text-[#10B981] font-bold text-[11px]">
+                    <li className="flex items-start gap-2.5">
+                      <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#10B981] text-white font-bold text-[11px] shadow-2xs">
                         2
                       </span>
                       <span>
                         Sélectionnez <strong className="text-black dark:text-white">« Installer l'application »</strong> ou <strong>« Ajouter à l'écran d'accueil »</strong>.
                       </span>
                     </li>
-                    <li className="flex items-start gap-2">
-                      <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#10B981]/10 text-[#10B981] font-bold text-[11px]">
+                    <li className="flex items-start gap-2.5">
+                      <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#10B981] text-white font-bold text-[11px] shadow-2xs">
                         3
                       </span>
                       <span>
-                        Validez. L'application est installée sans passer par le Play Store !
+                        Validez. L'icône est immédiatement épinglée à vos applications !
                       </span>
                     </li>
                   </ol>
+
+                  {/* Troubleshooting Alert if user doesn't see the option */}
+                  <div className="mt-3 pt-3 border-t border-black/10 dark:border-white/10 space-y-1.5 text-[11px] text-black/70 dark:text-white/70">
+                    <div className="font-bold text-[#10B981] flex items-center gap-1">
+                      <span>💡 Vous ne voyez pas « Ajouter à l'écran d'accueil » ?</span>
+                    </div>
+                    <p className="leading-relaxed">
+                      • <strong>Depuis WhatsApp / Telegram ?</strong> Touchez les 3 points (⋮) en haut et appuyez sur <em>« Ouvrir dans Chrome »</em>.<br/>
+                      • Vous pouvez aussi télécharger directement le fichier <strong>.APK Android</strong> dans l'onglet ci-dessus.
+                    </p>
+                    <button
+                      type="button"
+                      onClick={handleCopyLink}
+                      className="w-full mt-2 flex items-center justify-center gap-2 py-1.5 px-3 rounded-xl bg-white dark:bg-[#141414] border border-black/10 dark:border-white/10 text-xs font-mono font-bold text-[#10B981] hover:bg-black/5 dark:hover:bg-white/5 transition-colors cursor-pointer"
+                    >
+                      {copiedLink ? <Check className="h-3.5 w-3.5 text-[#10B981]" /> : <Copy className="h-3.5 w-3.5" />}
+                      <span>{copiedLink ? '✓ Lien copié ! Ouvrez Chrome et collez-le' : 'Copier le lien pour Google Chrome'}</span>
+                    </button>
+                  </div>
                 </div>
               </div>
             )}

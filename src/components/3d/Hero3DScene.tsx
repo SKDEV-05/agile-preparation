@@ -124,7 +124,7 @@ export function Hero3DScene() {
               <div className="flex items-center justify-between pb-1.5 border-b border-black/10 dark:border-white/10">
                 <div className="flex items-center gap-1.5">
                   <Code2 className="h-3.5 w-3.5 text-[#10B981]" />
-                  <span className="text-xs font-mono font-bold text-[#10B981] uppercase">Module M202 · React</span>
+                  <span className="text-xs font-mono font-bold text-[#10B981] uppercase">React.js &amp; Front-End</span>
                 </div>
                 <span className="text-[10px] font-mono font-bold bg-[#10B981]/15 text-[#10B981] px-2 py-0.5 rounded-md border border-[#10B981]/30">
                   Virtual DOM
@@ -164,7 +164,7 @@ export function Hero3DScene() {
               <div className="flex items-center justify-between pb-2 border-b border-black/10 dark:border-white/10">
                 <div className="flex items-center gap-2">
                   <Server className="h-3.5 w-3.5 text-[#22C55E]" />
-                  <span className="text-xs font-mono font-bold text-[#22C55E] uppercase">Module M203 · Laravel API REST</span>
+                  <span className="text-xs font-mono font-bold text-[#22C55E] uppercase">Laravel &amp; API REST</span>
                 </div>
                 <span className="text-[10px] font-mono font-bold bg-[#22C55E]/15 text-[#22C55E] px-2 py-0.5 rounded-md border border-[#22C55E]/30">
                   HTTP 200 OK · 18ms
@@ -192,7 +192,7 @@ export function Hero3DScene() {
               <div className="flex items-center justify-between pb-1.5 border-b border-black/10 dark:border-white/10">
                 <div className="flex items-center gap-1.5">
                   <Database className="h-3.5 w-3.5 text-[#10B981]" />
-                  <span className="text-xs font-mono font-bold text-[#10B981] uppercase">Module M204 · SGBD</span>
+                  <span className="text-xs font-mono font-bold text-[#10B981] uppercase">SGBD &amp; SQL Avancé</span>
                 </div>
                 <span className="text-[10px] font-mono font-bold bg-[#10B981]/15 text-[#10B981] px-2 py-0.5 rounded-md border border-[#10B981]/30">
                   ACID
@@ -209,17 +209,17 @@ export function Hero3DScene() {
               {/* Data Table Result Preview */}
               <div className="rounded-2xl border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.02] p-2.5 font-mono text-[10px]">
                 <div className="grid grid-cols-3 text-[#0A0A0A]/50 dark:text-white/50 pb-1 border-b border-black/10 dark:border-white/10 font-bold">
-                  <span>MODULE</span>
+                  <span>FORMATION</span>
                   <span>STATUT</span>
                   <span className="text-right">RÉSULTAT</span>
                 </div>
                 <div className="grid grid-cols-3 pt-1 text-[#10B981] font-semibold">
-                  <span>M201 Agile</span>
+                  <span>Agile &amp; DevOps</span>
                   <span>Validé</span>
                   <span className="text-right">18.5/20</span>
                 </div>
                 <div className="grid grid-cols-3 pt-0.5 text-[#22C55E] font-semibold">
-                  <span>M202 React</span>
+                  <span>React &amp; Redux</span>
                   <span>Validé</span>
                   <span className="text-right">17.0/20</span>
                 </div>
@@ -233,7 +233,7 @@ export function Hero3DScene() {
               <div className="flex items-center justify-between pb-1.5 border-b border-black/10 dark:border-white/10">
                 <div className="flex items-center gap-1.5">
                   <Layers className="h-3.5 w-3.5 text-[#10B981]" />
-                  <span className="text-xs font-mono font-bold text-[#10B981] uppercase">Module M201 · Agile</span>
+                  <span className="text-xs font-mono font-bold text-[#10B981] uppercase">Approche Agile &amp; DevOps</span>
                 </div>
                 <span className="text-[10px] font-mono font-bold bg-[#10B981]/15 text-[#10B981] px-2 py-0.5 rounded-md border border-[#10B981]/30">
                   Sprint 04

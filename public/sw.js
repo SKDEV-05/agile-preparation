@@ -1,10 +1,11 @@
-// Service Worker for FullStack Master 2A (PWA & APK Installer)
-const CACHE_NAME = 'fullstack2a-pwa-v1';
+const CACHE_NAME = 'fullstack2a-pwa-v2';
 
 const STATIC_ASSETS = [
   '/',
   '/index.html',
   '/manifest.webmanifest',
+  '/logo.svg',
+  '/logo.webp',
   '/icon-192.png',
   '/icon-512.png',
   '/favicon.svg',

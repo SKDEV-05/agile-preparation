@@ -28,11 +28,18 @@ function checkIsAndroid(): boolean {
   return /android/.test(window.navigator.userAgent.toLowerCase());
 }
 
+function checkIsInAppBrowser(): boolean {
+  if (typeof window === 'undefined') return false;
+  const ua = window.navigator.userAgent || '';
+  return /instagram|fban|fbav|whatsapp|tiktok|micromessenger|line\/|twitter|threads|telegram/i.test(ua);
+}
+
 export function usePWAInstall() {
   const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
   const [isInstalled, setIsInstalled] = useState<boolean>(checkIsInstalled);
   const [isIOS] = useState<boolean>(checkIsIOS);
   const [isAndroid] = useState<boolean>(checkIsAndroid);
+  const [isInAppBrowser] = useState<boolean>(checkIsInAppBrowser);
 
   useEffect(() => {
     const handleBeforeInstallPrompt = (e: Event) => {
@@ -71,6 +78,7 @@ export function usePWAInstall() {
     isInstalled,
     isIOS,
     isAndroid,
+    isInAppBrowser,
     promptInstall
   };
 }

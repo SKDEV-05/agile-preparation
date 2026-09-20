@@ -11,25 +11,25 @@ export default {
         surface: "var(--bg-surface)",
         brand: {
           green: "#10B981",
-          secondary: "#14B8A6",
+          secondary: "#22C55E",
           black: "#0A0A0A",
           white: "#FFFFFF",
         },
         primary: {
           DEFAULT: "#10B981",
-          hover: "#14B8A6",
+          hover: "#22C55E",
           light: "#10B981",
           dark: "#10B981",
         },
         secondary: {
-          DEFAULT: "#14B8A6",
+          DEFAULT: "#22C55E",
           hover: "#10B981",
         },
         accent: {
-          DEFAULT: "#14B8A6",
+          DEFAULT: "#22C55E",
           hover: "#10B981",
-          light: "#14B8A6",
-          dark: "#14B8A6",
+          light: "#22C55E",
+          dark: "#10B981",
         },
         success: {
           DEFAULT: "#10B981",
@@ -42,9 +42,9 @@ export default {
           border: "#0A0A0A",
         },
         danger: {
-          DEFAULT: "#14B8A6",
-          light: "#14B8A6",
-          border: "#14B8A6",
+          DEFAULT: "#22C55E",
+          light: "#22C55E",
+          border: "#22C55E",
         }
       },
       fontFamily: {

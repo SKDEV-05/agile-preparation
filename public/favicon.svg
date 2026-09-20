@@ -1,5 +1,20 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
-  <rect width="32" height="32" rx="8" fill="#10B981"/>
-  <path d="M16 6L24 16L16 26L8 16L16 6Z" fill="#FFFFFF" fill-opacity="0.9"/>
-  <circle cx="16" cy="16" r="3" fill="#14B8A6"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none">
+  <defs>
+    <linearGradient id="favTop" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#22C55E" />
+      <stop offset="100%" stop-color="#10B981" />
+    </linearGradient>
+    <linearGradient id="favLeft" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#10B981" />
+      <stop offset="100%" stop-color="#059669" />
+    </linearGradient>
+  </defs>
+  <rect width="48" height="48" rx="12" fill="#0A0A0A" />
+  <path d="M24 6L40 15L24 24L8 15L24 6Z" fill="url(#favTop)" />
+  <path d="M8 15L24 24V42L8 33V15Z" fill="url(#favLeft)" />
+  <path d="M24 24L40 15V33L24 42V24Z" fill="url(#favTop)" fill-opacity="0.9" />
+  <path d="M18 26L13 28.5L18 31" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+  <path d="M30 26L35 28.5L30 31" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+  <line x1="26" y1="25" x2="22" y2="32" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" />
+  <circle cx="24" cy="15" r="2.5" fill="#FFFFFF" />
 </svg>

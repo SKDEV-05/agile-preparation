@@ -17,33 +17,74 @@ import {
   Layers
 } from 'lucide-react';
 import { Button } from '../../components/ui/Button';
-import logoImg from '../../assets/logo.webp';
+import { PlatformLogo } from '../../components/common/PlatformLogo';
 
 const Hero3DScene = React.lazy(() => import('../../components/3d/Hero3DScene').then(m => ({ default: m.Hero3DScene })));
 
 interface CurriculumHubProps {
   onSelectAgile: () => void;
+  onSelectReact?: () => void;
   onOpenMethodology?: () => void;
 }
 
-export function CurriculumHub({ onSelectAgile, onOpenMethodology }: CurriculumHubProps) {
-  // Exactly 4 Official Modules
+// Authentic Brand SVGs for the 4 Curriculum Modules (React, Laravel, MongoDB, Scrum)
+function ReactBrandLogo({ className = "h-5 w-5" }: { className?: string }) {
+  return (
+    <svg viewBox="-11.5 -10.23174 23 20.46348" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="0" cy="0" r="2.05" fill="currentColor" />
+      <g stroke="currentColor" strokeWidth="1" fill="none">
+        <ellipse rx="11" ry="4.2" />
+        <ellipse rx="11" ry="4.2" transform="rotate(60)" />
+        <ellipse rx="11" ry="4.2" transform="rotate(120)" />
+      </g>
+    </svg>
+  );
+}
+
+function LaravelBrandLogo({ className = "h-5 w-5" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <path d="M23.642 5.43a.364.364 0 01.014.1v5.149c0 .135-.073.26-.189.326l-4.323 2.49v4.934a.378.378 0 01-.188.326L9.93 23.949a.316.316 0 01-.066.027c-.008.002-.016.008-.024.01a.348.348 0 01-.192 0c-.011-.002-.02-.008-.03-.012-.02-.008-.042-.014-.062-.025L.533 18.755a.376.376 0 01-.189-.326V2.974c0-.033.005-.066.014-.098.003-.012.01-.02.014-.032a.369.369 0 01.023-.058c.004-.013.015-.022.023-.033l.033-.045c.012-.01.025-.018.037-.027.014-.012.027-.024.041-.034H.53L5.043.05a.375.375 0 01.375 0L9.93 2.647h.002c.015.01.027.021.04.033l.038.027c.013.014.02.03.033.045.008.011.02.021.025.033.01.02.017.038.024.058.003.011.01.021.013.032.01.031.014.064.014.098v9.652l3.76-2.164V5.527c0-.033.004-.066.013-.098.003-.01.01-.02.013-.032a.487.487 0 01.024-.059c.007-.012.018-.02.025-.033.012-.015.021-.03.033-.043.012-.012.025-.02.037-.028.014-.01.026-.023.041-.032h.001l4.513-2.598a.375.375 0 01.375 0l4.513 2.598c.016.01.027.021.042.031.012.01.025.018.036.028.013.014.022.03.034.044.008.012.019.021.024.033.011.02.018.04.024.06.006.01.012.021.015.032zm-.74 5.032V6.179l-1.578.908-2.182 1.256v4.283zm-4.51 7.75v-4.287l-2.147 1.225-6.126 3.498v4.325zM1.093 3.624v14.588l8.273 4.761v-4.325l-4.322-2.445-.002-.003H5.04c-.014-.01-.025-.021-.04-.031-.011-.01-.024-.018-.035-.027l-.001-.002c-.013-.012-.021-.025-.031-.04-.01-.011-.021-.022-.028-.036h-.002c-.008-.014-.013-.031-.02-.047-.006-.016-.014-.027-.018-.043a.49.49 0 01-.008-.057c-.002-.014-.006-.027-.006-.041V5.789l-2.18-1.257zM5.23.81L1.47 2.974l3.76 2.164 3.758-2.164zm1.956 13.505l2.182-1.256V3.624l-1.58.91-2.182 1.255v9.435zm11.581-10.95l-3.76 2.163 3.76 2.163 3.759-2.164zm-.376 4.978L16.21 7.087 14.63 6.18v4.283l2.182 1.256 1.58.908zm-8.65 9.654l5.514-3.148 2.756-1.572-3.757-2.163-4.323 2.489-3.941 2.27z" />
+    </svg>
+  );
+}
+
+function MongoBrandLogo({ className = "h-5 w-5" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 0C11.83 0 11.66.07 11.53.2 9.87 1.83 4 8.16 4 14.28 4 18.73 7.54 22.3 11.97 22.4v1.39c0 .12.09.21.21.21.12 0 .22-.09.22-.21V22.4c4.43-.1 7.97-3.67 7.97-8.12 0-6.12-5.87-12.45-7.53-14.08A.73.73 0 0 0 12 0zm-.03 2.37c1.33 1.37 6.43 6.94 6.43 11.91 0 3.52-2.73 6.41-6.21 6.57l-.22-18.48zm-.4 0v18.48c-3.48-.16-6.21-3.05-6.21-6.57 0-4.97 5.1-10.54 6.43-11.91z" />
+    </svg>
+  );
+}
+
+function ScrumBrandLogo({ className = "h-5 w-5" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" xmlns="http://www.w3.org/2000/svg">
+      <path d="M21.5 2v6h-6" />
+      <path d="M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67" />
+      <circle cx="12" cy="12" r="2.5" fill="currentColor" />
+    </svg>
+  );
+}
+
+export function CurriculumHub({ onSelectAgile, onSelectReact, onOpenMethodology }: CurriculumHubProps) {
+  // Exactly 4 Official Modules with Authentic Real Logos
   const catalogueModules = [
     {
       id: 'agile',
       title: 'Approche Agile & Gestion de Projet',
-      shortCode: 'M201',
+      category: 'Scrum & Méthodes Agiles',
       status: 'available' as const,
       isOpen: true,
       description: 'Méthodologies prédictives vs agiles, calculs PERT & Gantt, Scrum, Jira, Git 4 zones et GitLab CI/CD.',
-      icon: Zap,
+      icon: ScrumBrandLogo,
       gradient: 'from-[#10B981] to-[#22C55E]',
       topics: ['Cycle en V vs Agile', 'Calculs PERT & Marges', 'Scrum & Jira', 'GitLab CI/CD'],
       stats: '5 Parties · 20 Chapitres · 200 QCM',
       preview: (
         <div className="rounded-lg bg-black/[0.03] dark:bg-white/[0.04] border border-black/10 dark:border-white/10 p-2 font-mono text-[9px]">
           <div className="flex items-center justify-between text-[#10B981] font-bold pb-1 mb-1 border-b border-black/10 dark:border-white/10">
-            <span className="flex items-center gap-1"><Zap className="h-3 w-3 text-[#10B981]" /> Scrum Board Live</span>
+            <span className="flex items-center gap-1.5"><ScrumBrandLogo className="h-3.5 w-3.5 text-[#10B981]" /> Scrum Sprint Live</span>
             <span className="text-[8px] font-bold bg-[#10B981]/15 px-1.5 py-0.5 rounded text-[#10B981]">Actif</span>
           </div>
           <div className="grid grid-cols-3 gap-1.5 text-center">
@@ -57,19 +98,19 @@ export function CurriculumHub({ onSelectAgile, onOpenMethodology }: CurriculumHu
     {
       id: 'react',
       title: 'React.js & Frontend Moderne',
-      shortCode: 'M202',
-      status: 'upcoming' as const,
-      isOpen: false,
-      description: 'Composants fonctionnels, hooks avancés (useState, useEffect), Redux Toolkit, Router v6 et API REST.',
-      icon: Code2,
+      category: 'Front-End Moderne & Redux',
+      status: 'available' as const,
+      isOpen: true,
+      description: 'Architecture SPA, JSX, Hooks (useState, useEffect), Redux Toolkit, Router v6 et Tests Jest/RTL.',
+      icon: ReactBrandLogo,
       gradient: 'from-[#22C55E] to-[#10B981]',
       topics: ['JSX & Virtual DOM', 'Hooks & State', 'Redux Toolkit', 'React Router v6'],
-      stats: '6 Modules · 24 Chapitres · 150 QCM',
+      stats: '8 Modules · 7 Labs · 120+ QCM',
       preview: (
         <div className="rounded-lg bg-black/[0.03] dark:bg-white/[0.04] border border-black/10 dark:border-white/10 p-2 font-mono text-[9px]">
-          <div className="flex items-center justify-between text-black/60 dark:text-white/60 pb-1 mb-1 border-b border-black/10 dark:border-white/10">
-            <span className="flex items-center gap-1 font-bold text-black dark:text-white"><Code2 className="h-3 w-3 text-[#22C55E]" /> &lt;VirtualDOM /&gt;</span>
-            <span className="text-[8px] text-[#10B981]">60 FPS ✓</span>
+          <div className="flex items-center justify-between text-[#10B981] font-bold pb-1 mb-1 border-b border-black/10 dark:border-white/10">
+            <span className="flex items-center gap-1.5 font-bold"><ReactBrandLogo className="h-3.5 w-3.5 text-[#22C55E]" /> &lt;VirtualDOM /&gt;</span>
+            <span className="text-[8px] font-bold bg-[#10B981]/15 px-1.5 py-0.5 rounded text-[#10B981]">60 FPS ✓</span>
           </div>
           <div className="bg-white dark:bg-[#0A0A0A] p-1 rounded border border-black/10 dark:border-white/10 text-[8px] space-y-0.5">
             <div><span className="text-[#10B981] font-bold">const</span> [state] = <span className="text-[#22C55E]">useState</span>();</div>
@@ -80,18 +121,18 @@ export function CurriculumHub({ onSelectAgile, onOpenMethodology }: CurriculumHu
     {
       id: 'laravel',
       title: 'Laravel & Architecture Backend APIs',
-      shortCode: 'M203',
+      category: 'Back-End & APIs REST (Laravel)',
       status: 'upcoming' as const,
       isOpen: false,
       description: 'Architecture MVC en PHP 8, persistance Eloquent ORM, authentification Sanctum, migrations et tests unitaires.',
-      icon: Server,
+      icon: LaravelBrandLogo,
       gradient: 'from-[#10B981] via-[#22C55E] to-[#0A0A0A]',
       topics: ['Architecture MVC', 'Eloquent ORM', 'Sanctum Auth', 'Tests Pest'],
       stats: '5 Modules · 20 Chapitres · 160 QCM',
       preview: (
         <div className="rounded-lg bg-black/[0.03] dark:bg-white/[0.04] border border-black/10 dark:border-white/10 p-2 font-mono text-[9px]">
           <div className="flex items-center justify-between text-black/60 dark:text-white/60 pb-1 mb-1 border-b border-black/10 dark:border-white/10">
-            <span className="flex items-center gap-1 font-bold text-black dark:text-white"><Server className="h-3 w-3 text-[#10B981]" /> api/v1/routes</span>
+            <span className="flex items-center gap-1.5 font-bold text-black dark:text-white"><LaravelBrandLogo className="h-3 w-3 text-[#10B981]" /> api/v1/routes</span>
             <span className="text-[8px] text-[#10B981]">200 OK ✓</span>
           </div>
           <div className="bg-white dark:bg-[#0A0A0A] p-1 rounded border border-black/10 dark:border-white/10 text-[8px] space-y-0.5">
@@ -102,23 +143,23 @@ export function CurriculumHub({ onSelectAgile, onOpenMethodology }: CurriculumHu
     },
     {
       id: 'database',
-      title: 'SGBD, SQL Avancé & NoSQL',
-      shortCode: 'M204',
+      title: 'SGBD, SQL Avancé & NoSQL (MongoDB)',
+      category: 'Bases de Données & NoSQL (MongoDB)',
       status: 'upcoming' as const,
       isOpen: false,
       description: 'Modélisation Merise (MCD/MLD), requêtes SQL complexes, index B-Tree, transactions ACID et MongoDB NoSQL.',
-      icon: Database,
+      icon: MongoBrandLogo,
       gradient: 'from-[#22C55E] to-[#10B981]',
       topics: ['Merise MCD & MLD', 'SQL Jointures & Index', 'Transactions ACID', 'MongoDB NoSQL'],
       stats: '4 Modules · 16 Chapitres · 140 QCM',
       preview: (
         <div className="rounded-lg bg-black/[0.03] dark:bg-white/[0.04] border border-black/10 dark:border-white/10 p-2 font-mono text-[9px]">
           <div className="flex items-center justify-between text-black/60 dark:text-white/60 pb-1 mb-1 border-b border-black/10 dark:border-white/10">
-            <span className="flex items-center gap-1 font-bold text-black dark:text-white"><Database className="h-3 w-3 text-[#10B981]" /> db_ofppt.sql</span>
-            <span className="text-[8px] text-[#10B981]">ACID ✓</span>
+            <span className="flex items-center gap-1.5 font-bold text-black dark:text-white"><MongoBrandLogo className="h-3.5 w-3.5 text-[#10B981]" /> mongodb://cluster</span>
+            <span className="text-[8px] text-[#10B981]">NoSQL ✓</span>
           </div>
           <div className="bg-white dark:bg-[#0A0A0A] p-1 rounded border border-black/10 dark:border-white/10 text-[8px] space-y-0.5">
-            <div><span className="text-[#22C55E] font-bold">SELECT</span> * <span className="text-[#10B981]">FROM</span> stagiaires;</div>
+            <div><span className="text-[#22C55E] font-bold">db.stagiaires.</span>find(<span className="text-[#10B981]">&#123; active: true &#125;</span>);</div>
           </div>
         </div>
       )
@@ -178,13 +219,7 @@ export function CurriculumHub({ onSelectAgile, onOpenMethodology }: CurriculumHu
 
             {/* Logo Pill */}
             <div className="inline-flex items-center gap-1.5 sm:gap-2 rounded-full bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 px-2.5 sm:px-3.5 py-1 text-xs shadow-2xs max-w-full min-w-0">
-              <img
-                src={logoImg}
-                alt="Logo FullStack 2A"
-                width={18}
-                height={18}
-                className="h-4.5 w-4.5 sm:h-5 sm:w-5 rounded-md object-cover ring-1 ring-[#10B981]/40 shrink-0"
-              />
+              <PlatformLogo size={20} />
               <span className="font-handwriting text-xl sm:text-2xl font-black text-[#0A0A0A] dark:text-white leading-none shrink-0">
                 FullStack <span className="text-[#10B981]">2A</span>
               </span>
@@ -357,18 +392,18 @@ export function CurriculumHub({ onSelectAgile, onOpenMethodology }: CurriculumHu
               Catalogue des Matières & Simulateurs
             </h2>
             <p className="text-xs sm:text-sm text-[#0A0A0A]/70 dark:text-white/70 mt-1 max-w-2xl">
-              Chaque module correspond au référentiel officiel OFPPT. L'Approche Agile (M201) est débloquée et prête à être étudiée.
+              Chaque module correspond au référentiel officiel OFPPT. L'Approche Agile et React.js sont débloqués et prêts pour l'entraînement.
             </p>
           </div>
 
           <div className="flex items-center gap-2 text-xs font-mono">
             <span className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#10B981]/15 text-[#10B981] border border-[#10B981]/30 font-bold">
               <span className="h-2 w-2 rounded-full bg-[#10B981] animate-pulse" />
-              1 Ouvert
+              2 Ouverts
             </span>
             <span className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-red-500/10 text-red-500 border border-red-500/30 font-bold">
               <span className="h-2 w-2 rounded-full bg-red-500" />
-              3 Fermés
+              2 Fermés
             </span>
           </div>
         </div>
@@ -382,14 +417,28 @@ export function CurriculumHub({ onSelectAgile, onOpenMethodology }: CurriculumHu
             return (
               <div
                 key={mod.id}
+                onClick={() => {
+                  if (isAvailable) {
+                    if (mod.id === 'react' && onSelectReact) {
+                      onSelectReact();
+                    } else {
+                      onSelectAgile();
+                    }
+                  }
+                }}
                 className={`group relative rounded-2xl border transition-all duration-300 flex flex-col justify-between overflow-hidden bg-white dark:bg-[#0A0A0A] p-4 sm:p-5 shadow-xs ${
                   isAvailable
-                    ? 'border-2 border-[#10B981] shadow-md shadow-[#10B981]/15 ring-1 ring-[#10B981]/30'
+                    ? 'border-2 border-[#10B981] shadow-md shadow-[#10B981]/15 ring-1 ring-[#10B981]/30 cursor-pointer hover:scale-[1.008]'
                     : 'border-black/10 dark:border-white/10 opacity-90 hover:opacity-100'
                 }`}
               >
                 {/* Accent top gradient bar */}
                 <div className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r ${mod.gradient}`} />
+
+                {/* Subtle Background Watermark Logo (Desktop/Web only, hidden on mobile) */}
+                <div className="hidden md:block absolute -right-6 -bottom-6 z-0 pointer-events-none select-none opacity-[0.07] dark:opacity-[0.12] text-[#10B981] group-hover:opacity-[0.18] dark:group-hover:opacity-[0.24] group-hover:scale-105 transition-all duration-300" aria-hidden="true">
+                  <Icon className="h-40 w-40" />
+                </div>
 
                 {/* TOP-RIGHT RED / GREEN CIRCLE BADGE (HIGH Z-INDEX) */}
                 <div className="absolute top-3.5 right-3.5 z-20">
@@ -407,14 +456,14 @@ export function CurriculumHub({ onSelectAgile, onOpenMethodology }: CurriculumHu
                 </div>
 
                 <div className="space-y-2.5 pr-16">
-                  {/* Icon & Code */}
+                  {/* Icon & Category */}
                   <div className="flex items-center gap-2.5 pt-0.5">
                     <div className={`flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br ${mod.gradient} text-white shadow-xs`}>
-                      <Icon className="h-4 w-4" />
+                      <Icon className="h-5 w-5 text-white" />
                     </div>
                     <div>
                       <span className="font-mono text-xs font-black text-[#10B981] tracking-wider block">
-                        {mod.shortCode}
+                        {mod.category}
                       </span>
                       <span className="text-[10px] text-[#0A0A0A]/50 dark:text-white/50 font-medium">
                         {mod.stats}
@@ -459,10 +508,17 @@ export function CurriculumHub({ onSelectAgile, onOpenMethodology }: CurriculumHu
                   {isAvailable ? (
                     <Button
                       variant="primary"
-                      onClick={onSelectAgile}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        if (mod.id === 'react' && onSelectReact) {
+                          onSelectReact();
+                        } else {
+                          onSelectAgile();
+                        }
+                      }}
                       className="w-full justify-between font-bold text-xs shadow-sm shadow-[#10B981]/20 bg-[#10B981] hover:bg-[#22C55E] text-white cursor-pointer py-1.5"
                     >
-                      <span>Accéder au module M201</span>
+                      <span>Accéder à la formation</span>
                       <ArrowRight className="h-3.5 w-3.5" />
                     </Button>
                   ) : (
@@ -492,19 +548,31 @@ export function CurriculumHub({ onSelectAgile, onOpenMethodology }: CurriculumHu
               </h3>
               <p className="text-xs text-[#0A0A0A]/70 dark:text-white/70 mt-0.5 max-w-2xl leading-relaxed">
                 Les modules respectent rigoureusement les compétences requises par le programme marocain.
-                L'Approche Agile (M201) est prête pour l'entraînement intensif avec tous les barèmes de calculs (PERT, Marges, Scrum).
+                L'Approche Agile et React.js sont prêts pour l'entraînement intensif avec tous les barèmes de calculs, exercices interactifs et QCMs.
               </p>
             </div>
           </div>
 
-          <Button
-            variant="primary"
-            onClick={onSelectAgile}
-            className="shrink-0 gap-2 font-bold text-xs shadow-sm shadow-[#10B981]/20 bg-[#10B981] hover:bg-[#22C55E] text-white cursor-pointer"
-          >
-            <span>Démarrer avec Approche Agile</span>
-            <ArrowRight className="h-4 w-4" />
-          </Button>
+          <div className="flex flex-wrap items-center gap-2.5 shrink-0">
+            {onSelectReact && (
+              <Button
+                variant="primary"
+                onClick={onSelectReact}
+                className="gap-2 font-bold text-xs shadow-sm shadow-[#10B981]/20 bg-[#10B981] hover:bg-[#22C55E] text-white cursor-pointer"
+              >
+                <span>Démarrer avec React.js</span>
+                <ArrowRight className="h-4 w-4" />
+              </Button>
+            )}
+            <Button
+              variant="outline"
+              onClick={onSelectAgile}
+              className="gap-2 font-bold text-xs border-[#10B981]/30 hover:border-[#10B981] cursor-pointer"
+            >
+              <span>Démarrer Approche Agile</span>
+              <ArrowRight className="h-4 w-4 text-[#10B981]" />
+            </Button>
+          </div>
         </div>
       </section>
     </div>

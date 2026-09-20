@@ -145,11 +145,11 @@ export const coursePart5: CoursePart = {
       miniQuestion: {
         question: 'Quelle est la différence fondamentale entre Continuous Delivery et Continuous Deployment ?',
         options: [
-        'La Livraison Continue supprime l’étape de compilation alors que le Déploiement Continu supprime les tests unitaires',
-        'Ce sont deux expressions rigoureusement synonymes sans aucune distinction technique',
-        'La Livraison Continue s’applique uniquement aux téléphones mobiles alors que le Déploiement Continu est réservé aux ordinateurs de bureau',
-        'La Livraison Continue conserve une décision ou validation manuelle avant la production, tandis que le Déploiement Continu automatise jusqu’à la production finale',
-      ],
+          'La Livraison Continue désactive les tests automatisés tandis que le Déploiement Continu effectue des tests exhaustifs sur simulateur.',
+          'La Livraison Continue s’applique exclusivement aux applications web tandis que le Déploiement Continu gère les systèmes embarqués.',
+          'La Livraison Continue exige une réécriture du code source avant chaque mise en ligne tandis que le Déploiement Continu compile à chaud.',
+          'La Livraison Continue conserve une validation humaine avant production, tandis que le Déploiement Continu automatise la mise en ligne finale.',
+        ],
         correctIndex: 3,
         explanation: 'En Continuous Delivery, le paquet est prêt et validé mais requiert un déclenchement manuel pour aller en prod ; en Continuous Deployment, le flux est intégralement automatisé sans intervention humaine.'
       }

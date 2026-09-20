@@ -1,7 +1,8 @@
 import React from 'react';
-import { Menu, Award, AlertTriangle, Layers, Search } from 'lucide-react';
+import { Menu, Award, AlertTriangle, Layers, Search, Zap, Code2 } from 'lucide-react';
 import { ActiveView } from './Sidebar';
 import { useProgress } from '../../store/progressStore';
+import { useReactProgress } from '../../store/reactProgressStore';
 import { Button } from '../ui/Button';
 import { ShareButton } from '../common/ShareButton';
 import { InstallButton } from '../common/InstallButton';
@@ -20,15 +21,45 @@ export function Header({
   onOpenMobileSidebar,
   onOpenSearch
 }: HeaderProps) {
+  const isReact = activeView.startsWith('react');
   const { progress } = useProgress();
-  const errorCount = progress.wrongQuestionIds.length;
+  const { progress: reactProgress } = useReactProgress();
+  const errorCount = isReact ? reactProgress.wrongQuestionIds.length : progress.wrongQuestionIds.length;
 
   const getBreadcrumb = () => {
     switch (activeView) {
       case 'curriculum-hub':
         return { title: 'Cursus 2ème Année', subtitle: 'Sélectionnez votre module de révision' };
       case 'dashboard':
-        return { title: 'Tableau de bord', subtitle: 'Module Approche Agile & Gestion de Projet (M201)' };
+        return { title: 'Tableau de bord', subtitle: 'Approche Agile & Gestion de Projet' };
+      case 'react-dashboard':
+        return { title: 'Tableau de bord React', subtitle: 'React.js & Front-End Moderne' };
+      case 'react-module1':
+        return { title: 'Module 1 : Architecture Web', subtitle: 'Client-Serveur, DOM, SPA vs MPA' };
+      case 'react-module2':
+        return { title: 'Module 2 : JavaScript Moderne', subtitle: 'ES6+, Destructuring, Promises & Async' };
+      case 'react-module3':
+        return { title: 'Module 3 : React & Architecture', subtitle: 'Virtual DOM, JSX, Babel & Tooling' };
+      case 'react-module4':
+        return { title: 'Module 4 : Composants & State', subtitle: 'Props, useState, Événements & Listes' };
+      case 'react-module5':
+        return { title: 'Module 5 : Styles & Cycle de Vie', subtitle: 'useEffect, Nettoyage & CSS Modules' };
+      case 'react-module6':
+        return { title: 'Module 6 : Routage & Tests', subtitle: 'React Router v6 & Testing Library' };
+      case 'react-module7':
+        return { title: 'Module 7 : Redux Fondamentaux', subtitle: 'Store, Reducers, Actions & Flux' };
+      case 'react-module8':
+        return { title: 'Module 8 : Redux Toolkit & Thunk', subtitle: 'createSlice, configureStore & Thunk' };
+      case 'react-playground':
+        return { title: 'Playground Live', subtitle: 'Éditeur de code et aperçu React en temps réel' };
+      case 'react-laboratory':
+        return { title: 'Laboratoire React', subtitle: '7 Ateliers pratiques & résolution de bugs' };
+      case 'react-flashcards':
+        return { title: 'Flashcards 3D React', subtitle: 'Mémorisation active des concepts clés' };
+      case 'react-errors':
+        return { title: 'Mes Erreurs React', subtitle: 'Révision ciblée des questions erronées' };
+      case 'react-final-exam':
+        return { title: 'Examen Blanc React', subtitle: '40 QCM chronométrés en conditions réelles' };
       case 'methodology':
         return { title: 'Comment Apprendre', subtitle: 'La méthode active en 6 étapes pour réussir' };
       case 'profile-settings':
@@ -81,73 +112,7 @@ export function Header({
         </div>
       </div>
 
-      {/* Right controls */}
-      <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
-        {/* Global Search trigger (Cmd+K) */}
-        {onOpenSearch && (
-          <button
-            onClick={onOpenSearch}
-            className="flex items-center gap-2 rounded-xl border border-black/15 dark:border-white/15 bg-black/[0.02] dark:bg-white/[0.03] px-2.5 py-1.5 text-xs text-[#0A0A0A]/70 dark:text-white/70 hover:border-[#10B981] hover:text-[#10B981] transition-all cursor-pointer shadow-2xs"
-            title="Rechercher (Ctrl+K)"
-          >
-            <Search className="h-3.5 w-3.5 text-[#10B981]" />
-            <span className="hidden md:inline font-medium">Rechercher...</span>
-            <kbd className="hidden sm:inline-flex items-center px-1.5 py-0.2 text-[9px] font-mono font-bold rounded bg-black/5 dark:bg-white/10 text-[#0A0A0A]/50 dark:text-white/50 border border-black/10 dark:border-white/10">
-              ⌘K
-            </kbd>
-          </button>
-        )}
-
-        {/* Switch back to curriculum modules */}
-        {activeView !== 'curriculum-hub' && (
-          <button
-            onClick={() => onNavigate('curriculum-hub')}
-            aria-label="Revenir au choix des modules 2ème Année"
-            className="hidden xl:inline-flex items-center gap-1.5 rounded-xl border border-black/15 dark:border-white/15 bg-white dark:bg-[#0A0A0A] px-2.5 py-1.5 text-xs font-bold text-[#0A0A0A] dark:text-white hover:border-[#10B981] hover:text-[#10B981] transition-colors shadow-2xs cursor-pointer"
-            title="Revenir au choix des matières 2ème Année"
-          >
-            <Layers className="h-3.5 w-3.5 text-[#10B981] shrink-0" />
-            <span>Modules 2A</span>
-          </button>
-        )}
-
-        {/* Errors quick link */}
-        {errorCount > 0 && (
-          <button
-            onClick={() => onNavigate('errors')}
-            aria-label={`Voir les ${errorCount} questions à réviser`}
-            className="flex items-center gap-1.5 rounded-xl bg-[#22C55E] text-white px-2.5 py-1.5 text-xs font-bold hover:bg-[#10B981] transition-colors cursor-pointer shadow-xs"
-            title={`${errorCount} questions à revoir`}
-          >
-            <AlertTriangle className="h-3.5 w-3.5 text-white shrink-0" />
-            <span className="hidden md:inline">Erreurs :</span>
-            <span>{errorCount}</span>
-          </button>
-        )}
-
-        {/* Install Mobile App / PWA */}
-        <InstallButton />
-
-        {/* Theme Switcher Toggle */}
-        <ThemeToggle />
-
-        {/* Share Button (WhatsApp / Copy link) */}
-        <ShareButton />
-
-        {/* Quick Launch Final Exam */}
-        {activeView !== 'final-exam' && (
-          <Button
-            size="sm"
-            variant="primary"
-            onClick={() => onNavigate('final-exam')}
-            className="gap-1.5 font-bold px-2.5 sm:px-3 text-xs"
-          >
-            <Award className="h-3.5 w-3.5 shrink-0" />
-            <span className="hidden sm:inline">Lancer</span>
-            <span>50 QCM</span>
-          </Button>
-        )}
-      </div>
+      
     </header>
   );
 }

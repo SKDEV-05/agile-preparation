@@ -14,16 +14,21 @@ import {
   Sparkles,
   Settings,
   X,
-  CheckCircle2
+  CheckCircle2,
+  Code2,
+  Compass,
+  Play
 } from 'lucide-react';
 import { PartId } from '../../types';
+import { ReactModuleId } from '../../types/reactTypes';
 import { useProgress } from '../../store/progressStore';
+import { useReactProgress } from '../../store/reactProgressStore';
 import { Progress } from '../ui/Progress';
 import { CreatorCard } from './CreatorCard';
 import { ThemeToggle } from '../common/ThemeToggle';
 import { InstallButton } from '../common/InstallButton';
 import { cn } from '../../lib/utils';
-import logoImg from '../../assets/logo.webp';
+import { PlatformLogo } from '../common/PlatformLogo';
 
 export type ActiveView = 
   | 'curriculum-hub' 
@@ -38,7 +43,21 @@ export type ActiveView =
   | 'simulators' 
   | 'flashcards' 
   | 'errors' 
-  | 'final-exam';
+  | 'final-exam'
+  | 'react-dashboard'
+  | 'react-module1'
+  | 'react-module2'
+  | 'react-module3'
+  | 'react-module4'
+  | 'react-module5'
+  | 'react-module6'
+  | 'react-module7'
+  | 'react-module8'
+  | 'react-playground'
+  | 'react-laboratory'
+  | 'react-flashcards'
+  | 'react-errors'
+  | 'react-final-exam';
 
 interface SidebarProps {
   activeView: ActiveView;
@@ -48,33 +67,65 @@ interface SidebarProps {
 }
 
 export function Sidebar({ activeView, onNavigate, isOpenMobile, onCloseMobile }: SidebarProps) {
+  const isReact = activeView.startsWith('react');
   const { progress, overallPercentage } = useProgress();
-  const errorCount = progress.wrongQuestionIds.length;
+  const { progress: reactProgress, overallPercentage: reactOverallPercentage } = useReactProgress();
+  
+  const errorCount = isReact ? reactProgress.wrongQuestionIds.length : progress.wrongQuestionIds.length;
 
-  const mainNavItems = [
-    { id: 'dashboard', label: 'Accueil · Tableau de bord', icon: LayoutDashboard },
-    { id: 'methodology', label: 'Comment Apprendre', icon: Sparkles, badge: 'Méthode' },
-  ];
+  const mainNavItems = isReact
+    ? [
+        { id: 'react-dashboard', label: 'Accueil · React.js', icon: LayoutDashboard },
+        { id: 'methodology', label: 'Comment Apprendre', icon: Sparkles, badge: 'Méthode' },
+      ]
+    : [
+        { id: 'dashboard', label: 'Accueil · Tableau de bord', icon: LayoutDashboard },
+        { id: 'methodology', label: 'Comment Apprendre', icon: Sparkles, badge: 'Méthode' },
+      ];
 
-  const learnItems = [
-    { id: 'part1', order: '01', label: 'Fondamentaux Gestion de Projet', icon: Layers, partId: 'part1' as PartId },
-    { id: 'part2', order: '02', label: 'Planification Gantt & PERT', icon: CalendarRange, partId: 'part2' as PartId },
-    { id: 'part3', order: '03', label: 'Agile · Scrum & Jira', icon: Zap, partId: 'part3' as PartId },
-    { id: 'part4', order: '04', label: 'Git · GitLab & SonarQube', icon: GitBranch, partId: 'part4' as PartId },
-    { id: 'part5', order: '05', label: 'DevOps & CI/CD Pipelines', icon: Rocket, partId: 'part5' as PartId },
-  ];
+  const learnItems = isReact
+    ? [
+        { id: 'react-module1', order: '01', label: 'Architecture Web & SPA', icon: Layers },
+        { id: 'react-module2', order: '02', label: 'JavaScript Moderne ES6+', icon: Code2 },
+        { id: 'react-module3', order: '03', label: 'React & Virtual DOM', icon: Zap },
+        { id: 'react-module4', order: '04', label: 'Composants, Props & State', icon: Layers },
+        { id: 'react-module5', order: '05', label: 'Styles & Cycle de Vie', icon: Sparkles },
+        { id: 'react-module6', order: '06', label: 'Routage & Tests RTL/Jest', icon: Compass },
+        { id: 'react-module7', order: '07', label: 'Redux Fondamentaux', icon: Layers },
+        { id: 'react-module8', order: '08', label: 'Redux Toolkit & Thunk', icon: Rocket },
+      ]
+    : [
+        { id: 'part1', order: '01', label: 'Fondamentaux Gestion de Projet', icon: Layers, partId: 'part1' as PartId },
+        { id: 'part2', order: '02', label: 'Planification Gantt & PERT', icon: CalendarRange, partId: 'part2' as PartId },
+        { id: 'part3', order: '03', label: 'Agile · Scrum & Jira', icon: Zap, partId: 'part3' as PartId },
+        { id: 'part4', order: '04', label: 'Git · GitLab & SonarQube', icon: GitBranch, partId: 'part4' as PartId },
+        { id: 'part5', order: '05', label: 'DevOps & CI/CD Pipelines', icon: Rocket, partId: 'part5' as PartId },
+      ];
 
-  const practiceItems = [
-    { id: 'simulators', label: 'Laboratoire interactif', icon: FlaskConical, badge: '5 Labs' },
-    { id: 'flashcards', label: 'Flashcards 3D', icon: CreditCard, badge: '18 cartes' },
-    { 
-      id: 'errors', 
-      label: 'Mes erreurs ciblées', 
-      icon: AlertTriangle, 
-      badge: errorCount > 0 ? `${errorCount}` : undefined, 
-      badgeColor: errorCount > 0 ? 'bg-[#22C55E] text-white border-transparent' : undefined 
-    },
-  ];
+  const practiceItems = isReact
+    ? [
+        { id: 'react-playground', label: 'Playground Live', icon: Play, badge: 'Code Live' },
+        { id: 'react-laboratory', label: 'Laboratoire interactif', icon: FlaskConical, badge: '7 Labs' },
+        { id: 'react-flashcards', label: 'Flashcards 3D', icon: CreditCard, badge: 'Flashcards' },
+        { 
+          id: 'react-errors', 
+          label: 'Mes erreurs ciblées', 
+          icon: AlertTriangle, 
+          badge: errorCount > 0 ? `${errorCount}` : undefined, 
+          badgeColor: errorCount > 0 ? 'bg-[#22C55E] text-white border-transparent' : undefined 
+        },
+      ]
+    : [
+        { id: 'simulators', label: 'Laboratoire interactif', icon: FlaskConical, badge: '5 Labs' },
+        { id: 'flashcards', label: 'Flashcards 3D', icon: CreditCard, badge: '18 cartes' },
+        { 
+          id: 'errors', 
+          label: 'Mes erreurs ciblées', 
+          icon: AlertTriangle, 
+          badge: errorCount > 0 ? `${errorCount}` : undefined, 
+          badgeColor: errorCount > 0 ? 'bg-[#22C55E] text-white border-transparent' : undefined 
+        },
+      ];
 
   const handleNav = (view: ActiveView, partId?: PartId) => {
     onNavigate(view, partId);
@@ -88,12 +139,10 @@ export function Sidebar({ activeView, onNavigate, isOpenMobile, onCloseMobile }:
         {/* Top Logo & App Title */}
         <div className="flex items-center justify-between pb-3.5 border-b border-black/10 dark:border-white/10">
           <button
-            onClick={() => handleNav('dashboard')}
+            onClick={() => handleNav(isReact ? 'react-dashboard' : 'dashboard')}
             className="flex items-center gap-3 text-left group focus:outline-none cursor-pointer"
           >
-            <div className="h-10 w-10 shrink-0 rounded-2xl overflow-hidden shadow-xs border border-black/15 dark:border-white/15 ring-2 ring-[#10B981]/20 transition-transform group-hover:scale-105">
-              <img src={logoImg} alt="Logo FullStack 2A" width={40} height={40} decoding="async" className="h-full w-full object-cover" />
-            </div>
+            <PlatformLogo size={36} className="transition-transform group-hover:scale-105" />
             <div>
               <div className="font-handwriting flex items-center gap-1.5 font-bold tracking-wide text-[#0A0A0A] dark:text-white text-[28px] leading-none">
                 <span>FullStack</span>
@@ -116,17 +165,41 @@ export function Sidebar({ activeView, onNavigate, isOpenMobile, onCloseMobile }:
           )}
         </div>
 
-        {/* Quick Hub Switcher button */}
-        <div className="mt-3">
+        {/* Dual Module Toggle: Agile vs React */}
+        <div className="mt-3 space-y-1.5">
+          <div className="p-1 rounded-2xl bg-black/[0.03] dark:bg-white/[0.04] border border-black/10 dark:border-white/10 flex items-center gap-1">
+            <button
+              onClick={() => handleNav('dashboard')}
+              className={cn(
+                "flex-1 flex items-center justify-center gap-1.5 py-1.5 px-2 rounded-xl text-xs font-bold transition-all cursor-pointer",
+                !isReact
+                  ? "bg-[#10B981] text-white shadow-xs"
+                  : "text-[#0A0A0A]/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5"
+              )}
+            >
+              <Zap className="h-3.5 w-3.5 shrink-0" />
+              <span className="truncate">Agile</span>
+            </button>
+            <button
+              onClick={() => handleNav('react-dashboard')}
+              className={cn(
+                "flex-1 flex items-center justify-center gap-1.5 py-1.5 px-2 rounded-xl text-xs font-bold transition-all cursor-pointer",
+                isReact
+                  ? "bg-[#10B981] text-white shadow-xs"
+                  : "text-[#0A0A0A]/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5"
+              )}
+            >
+              <Code2 className="h-3.5 w-3.5 shrink-0" />
+              <span className="truncate">React.js</span>
+            </button>
+          </div>
+
           <button
             onClick={() => handleNav('curriculum-hub')}
-            className="flex w-full items-center justify-between rounded-2xl border border-[#10B981]/30 bg-[#10B981]/5 hover:bg-[#10B981]/10 px-3.5 py-2 text-xs font-bold text-[#10B981] transition-all group shadow-2xs cursor-pointer"
+            className="flex w-full items-center justify-between rounded-xl border border-black/10 dark:border-white/10 bg-black/[0.01] dark:bg-white/[0.02] hover:bg-black/5 dark:hover:bg-white/5 px-2.5 py-1 text-[11px] font-medium text-[#0A0A0A]/60 dark:text-white/60 transition-all group cursor-pointer"
           >
-            <span className="flex items-center gap-2 truncate">
-              <span className="h-2 w-2 rounded-full bg-[#10B981]"></span>
-              <span className="truncate">Changer de matière (Cursus 2A)</span>
-            </span>
-            <ChevronRight className="h-3.5 w-3.5 text-[#10B981] group-hover:translate-x-1 transition-transform shrink-0 ml-1" />
+            <span className="truncate">Catalogue 2A (4 Modules)</span>
+            <ChevronRight className="h-3 w-3 text-[#0A0A0A]/40 dark:text-white/40 group-hover:translate-x-0.5 transition-transform shrink-0" />
           </button>
         </div>
 
@@ -168,26 +241,31 @@ export function Sidebar({ activeView, onNavigate, isOpenMobile, onCloseMobile }:
             })}
           </div>
 
-          {/* Group: APPRENDRE (5 Modules EFM) */}
+          {/* Group: APPRENDRE */}
           <div>
             <div className="flex items-center justify-between px-3 mb-1.5">
               <span className="text-[10px] font-mono font-bold tracking-wider text-[#0A0A0A]/50 dark:text-white/50 uppercase">
-                Apprendre (5 Modules)
+                {isReact ? 'Modules React & Redux' : 'Modules de Cours'}
               </span>
-              <span className="text-[9px] font-mono text-[#10B981] font-bold">M201</span>
+              <span className="text-[9px] font-mono text-[#10B981] font-bold">
+                {isReact ? '8 Modules' : '5 Parties'}
+              </span>
             </div>
             <div className="space-y-1">
               {learnItems.map(item => {
                 const isActive = activeView === item.id;
-                const partProgress = progress.parts[item.partId];
-                const bestScore = partProgress?.bestScore || 0;
-                const isCompleted = partProgress?.quizCompleted;
-                const completedSections = partProgress?.completedSections.length || 0;
+                const partProgress = !isReact && (item as any).partId ? progress.parts[(item as any).partId as PartId] : null;
+                const reactModId = isReact ? (item.id.replace('react-', '') as ReactModuleId) : null;
+                const reactModProgress = isReact && reactModId ? reactProgress.modules[reactModId] : null;
+
+                const bestScore = isReact ? (reactModProgress?.bestScore || 0) : (partProgress?.bestScore || 0);
+                const isCompleted = isReact ? reactModProgress?.quizCompleted : partProgress?.quizCompleted;
+                const completedSections = isReact ? (reactModProgress?.completedSections.length || 0) : (partProgress?.completedSections.length || 0);
 
                 return (
                   <button
                     key={item.id}
-                    onClick={() => handleNav(item.id as ActiveView, item.partId)}
+                    onClick={() => handleNav(item.id as ActiveView, (item as any).partId)}
                     className={cn(
                       "relative group flex w-full items-center justify-between rounded-2xl px-3 py-2 text-xs font-bold transition-all text-left cursor-pointer",
                       isActive
@@ -278,23 +356,23 @@ export function Sidebar({ activeView, onNavigate, isOpenMobile, onCloseMobile }:
             </span>
             <div>
               <button
-                onClick={() => handleNav('final-exam')}
+                onClick={() => handleNav(isReact ? 'react-final-exam' : 'final-exam')}
                 className={cn(
                   "relative flex w-full items-center justify-between rounded-2xl px-3.5 py-2.5 text-xs font-bold transition-all border cursor-pointer",
-                  activeView === 'final-exam'
+                  (activeView === 'final-exam' || activeView === 'react-final-exam')
                     ? "bg-[#10B981] text-white border-[#10B981] shadow-xs"
                     : "bg-white dark:bg-[#0A0A0A] text-[#0A0A0A] dark:text-white border-black/15 dark:border-white/15 hover:border-[#10B981] hover:text-[#10B981]"
                 )}
               >
                 <div className="flex items-center gap-2.5">
-                  <Award className={cn("h-4 w-4", activeView === 'final-exam' ? "text-white" : "text-[#10B981]")} />
-                  <span>Examen Blanc EFM</span>
+                  <Award className={cn("h-4 w-4", (activeView === 'final-exam' || activeView === 'react-final-exam') ? "text-white" : "text-[#10B981]")} />
+                  <span>{isReact ? 'Examen Blanc React' : 'Examen Blanc EFM'}</span>
                 </div>
                 <span className={cn(
                   "rounded-lg px-2 py-0.5 text-[10px] font-bold font-mono",
-                  activeView === 'final-exam' ? "bg-white/20 text-white" : "bg-[#10B981]/15 text-[#10B981] border border-[#10B981]/30"
+                  (activeView === 'final-exam' || activeView === 'react-final-exam') ? "bg-white/20 text-white" : "bg-[#10B981]/15 text-[#10B981] border border-[#10B981]/30"
                 )}>
-                  50 QCM
+                  {isReact ? '40 QCM' : '50 QCM'}
                 </span>
               </button>
             </div>
@@ -335,12 +413,14 @@ export function Sidebar({ activeView, onNavigate, isOpenMobile, onCloseMobile }:
           <div className="flex items-center justify-between text-xs font-bold text-[#0A0A0A] dark:text-white">
             <span className="flex items-center gap-1.5">
               <Sparkles className="h-3.5 w-3.5 text-[#10B981]" />
-              <span>Maîtrise globale</span>
+              <span>{isReact ? 'Maîtrise React' : 'Maîtrise Agile'}</span>
             </span>
-            <span className="text-[#10B981] font-mono font-bold">{overallPercentage}%</span>
+            <span className="text-[#10B981] font-mono font-bold">
+              {isReact ? reactOverallPercentage : overallPercentage}%
+            </span>
           </div>
           <div className="mt-2">
-            <Progress value={overallPercentage} className="h-1.5" />
+            <Progress value={isReact ? reactOverallPercentage : overallPercentage} className="h-1.5" />
           </div>
           <p className="mt-1.5 text-[10px] text-[#0A0A0A]/55 dark:text-white/55 font-mono">
             Progression enregistrée localement

@@ -1,0 +1,44 @@
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="fsPrimaryGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#22C55E" />
+      <stop offset="100%" stop-color="#10B981" />
+    </linearGradient>
+    <linearGradient id="fsAccentGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#10B981" />
+      <stop offset="100%" stop-color="#059669" />
+    </linearGradient>
+    <linearGradient id="fsGlowGrad" x1="50%" y1="0%" x2="50%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.35" />
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0" />
+    </linearGradient>
+    <filter id="fsGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#10B981" flood-opacity="0.4" />
+    </filter>
+  </defs>
+
+  <g filter="url(#fsGlow)">
+    <!-- Top Diamond Facet -->
+    <path d="M24 3L42 13.5L24 24L6 13.5L24 3Z" fill="url(#fsPrimaryGrad)" />
+    <path d="M24 3L42 13.5L24 24L6 13.5L24 3Z" fill="url(#fsGlowGrad)" />
+
+    <!-- Left Isometric Facet -->
+    <path d="M6 13.5L24 24V45L6 34.5V13.5Z" fill="url(#fsAccentGrad)" />
+
+    <!-- Right Isometric Facet -->
+    <path d="M24 24L42 13.5V34.5L24 45V24Z" fill="url(#fsPrimaryGrad)" fill-opacity="0.9" />
+
+    <!-- Stylized Code Bracket "<" on Left Facet -->
+    <path d="M17 26.5L11.5 29.5L17 32.5" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" />
+
+    <!-- Stylized Code Bracket ">" on Right Facet -->
+    <path d="M31 26.5L36.5 29.5L31 32.5" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" />
+
+    <!-- Slash "/" in Center Axis -->
+    <line x1="26" y1="25.5" x2="22" y2="33.5" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" />
+
+    <!-- Inner Core Accent on Top Face -->
+    <polygon points="24,9 33,14 24,19 15,14" fill="#FFFFFF" fill-opacity="0.25" />
+    <circle cx="24" cy="14" r="2.2" fill="#FFFFFF" />
+  </g>
+</svg>

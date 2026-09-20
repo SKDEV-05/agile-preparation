@@ -428,12 +428,12 @@ export const questionsPart1: Question[] = [
     tag: "Planning",
     question: "Que représente un « jalon » (milestone) sur le calendrier prévisionnel d’un projet ?",
     options: [
-      "Un événement marquant ou une décision majeure dont la durée calendaire est nulle",
       "Une phase de développement logiciel continue s’étalant sur au moins six mois",
       "Une commande système permettant de compiler les bibliothèques logicielles",
+      "Un événement marquant ou une décision majeure dont la durée calendaire est nulle",
       "Un outil de gestion de versions distribué utilisé par les ingénieurs d’études",
     ],
-    correctIndex: 0,
+    correctIndex: 2,
     explanation: "Un jalon formalise la validation d’une étape charnière (ex: signature de la recette, passage en production) sans consommer de durée."
   },
   {
@@ -443,12 +443,12 @@ export const questionsPart1: Question[] = [
     tag: "Pilotage",
     question: "Quel indicateur de pilotage alerte le plus efficacement le chef de projet sur une dérive temporelle naissante ?",
     options: [
-      "L’écart mesuré entre l’avancement physique réel et le planning prévisionnel initial",
       "La quantité d’écrans d’administration créés dans la base de données de test",
+      "L’écart mesuré entre l’avancement physique réel et le planning prévisionnel initial",
       "La taille globale en mégaoctets du fichier de documentation utilisateur final",
       "Le nombre total de réunions de synchronisation tenues durant la semaine passée",
     ],
-    correctIndex: 0,
+    correctIndex: 1,
     explanation: "Mesurer l’écart entre l’avancement réel du travail et la trajectoire planifiée permet de déclencher immédiatement des actions correctives."
   }
 ];

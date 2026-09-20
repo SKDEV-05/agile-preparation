@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Share2, Check, MessageCircle, Copy } from 'lucide-react';
+import { Share2, Check, MessageCircle, Copy, Smartphone } from 'lucide-react';
+import { InstallModal } from './InstallModal';
 
 interface ShareButtonProps {
   variant?: 'minimal' | 'full';
@@ -9,6 +10,7 @@ interface ShareButtonProps {
 export function ShareButton({ variant = 'minimal', className = '' }: ShareButtonProps) {
   const [copied, setCopied] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [isInstallOpen, setIsInstallOpen] = useState(false);
 
   const shareData = {
     title: 'Full Stack Web Master · 2ème Année',
@@ -107,16 +109,32 @@ export function ShareButton({ variant = 'minimal', className = '' }: ShareButton
             {/* Copy Link */}
             <button
               onClick={handleCopy}
-              className="flex items-center gap-2.5 w-full px-3 py-2 rounded-xl text-xs font-semibold text-black dark:text-white hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
+              className="flex items-center gap-2.5 w-full px-3 py-2 rounded-xl text-xs font-semibold text-black dark:text-white hover:bg-black/5 dark:hover:bg-white/5 transition-colors cursor-pointer"
             >
               <div className="flex h-6 w-6 items-center justify-center rounded-lg bg-black/10 dark:bg-white/10 text-black dark:text-white shrink-0">
                 {copied ? <Check className="h-3.5 w-3.5 text-[#10B981]" /> : <Copy className="h-3.5 w-3.5" />}
               </div>
               <span>{copied ? 'Lien copié !' : 'Copier le lien'}</span>
             </button>
+
+            {/* Add to Home Screen / Install Option */}
+            <button
+              onClick={() => {
+                setIsOpen(false);
+                setIsInstallOpen(true);
+              }}
+              className="flex items-center gap-2.5 w-full px-3 py-2 rounded-xl text-xs font-semibold text-[#10B981] hover:bg-[#10B981]/10 transition-colors border-t border-black/5 dark:border-white/5 mt-1 pt-2 cursor-pointer"
+            >
+              <div className="flex h-6 w-6 items-center justify-center rounded-lg bg-[#10B981]/15 text-[#10B981] shrink-0">
+                <Smartphone className="h-3.5 w-3.5" />
+              </div>
+              <span>Sur l'écran d'accueil (App)</span>
+            </button>
           </div>
         </>
       )}
+
+      <InstallModal open={isInstallOpen} onOpenChange={setIsInstallOpen} />
     </div>
   );
 }
