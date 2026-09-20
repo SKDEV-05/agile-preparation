@@ -27,8 +27,11 @@ export default defineConfig({
           if (id.includes('node_modules/lucide-react/')) {
             return 'vendor-icons';
           }
+          if (id.includes('/src/data/react')) {
+            return 'react-data';
+          }
           if (id.includes('/src/data/')) {
-            return 'course-data';
+            return 'agile-data';
           }
           if (id.includes('node_modules/')) {
             return 'vendor-utils';

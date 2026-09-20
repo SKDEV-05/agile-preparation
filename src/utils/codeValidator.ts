@@ -21,6 +21,42 @@ declare global {
   }
 }
 
+let babelLoadingPromise: Promise<boolean> | null = null;
+
+/**
+ * Lazy loads Babel Standalone dynamically only on interactive coding pages (Playground / Laboratory).
+ * Never loaded on landing pages, agile course pages, or quizzes.
+ */
+export function loadBabelStandalone(): Promise<boolean> {
+  if (typeof window === 'undefined') return Promise.resolve(false);
+  if (window.Babel) return Promise.resolve(true);
+  if (babelLoadingPromise) return babelLoadingPromise;
+
+  babelLoadingPromise = new Promise<boolean>((resolve) => {
+    const existing = document.querySelector('script[data-babel-standalone="true"]') as HTMLScriptElement | null;
+    if (existing) {
+      if (window.Babel) return resolve(true);
+      existing.addEventListener('load', () => resolve(true), { once: true });
+      existing.addEventListener('error', () => resolve(false), { once: true });
+      return;
+    }
+
+    const script = document.createElement('script');
+    script.src = 'https://unpkg.com/@babel/standalone@7.26.4/babel.min.js';
+    script.async = true;
+    script.crossOrigin = 'anonymous';
+    script.setAttribute('data-babel-standalone', 'true');
+    script.onload = () => resolve(true);
+    script.onerror = () => {
+      console.warn('Babel Standalone failed to load, falling back to built-in syntax checks');
+      resolve(false);
+    };
+    document.head.appendChild(script);
+  });
+
+  return babelLoadingPromise;
+}
+
 export function validateCodeSyntax(code: string, fileName: string): SyntaxDiagnostic {
   if (!code || !code.trim()) {
     return { isValid: true, error: null };

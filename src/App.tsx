@@ -8,8 +8,10 @@ import { ReactModuleId } from './types/reactTypes';
 import { useScrollReveal } from './hooks/useScrollReveal';
 import { trackPageView, analytics } from './lib/analytics';
 import { InteractiveGridBackground } from './components/common/InteractiveGridBackground';
-import { CommandPalette } from './components/common/CommandPalette';
 import { useActiveTrack } from './store/trackStore';
+
+// Lazy-load CommandPalette so heavy course & lab datasets are excluded from initial render
+const CommandPalette = lazy(() => import('./components/common/CommandPalette').then(m => ({ default: m.CommandPalette })));
 
 // Lazy-load secondary views & heavy dependencies for optimal LCP/FCP
 const Dashboard = lazy(() => import('./pages/Dashboard').then(m => ({ default: m.Dashboard })));
@@ -383,13 +385,17 @@ export function App() {
       {/* 2026 Digital Notebook Micro-Grid Background with Cursor Proximity Illumination */}
       <InteractiveGridBackground intensity={gridIntensity} />
 
-      {/* Global Command Palette (Cmd+K / Ctrl+K) */}
-      <CommandPalette 
-        isOpen={isSearchOpen} 
-        onClose={() => setIsSearchOpen(false)} 
-        onNavigate={handleNavigate} 
-        activeView={activeView}
-      />
+      {/* Global Command Palette (Cmd+K / Ctrl+K) - Lazy loaded on demand */}
+      {isSearchOpen && (
+        <Suspense fallback={null}>
+          <CommandPalette 
+            isOpen={isSearchOpen} 
+            onClose={() => setIsSearchOpen(false)} 
+            onNavigate={handleNavigate} 
+            activeView={activeView}
+          />
+        </Suspense>
+      )}
 
       {/* Foreground Website Content */}
       <div className="relative z-10">

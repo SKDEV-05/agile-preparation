@@ -3,7 +3,7 @@ import Editor, { OnMount } from '@monaco-editor/react';
 import { Copy, Check, RotateCcw, Code2, AlertTriangle, AlertCircle } from 'lucide-react';
 import { registerMonacoProviders } from './monacoCompletionProvider';
 import { useTheme } from '../../hooks/useTheme';
-import { validateCodeSyntax, SyntaxDiagnostic } from '../../utils/codeValidator';
+import { validateCodeSyntax, SyntaxDiagnostic, loadBabelStandalone } from '../../utils/codeValidator';
 
 interface CodeEditorProps {
   code: string;
@@ -34,6 +34,15 @@ export function CodeEditor({ code, onChange, fileName, onReset }: CodeEditorProp
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
+
+  // Pre-load Babel standalone in background when code editor mounts
+  useEffect(() => {
+    loadBabelStandalone().then((loaded) => {
+      if (loaded) {
+        setDiagnostic(validateCodeSyntax(code, fileName));
+      }
+    });
+  }, [fileName]);
 
   // Dynamically update theme when user toggles light/dark mode
   useEffect(() => {

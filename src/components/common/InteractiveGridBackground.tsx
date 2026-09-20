@@ -46,12 +46,23 @@ export function InteractiveGridBackground({
       isActive: false
     };
 
+    let isLoopRunning = false;
+
+    const requestLoop = () => {
+      if (!isLoopRunning && !isDestroyed) {
+        isLoopRunning = true;
+        animationFrameId = requestAnimationFrame(render);
+      }
+    };
+
     const handleResize = () => {
       if (!canvas) return;
       width = canvas.width = window.innerWidth;
       height = canvas.height = window.innerHeight;
       if (isTouch || prefersReducedMotion) {
         drawStaticGrid();
+      } else {
+        requestLoop();
       }
     };
 
@@ -59,12 +70,14 @@ export function InteractiveGridBackground({
       mouse.targetX = e.clientX;
       mouse.targetY = e.clientY;
       mouse.isActive = true;
+      requestLoop();
     };
 
     const handleMouseLeave = () => {
       mouse.targetX = -9999;
       mouse.targetY = -9999;
       mouse.isActive = false;
+      requestLoop();
     };
 
     // Draw static lightweight grid for touch or reduced-motion
@@ -82,20 +95,29 @@ export function InteractiveGridBackground({
     };
 
     if (isTouch || prefersReducedMotion) {
-      drawStaticGrid();
+      if ('requestIdleCallback' in window) {
+        window.requestIdleCallback(() => drawStaticGrid(), { timeout: 1000 });
+      } else {
+        setTimeout(drawStaticGrid, 100);
+      }
       window.addEventListener('resize', handleResize, { passive: true });
       return () => {
         window.removeEventListener('resize', handleResize);
       };
     }
 
-    // Interactive 60fps loop for desktop mouse proximity
+    // Reactive loop for desktop mouse proximity - strictly pauses when cursor is stationary
     const render = () => {
-      if (isDestroyed) return;
+      if (isDestroyed) {
+        isLoopRunning = false;
+        return;
+      }
 
       // Smooth cursor lerp
-      mouse.x += (mouse.targetX - mouse.x) * 0.15;
-      mouse.y += (mouse.targetY - mouse.y) * 0.15;
+      const dx = mouse.targetX - mouse.x;
+      const dy = mouse.targetY - mouse.y;
+      mouse.x += dx * 0.15;
+      mouse.y += dy * 0.15;
 
       ctx.clearRect(0, 0, width, height);
 
@@ -119,7 +141,8 @@ export function InteractiveGridBackground({
       }
 
       // Proximity glow highlighting around mouse
-      if (mouse.x > -100 && mouse.x < width + 100 && mouse.y > -100 && mouse.y < height + 100) {
+      const isMouseInView = mouse.x > -100 && mouse.x < width + 100 && mouse.y > -100 && mouse.y < height + 100;
+      if (isMouseInView) {
         const minCol = Math.max(0, Math.floor((mouse.x - proximityRadius) / step));
         const maxCol = Math.min(cols - 1, Math.ceil((mouse.x + proximityRadius) / step));
         const minRow = Math.max(0, Math.floor((mouse.y - proximityRadius) / step));
@@ -133,9 +156,9 @@ export function InteractiveGridBackground({
             const cellY = r * step;
             const cellCenterY = cellY + cellSize * 0.5;
 
-            const dx = cellCenterX - mouse.x;
-            const dy = cellCenterY - mouse.y;
-            const dist = Math.sqrt(dx * dx + dy * dy);
+            const cdx = cellCenterX - mouse.x;
+            const cdy = cellCenterY - mouse.y;
+            const dist = Math.sqrt(cdx * cdx + cdy * cdy);
 
             if (dist < proximityRadius) {
               // Smooth gaussian-like proximity curve
@@ -161,17 +184,29 @@ export function InteractiveGridBackground({
         }
       }
 
-      animationFrameId = requestAnimationFrame(render);
+      // Only schedule next frame if mouse is still interpolating or active
+      const isStillMoving = Math.abs(dx) > 0.2 || Math.abs(dy) > 0.2;
+      if (isStillMoving || (mouse.isActive && isMouseInView)) {
+        animationFrameId = requestAnimationFrame(render);
+      } else {
+        isLoopRunning = false;
+      }
     };
 
     window.addEventListener('resize', handleResize, { passive: true });
     window.addEventListener('mousemove', handleMouseMove, { passive: true });
     document.addEventListener('mouseleave', handleMouseLeave, { passive: true });
 
-    render();
+    // Defer initial paint to idle to protect FCP and initial hydration
+    if ('requestIdleCallback' in window) {
+      window.requestIdleCallback(() => requestLoop(), { timeout: 1000 });
+    } else {
+      setTimeout(requestLoop, 150);
+    }
 
     return () => {
       isDestroyed = true;
+      isLoopRunning = false;
       cancelAnimationFrame(animationFrameId);
       window.removeEventListener('resize', handleResize);
       window.removeEventListener('mousemove', handleMouseMove);
