@@ -145,7 +145,12 @@ export function ReactPlayground({ initialTemplateId = 'starter', customCode, tit
 
         {/* Right Column: Live Preview Panel */}
         <div className="h-[380px] sm:h-[480px] lg:h-[620px] flex flex-col">
-          <LivePreview code={activeCode} onLog={handleAddLog} />
+          <LivePreview
+            code={activeCode}
+            fileName={isCustomMode ? 'ExempleCours.jsx' : (selectedTemplate.files[0]?.name || 'App.jsx')}
+            onLog={handleAddLog}
+            onResetToReact={handleReset}
+          />
         </div>
       </div>
 

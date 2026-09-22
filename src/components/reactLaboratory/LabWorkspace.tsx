@@ -493,6 +493,7 @@ export function LabWorkspace({
               code={previewCode}
               files={files}
               entryPath={exercise.entryFile}
+              fileName={activeFile?.name || 'App.jsx'}
               onLog={handleAddLog}
             />
           </div>
@@ -765,6 +766,7 @@ export function LabWorkspace({
                 code={previewCode}
                 files={files}
                 entryPath={exercise.entryFile}
+                fileName={activeFile?.name || 'App.jsx'}
                 onLog={handleAddLog}
               />
             </div>

@@ -1,18 +1,20 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useMemo } from 'react';
 import Editor, { OnMount } from '@monaco-editor/react';
-import { Copy, Check, RotateCcw, Code2, AlertTriangle, AlertCircle } from 'lucide-react';
+import { Copy, Check, RotateCcw, Code2, AlertTriangle, AlertCircle, ShieldAlert } from 'lucide-react';
 import { registerMonacoProviders } from './monacoCompletionProvider';
 import { useTheme } from '../../hooks/useTheme';
 import { validateCodeSyntax, SyntaxDiagnostic, loadBabelStandalone } from '../../utils/codeValidator';
+import { determineCodeLanguage, DetectedLanguage } from '../../utils/codeLanguageDetector';
 
 interface CodeEditorProps {
   code: string;
   onChange: (newCode: string) => void;
   fileName: string;
   onReset?: () => void;
+  explicitLanguage?: DetectedLanguage;
 }
 
-export function CodeEditor({ code, onChange, fileName, onReset }: CodeEditorProps) {
+export function CodeEditor({ code, onChange, fileName, onReset, explicitLanguage }: CodeEditorProps) {
   const [copied, setCopied] = useState(false);
   const [cursorPos, setCursorPos] = useState({ line: 1, col: 1 });
   const [diagnostic, setDiagnostic] = useState<SyntaxDiagnostic>(() => validateCodeSyntax(code, fileName));
@@ -20,8 +22,16 @@ export function CodeEditor({ code, onChange, fileName, onReset }: CodeEditorProp
   const monacoRef = useRef<any>(null);
   const { isDark } = useTheme();
 
+  // Detect language for Monaco coloring and unsupported badge
+  const languageInfo = useMemo(
+    () => determineCodeLanguage(fileName, code, explicitLanguage),
+    [fileName, code, explicitLanguage]
+  );
+
   // Determine Monaco language from file extension
   const getLanguage = (file: string): string => {
+    // Use detected language's monacoLanguage for accurate coloring
+    if (languageInfo && languageInfo.monacoLanguage) return languageInfo.monacoLanguage;
     if (file.endsWith('.css')) return 'css';
     if (file.endsWith('.json')) return 'json';
     if (file.endsWith('.html')) return 'html';
@@ -242,27 +252,35 @@ export function CodeEditor({ code, onChange, fileName, onReset }: CodeEditorProp
             <span>{fileName}</span>
           </div>
 
-          {/* Live Syntax Diagnostic Indicator */}
-          {diagnostic.isValid ? (
-            <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 text-[10px] font-mono font-bold">
-              <Check className="h-3 w-3 text-[#10B981]" />
-              <span>Code Valide</span>
+          {/* Unsupported Language Badge (highest priority) */}
+          {!languageInfo.isSupported ? (
+            <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/30 text-[10px] font-mono font-bold">
+              <ShieldAlert className="h-3 w-3 shrink-0" />
+              <span>{languageInfo.icon} {languageInfo.name} — Non Supporté</span>
             </div>
           ) : (
-            <button
-              onClick={handleJumpToError}
-              title={`${diagnostic.error?.message} (Cliquez pour aller à la ligne ${diagnostic.error?.line})`}
-              className="flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-red-500/15 text-red-600 dark:text-red-400 border border-red-500/30 text-[10px] font-mono font-bold animate-pulse cursor-pointer hover:bg-red-500/25 transition-colors"
-            >
-              <AlertTriangle className="h-3 w-3 text-red-500 shrink-0" />
-              <span className="truncate max-w-[150px] sm:max-w-[280px]">
-                Ligne {diagnostic.error?.line} : {diagnostic.error?.shortMessage}
-              </span>
-            </button>
+            /* Live Syntax Diagnostic Indicator (only for supported languages) */
+            diagnostic.isValid ? (
+              <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 text-[10px] font-mono font-bold">
+                <Check className="h-3 w-3 text-[#10B981]" />
+                <span>Code Valide</span>
+              </div>
+            ) : (
+              <button
+                onClick={handleJumpToError}
+                title={`${diagnostic.error?.message} (Cliquez pour aller à la ligne ${diagnostic.error?.line})`}
+                className="flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-red-500/15 text-red-600 dark:text-red-400 border border-red-500/30 text-[10px] font-mono font-bold animate-pulse cursor-pointer hover:bg-red-500/25 transition-colors"
+              >
+                <AlertTriangle className="h-3 w-3 text-red-500 shrink-0" />
+                <span className="truncate max-w-[150px] sm:max-w-[280px]">
+                  Ligne {diagnostic.error?.line} : {diagnostic.error?.shortMessage}
+                </span>
+              </button>
+            )
           )}
 
           <span className="text-[10px] text-slate-500 dark:text-white/40 hidden md:inline">
-            {lines.length} lignes · {getLanguage(fileName)}
+            {lines.length} lignes · {languageInfo.name}
           </span>
         </div>
 
@@ -378,7 +396,12 @@ export function CodeEditor({ code, onChange, fileName, onReset }: CodeEditorProp
       {/* VSCode Bottom Status Bar (Adapts to Platform Theme with Real-Time Error Check) */}
       <div className="px-3 py-1 bg-[#F8FAFC] dark:bg-[#121212] border-t border-black/10 dark:border-white/10 flex items-center justify-between text-[10px] font-mono text-slate-500 dark:text-white/50 select-none transition-colors">
         <div className="flex items-center gap-3">
-          {diagnostic.isValid ? (
+          {!languageInfo.isSupported ? (
+            <span className="text-amber-500 font-bold flex items-center gap-1.5">
+              <ShieldAlert className="h-3 w-3" />
+              <span>Langage {languageInfo.name} non exécutable ici</span>
+            </span>
+          ) : diagnostic.isValid ? (
             <span className="text-emerald-600 dark:text-[#10B981] font-bold flex items-center gap-1.5">
               <Check className="h-3 w-3" />
               <span>Syntaxe OK (0 erreur)</span>
@@ -402,8 +425,8 @@ export function CodeEditor({ code, onChange, fileName, onReset }: CodeEditorProp
         <div className="flex items-center gap-3">
           <span className="hidden sm:inline">UTF-8</span>
           <span className="hidden sm:inline">Espaces: 2</span>
-          <span className="text-[#10B981] font-bold">
-            VS Code Monaco ({isDark ? 'Dark' : 'Light'})
+          <span className={`font-bold ${languageInfo.isSupported ? 'text-[#10B981]' : 'text-amber-500'}`}>
+            {languageInfo.icon} {languageInfo.name} · Monaco ({isDark ? 'Dark' : 'Light'})
           </span>
         </div>
       </div>
